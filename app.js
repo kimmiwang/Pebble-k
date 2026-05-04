@@ -817,7 +817,8 @@ const App = {
     let words = recommended.map(w => ({ key: w, ...WORD_DB[w] }));
     if (tag !== 'all') words = words.filter(w => w.tag === tag);
     
-    document.getElementById('recommendCount').textContent = words.length;
+    const rcEl = document.getElementById('recommendCount');
+    if (rcEl) rcEl.textContent = words.length;
     const grid = document.getElementById('recommendGrid');
     const existingSet = new Set(this.data.words.map(w => w.word.toLowerCase()));
     const todayLearned = new Set(((this.data.dailyLearned || {})[todayStr()] || []).map(w => w.toLowerCase()));
@@ -2114,8 +2115,8 @@ const DailyModule = {
     container.innerHTML = seen.map(idx => {
       const s = DAILY_SENTENCES[idx % DAILY_SENTENCES.length];
       return `<div class="daily-history-item">
-        <span class="dh-date">${s.scene}</span>
         <div>${s.en}</div>
+        <div class="dh-chinese">${s.cn}</div>
       </div>`;
     }).join('');
   },
@@ -2385,10 +2386,10 @@ const FocusTimer = {
     // Button
     const btn = document.getElementById('ftBtn');
     if (btn) {
-      if (done) btn.textContent = 'DONE ✓';
-      else if (this._running) btn.textContent = 'PAUSE';
-      else if (this._elapsed > 0) btn.textContent = 'RESUME';
-      else btn.textContent = 'START';
+      if (done) btn.textContent = 'Done ✓';
+      else if (this._running) btn.textContent = 'Pause';
+      else if (this._elapsed > 0) btn.textContent = 'Resume';
+      else btn.textContent = 'Start';
     }
 
     // Label

@@ -234,17 +234,15 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .focus-timer.running .ft-label { color: var(--accent); }
 .focus-timer.completed .ft-label { color: var(--green); }
 .ft-btn {
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
+  padding: 10px 22px;
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
   background: var(--text);
   color: #fff;
   transition: var(--transition);
   white-space: nowrap;
-  min-width: 64px;
   text-align: center;
 }
 .ft-btn:hover { background: #333; }
@@ -298,7 +296,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 }
 .streak-fire { font-size: 16px; }
 .streak-num { font-size: 14px; color: var(--accent); font-weight: 700; }
-.streak-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.streak-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; font-weight: 500; }
 
 /* ══════ Dashboard Grid ══════ */
 .dashboard-grid {
@@ -917,6 +915,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 }
 .daily-history-item:last-child { border-bottom: none; }
 .dh-date { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.dh-chinese { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
 
 /* ══════ Check-in ══════ */
 .checkin-top { display: flex; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
