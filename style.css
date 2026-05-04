@@ -156,7 +156,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 48px;
+  margin-bottom: 28px;
   flex-wrap: wrap;
   gap: 16px;
 }
@@ -234,7 +234,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .focus-timer.running .ft-label { color: var(--accent); }
 .focus-timer.completed .ft-label { color: var(--green); }
 .ft-btn {
-  padding: 5px 14px;
+  padding: 6px 16px;
   border-radius: 20px;
   font-size: 10px;
   font-weight: 700;
@@ -244,6 +244,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   color: #fff;
   transition: var(--transition);
   white-space: nowrap;
+  min-width: 64px;
+  text-align: center;
 }
 .ft-btn:hover { background: #333; }
 .focus-timer.running .ft-btn { background: var(--accent); }
@@ -253,12 +255,14 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .btn-primary {
   background: var(--text);
   color: #fff;
-  padding: 10px 22px;
+  padding: 12px 28px;
   border-radius: 40px;
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.2px;
   transition: var(--transition);
+  min-width: 140px;
+  text-align: center;
 }
 .btn-primary:hover { background: #333; transform: translateY(-1px); }
 .btn-secondary {
@@ -374,7 +378,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
-.rtag-btn:hover, .rtag-btn.active { background: var(--text); color: #fff; border-color: var(--text); }
+.rtag-btn:hover { border-color: var(--text); color: var(--text); }
+.rtag-btn.active { background: var(--bg-warm); color: var(--text); border-color: var(--text); font-weight: 600; }
 .recommend-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -691,7 +696,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   color: var(--text-muted); transition: var(--transition);
   text-transform: uppercase; letter-spacing: 0.3px;
 }
-.cat-btn:hover, .cat-btn.active { background: var(--text); color: #fff; border-color: var(--text); }
+.cat-btn:hover { border-color: var(--text); color: var(--text); }
+.cat-btn.active { background: var(--bg-warm); color: var(--text); border-color: var(--text); font-weight: 600; }
 .shadow-video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -956,7 +962,28 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 /* ══════ Heatmap ══════ */
 .heatmap-section { margin-bottom: 40px; }
 .heatmap-section h3 { font-family: var(--font-serif); font-size: 20px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 20px; }
-.heatmap-months { display: flex; gap: 0; margin-bottom: 4px; padding-left: 0; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.heatmap-months { display: flex; gap: 0; margin-bottom: 4px; padding-left: 32px; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.heatmap-wrap {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+}
+.heatmap-days {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 0;
+}
+.heatmap-days span {
+  height: 13px;
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 13px;
+  text-align: right;
+  min-width: 26px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
 .heatmap {
   display: grid;
   grid-template-columns: repeat(53, 1fr);
