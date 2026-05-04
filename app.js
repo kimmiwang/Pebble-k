@@ -1221,6 +1221,7 @@ const App = {
     Store.save(this.data);
 
     this._learnIndex++;
+    this._updateLearnProgress();
     this._showLearnCard();
   },
 
@@ -1324,6 +1325,13 @@ const App = {
 
   addXP(amount) {
     this.data.xp = (this.data.xp || 0) + amount;
+    // Auto check-in: any learning activity counts as today's check-in
+    const today = todayStr();
+    if (!this.data.checkins[today]) {
+      this.data.checkins[today] = { xp: amount, tasks: ['auto'], time: new Date().toISOString() };
+    } else {
+      this.data.checkins[today].xp = (this.data.checkins[today].xp || 0) + amount;
+    }
     Store.save(this.data);
   },
 
@@ -1414,6 +1422,7 @@ const VocabModule = {
             </div>
             ${phonetic ? `<span class="vocab-phonetic">${phonetic}</span>` : ''}
             <span class="vocab-meaning">${w.meaning || ''}</span>
+            ${w.note ? `<span class="vocab-note-inline">${w.note}</span>` : ''}
           </div>
           <div class="vocab-item-right">
             ${isDue ? '<span class="vocab-due due-now">Due now</span>' : `<span class="vocab-due">Next: ${w.nextReview}</span>`}
