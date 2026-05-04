@@ -155,7 +155,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .page-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   margin-bottom: 28px;
   flex-wrap: wrap;
   gap: 16px;
@@ -184,23 +184,24 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   max-width: 400px;
 }
 
-/* ══════ Focus Timer ══════ */
-.focus-timer {
+/* ══════ Focus Timer (Sidebar) ══════ */
+.sidebar-timer {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  background: var(--bg-card);
+  gap: 8px;
+  padding: 20px 12px;
+  margin: 8px 0;
   border: 1px solid var(--border);
-  border-radius: 40px;
-  padding: 8px 16px 8px 8px;
-  transition: var(--transition);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
 }
-.focus-timer.running { border-color: var(--accent); }
-.focus-timer.completed { border-color: var(--green); }
+.sidebar-timer.running { border-color: var(--accent); }
+.sidebar-timer.completed { border-color: var(--green); }
 .ft-ring {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
 }
 .ft-ring svg { display: block; }
@@ -209,7 +210,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
   letter-spacing: -0.3px;
   font-variant-numeric: tabular-nums;
@@ -218,25 +219,26 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .ft-info {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1px;
 }
 .ft-label {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   color: var(--text);
 }
 .ft-sub {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-muted);
 }
-.focus-timer.running .ft-label { color: var(--accent); }
-.focus-timer.completed .ft-label { color: var(--green); }
+.sidebar-timer.running .ft-label { color: var(--accent); }
+.sidebar-timer.completed .ft-label { color: var(--green); }
 .ft-btn {
-  padding: 10px 22px;
-  border-radius: 40px;
-  font-size: 13px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.2px;
   background: var(--text);
@@ -246,8 +248,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   text-align: center;
 }
 .ft-btn:hover { background: #333; }
-.focus-timer.running .ft-btn { background: var(--accent); }
-.focus-timer.completed .ft-btn { background: var(--green); }
+.sidebar-timer.running .ft-btn { background: var(--accent); }
+.sidebar-timer.completed .ft-btn { background: var(--green); }
 
 /* ══════ Buttons ══════ */
 .btn-primary {
@@ -287,14 +289,12 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 
 /* ══════ Streak Badge ══════ */
 .streak-badge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  margin-top: 12px;
-  font-size: 13px;
-  color: var(--text-secondary);
+  padding: 6px 12px;
 }
-.streak-fire { font-size: 16px; }
 .streak-num { font-size: 14px; color: var(--accent); font-weight: 700; }
 .streak-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; font-weight: 500; }
 
@@ -1138,6 +1138,14 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 
 /* ══════ Recommend Header Layout ══════ */
 .recommend-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.recommend-sub-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 .learn-progress-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
 .learn-progress-bar { width: 180px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .learn-progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }

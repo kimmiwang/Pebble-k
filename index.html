@@ -45,6 +45,27 @@
         <span>Check-in</span>
       </li>
     </ul>
+    <!-- Focus Timer in sidebar -->
+    <div class="sidebar-timer" id="focusTimer">
+      <div class="ft-ring" id="ftRing">
+        <svg viewBox="0 0 36 36" width="40" height="40">
+          <circle cx="18" cy="18" r="16" fill="none" stroke="#e7e5e4" stroke-width="2.5"/>
+          <circle cx="18" cy="18" r="16" fill="none" stroke="#e8590c" stroke-width="2.5"
+            stroke-dasharray="100.53" stroke-dashoffset="100.53" stroke-linecap="round"
+            transform="rotate(-90 18 18)" id="ftProgress"/>
+        </svg>
+        <span class="ft-time" id="ftTime">30:00</span>
+      </div>
+      <div class="ft-info">
+        <span class="ft-label" id="ftLabel">DAILY FOCUS</span>
+        <span class="ft-sub" id="ftSub">30 min goal</span>
+      </div>
+      <button class="ft-btn" id="ftBtn" onclick="FocusTimer.toggle()">Start</button>
+    </div>
+    <div class="streak-badge" id="streakBadge">
+      <span class="streak-num" id="streakNum">0</span>
+      <span class="streak-label">day streak</span>
+    </div>
     <div class="sidebar-channels" id="sidebarChannels">
       <div class="sidebar-channels-header">
         <span>MY CHANNELS</span>
@@ -66,31 +87,7 @@
     <!-- ========== Dashboard ========== -->
     <section class="page active" id="page-dashboard">
       <div class="page-header">
-        <div>
-          <h1 class="greeting" id="greeting">Good morning!</h1>
-          <p class="sub-greeting" id="subGreeting">Ready to learn something new today?</p>
-          <div class="streak-badge" id="streakBadge">
-            <span class="streak-fire">&#x1F525;</span>
-            <span class="streak-num" id="streakNum">0</span>
-            <span class="streak-label">day streak</span>
-          </div>
-        </div>
-        <div class="focus-timer" id="focusTimer">
-          <div class="ft-ring" id="ftRing">
-            <svg viewBox="0 0 36 36" width="44" height="44">
-              <circle cx="18" cy="18" r="16" fill="none" stroke="#e7e5e4" stroke-width="2.5"/>
-              <circle cx="18" cy="18" r="16" fill="none" stroke="#e8590c" stroke-width="2.5"
-                stroke-dasharray="100.53" stroke-dashoffset="100.53" stroke-linecap="round"
-                transform="rotate(-90 18 18)" id="ftProgress"/>
-            </svg>
-            <span class="ft-time" id="ftTime">30:00</span>
-          </div>
-          <div class="ft-info">
-            <span class="ft-label" id="ftLabel">DAILY FOCUS</span>
-            <span class="ft-sub" id="ftSub">30 min goal</span>
-          </div>
-          <button class="ft-btn" id="ftBtn" onclick="FocusTimer.toggle()">Start</button>
-        </div>
+        <h1 class="greeting" id="greeting">Good morning!</h1>
       </div>
 
       <div class="dashboard-grid">
@@ -144,19 +141,19 @@
         <div class="recommend-header">
           <div>
             <h3>Today's New Words</h3>
-            <div class="learn-progress-row" id="learnProgressRow">
-              <div class="learn-progress-bar"><div class="learn-progress-fill" id="learnProgressFill" style="width:0%"></div></div>
-              <span class="learn-progress-text" id="learnProgressText">0 / 30 learned</span>
-            </div>
           </div>
-          <div class="recommend-header-right">
-            <button class="btn-primary" onclick="App.startDailyLearn()" id="btnStartLearn">Start Learning</button>
-            <div class="recommend-tags">
-              <button class="rtag-btn active" data-tag="all" onclick="App.filterRecommend('all')">All</button>
-              <button class="rtag-btn" data-tag="daily" onclick="App.filterRecommend('daily')">Daily Life</button>
-              <button class="rtag-btn" data-tag="tech" onclick="App.filterRecommend('tech')">Tech & Internet</button>
-              <button class="rtag-btn" data-tag="design" onclick="App.filterRecommend('design')">Designer</button>
-            </div>
+          <button class="btn-primary" onclick="App.startDailyLearn()" id="btnStartLearn">Start Learning</button>
+        </div>
+        <div class="recommend-sub-row">
+          <div class="learn-progress-row" id="learnProgressRow">
+            <div class="learn-progress-bar"><div class="learn-progress-fill" id="learnProgressFill" style="width:0%"></div></div>
+            <span class="learn-progress-text" id="learnProgressText">0 / 30 learned</span>
+          </div>
+          <div class="recommend-tags">
+            <button class="rtag-btn active" data-tag="all" onclick="App.filterRecommend('all')">All</button>
+            <button class="rtag-btn" data-tag="daily" onclick="App.filterRecommend('daily')">Daily Life</button>
+            <button class="rtag-btn" data-tag="tech" onclick="App.filterRecommend('tech')">Tech & Internet</button>
+            <button class="rtag-btn" data-tag="design" onclick="App.filterRecommend('design')">Designer</button>
           </div>
         </div>
         <div class="recommend-grid" id="recommendGrid"></div>
