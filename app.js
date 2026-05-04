@@ -21,7 +21,7 @@ const WORD_DB = {
   "plot twist": { phonetic: "/plɒt twɪst/", meaning: "剧情反转", examples: ["I didn't see that plot twist coming at all!", "The movie is full of unexpected plot twists."], synonyms: ["surprise ending", "turn of events", "reversal"], tag: "daily", image: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=300&h=200&fit=crop" },
   "gist": { phonetic: "/dʒɪst/", meaning: "要点，大意", examples: ["I didn't catch every word, but I got the gist of it.", "Can you give me the gist of the meeting?"], synonyms: ["essence", "core", "main point"], tag: "daily", image: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=300&h=200&fit=crop" },
   "commute": { phonetic: "/kəˈmjuːt/", meaning: "通勤", examples: ["My commute takes about 45 minutes each way.", "I listen to podcasts during my commute."], synonyms: ["travel", "journey", "trip"], tag: "daily", image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=300&h=200&fit=crop" },
-  "cringe": { phonetic: "/krɪndʒ/", meaning: "感到尴尬；畏缩", examples: ["I cringe every time I watch that video of myself.", "The joke was so bad it made everyone cringe."], synonyms: ["wince", "flinch", "shudder"], tag: "daily", image: "https://images.unsplash.com/photo-1520462100942-63e8dbf41a8c?w=300&h=200&fit=crop" },
+  "cringe": { phonetic: "/krɪndʒ/", meaning: "让人尴尬的，社死", examples: ["That joke was so cringe.", "I cringe every time I think about what I said."], synonyms: ["embarrassing", "awkward", "uncomfortable"], tag: "slang" }, image: "https://images.unsplash.com/photo-1520462100942-63e8dbf41a8c?w=300&h=200&fit=crop" },
   "anecdote": { phonetic: "/ˈænɪkdəʊt/", meaning: "趣闻，轶事", examples: ["He told a funny anecdote about his first job.", "The speech was full of personal anecdotes."], synonyms: ["story", "tale", "yarn"], tag: "daily" },
   "etiquette": { phonetic: "/ˈetɪket/", meaning: "礼仪，礼节", examples: ["Business etiquette varies across cultures.", "It's basic email etiquette to reply within 24 hours."], synonyms: ["manners", "protocol", "decorum"], tag: "daily" },
   "versatile": { phonetic: "/ˈvɜːsətaɪl/", meaning: "多才多艺的；多功能的", examples: ["She's a versatile actress who can play any role.", "This is a very versatile kitchen gadget."], synonyms: ["adaptable", "flexible", "all-round"], tag: "daily" },
@@ -167,9 +167,9 @@ const WORD_DB = {
   "catch up": { phonetic: "", meaning: "叙旧，赶上进度", examples: ["Let's catch up over coffee sometime.", "I need to catch up on my emails."], synonyms: ["reconnect", "get up to speed", "update"], tag: "daily" },
   "vibe": { phonetic: "/vaɪb/", meaning: "氛围，感觉", examples: ["This café has a really nice vibe.", "I got a weird vibe from that place."], synonyms: ["atmosphere", "feeling", "energy"], tag: "daily" },
   "chill": { phonetic: "/tʃɪl/", meaning: "放松，冷静的", examples: ["Let's just chill at home tonight.", "He's a really chill guy."], synonyms: ["relax", "laid-back", "calm"], tag: "daily" },
-  "ghosting": { phonetic: "/ˈɡəʊstɪŋ/", meaning: "突然不回消息（社交中）", examples: ["She started ghosting me after the third date.", "Ghosting is really hurtful behavior."], synonyms: ["ignoring", "disappearing", "cutting off"], tag: "daily" },
-  "cringe": { phonetic: "/krɪndʒ/", meaning: "让人尴尬的，社死", examples: ["That joke was so cringe.", "I cringe every time I think about what I said."], synonyms: ["embarrassing", "awkward", "uncomfortable"], tag: "daily" },
-  "lowkey": { phonetic: "/ˌləʊˈkiː/", meaning: "暗地里，有一点", examples: ["I lowkey want to skip the party.", "She's lowkey the smartest person in the room."], synonyms: ["secretly", "quietly", "subtly"], tag: "daily" },
+  "ghosting": { phonetic: "/ˈɡəʊstɪŋ/", meaning: "突然不回消息（社交中）", examples: ["She started ghosting me after the third date.", "Ghosting is really hurtful behavior."], synonyms: ["ignoring", "disappearing", "cutting off"], tag: "slang" } },
+  "cringe": { phonetic: "/krɪndʒ/", meaning: "让人尴尬的，社死", examples: ["That joke was so cringe.", "I cringe every time I think about what I said."], synonyms: ["embarrassing", "awkward", "uncomfortable"], tag: "slang" } },
+  "lowkey": { phonetic: "/ˌləʊˈkiː/", meaning: "暗地里，有一点", examples: ["I lowkey want to skip the party.", "She's lowkey the smartest person in the room."], synonyms: ["secretly", "quietly", "subtly"], tag: "slang" } },
   "salty": { phonetic: "/ˈsɔːlti/", meaning: "（俚语）生气的，不爽的", examples: ["He's still salty about losing the game.", "Don't be so salty — it was just a joke."], synonyms: ["bitter", "upset", "annoyed"], tag: "daily" },
   "FOMO": { phonetic: "/ˈfəʊməʊ/", meaning: "错过恐惧症", examples: ["I have serious FOMO when I see everyone at the party.", "Social media gives me FOMO."], synonyms: ["fear of missing out", "anxiety", "envy"], tag: "daily" },
   "subtle": { phonetic: "/ˈsʌtl/", meaning: "微妙的，不明显的", examples: ["There's a subtle difference between the two colors.", "He gave a subtle hint that he was bored."], synonyms: ["understated", "delicate", "slight"], tag: "daily" },
@@ -311,7 +311,39 @@ const WORD_DB = {
   "slay": { phonetic: "/sleɪ/", meaning: "（俚语）太厉害了，杀疯了", examples: ["She absolutely slayed that performance.", "You slay every time!"], synonyms: ["dominate", "crush it", "kill it"], tag: "daily" },
   "tea": { phonetic: "/tiː/", meaning: "（俚语）八卦", examples: ["Spill the tea! What happened?", "I heard some tea about them."], synonyms: ["gossip", "drama", "scoop"], tag: "daily" },
   "cap": { phonetic: "/kæp/", meaning: "（俚语）说谎 / no cap = 不骗你", examples: ["That's cap — I don't believe you.", "No cap, that was the best movie I've ever seen."], synonyms: ["lie", "falsehood", "untruth"], tag: "daily" },
-  "lit": { phonetic: "/lɪt/", meaning: "（俚语）很嗨，很精彩", examples: ["The party was absolutely lit.", "This song is so lit."], synonyms: ["amazing", "exciting", "awesome"], tag: "daily" },
+  "lit": { phonetic: "/lɪt/", meaning: "（俚语）很嗨，很精彩", examples: ["The party was absolutely lit.", "This song is so lit."], synonyms: ["amazing", "exciting", "awesome"], tag: "slang" },
+
+  // ═══ SLANG & EVERYDAY PHRASES ═══
+  "no worries": { phonetic: "", meaning: "没关系，不用担心", examples: ["No worries, I'll handle it.", "Thanks! — No worries at all."], synonyms: ["no problem", "it's fine", "don't mention it"], tag: "slang" },
+  "my bad": { phonetic: "", meaning: "我的错", examples: ["Oh, my bad — I didn't see your message.", "My bad, I forgot to mention it."], synonyms: ["sorry", "my mistake", "my fault"], tag: "slang" },
+  "I'm down": { phonetic: "", meaning: "我愿意/我参加", examples: ["Wanna grab dinner? — Yeah, I'm down.", "I'm down for whatever."], synonyms: ["I'm in", "count me in", "sure"], tag: "slang" },
+  "that's a wrap": { phonetic: "", meaning: "结束了，搞定了", examples: ["That's a wrap for today's meeting.", "And that's a wrap on the project!"], synonyms: ["done", "finished", "all done"], tag: "slang" },
+  "you do you": { phonetic: "", meaning: "你做你自己就好", examples: ["I don't agree, but you do you.", "Life's too short — you do you."], synonyms: ["be yourself", "do your thing", "to each their own"], tag: "slang" },
+  "on point": { phonetic: "", meaning: "很到位，很棒", examples: ["Her outfit is on point today.", "The presentation was on point."], synonyms: ["perfect", "spot on", "flawless"], tag: "slang" },
+  "keep it real": { phonetic: "", meaning: "保持真实，不装", examples: ["I respect people who keep it real.", "Just keep it real with me."], synonyms: ["be honest", "be genuine", "stay true"], tag: "slang" },
+  "big deal": { phonetic: "", meaning: "大事/了不起（常用于反讽）", examples: ["It's not a big deal, don't worry.", "What's the big deal?"], synonyms: ["important matter", "fuss", "commotion"], tag: "slang" },
+  "a piece of cake": { phonetic: "", meaning: "小菜一碟", examples: ["The exam was a piece of cake.", "Don't worry, it'll be a piece of cake."], synonyms: ["easy", "simple", "effortless"], tag: "slang" },
+  "break the ice": { phonetic: "", meaning: "打破僵局", examples: ["He told a joke to break the ice.", "It's hard to break the ice at networking events."], synonyms: ["start a conversation", "warm up", "ease tension"], tag: "slang" },
+  "spill the beans": { phonetic: "", meaning: "泄露秘密", examples: ["Come on, spill the beans — what happened?", "She accidentally spilled the beans about the surprise."], synonyms: ["reveal", "let out", "disclose"], tag: "slang" },
+  "hit the nail on the head": { phonetic: "", meaning: "说得一针见血", examples: ["You hit the nail on the head with that comment.", "Her analysis hit the nail on the head."], synonyms: ["be exactly right", "be spot on", "nailed it"], tag: "slang" },
+  "under the weather": { phonetic: "", meaning: "身体不舒服", examples: ["I'm feeling a bit under the weather today.", "She called in sick — she's under the weather."], synonyms: ["unwell", "sick", "not feeling well"], tag: "slang" },
+  "call it a day": { phonetic: "", meaning: "到此为止，收工", examples: ["It's 6 PM, let's call it a day.", "I'm tired — I'm gonna call it a day."], synonyms: ["stop working", "wrap up", "finish"], tag: "slang" },
+  "on the same page": { phonetic: "", meaning: "达成共识", examples: ["Let's make sure we're on the same page.", "Are we on the same page about the deadline?"], synonyms: ["in agreement", "aligned", "synchronized"], tag: "slang" },
+  "sleep on it": { phonetic: "", meaning: "考虑一晚再决定", examples: ["Don't decide now — sleep on it.", "I'll sleep on it and let you know tomorrow."], synonyms: ["think it over", "take time", "consider"], tag: "slang" },
+  "get the hang of": { phonetic: "", meaning: "掌握窍门", examples: ["It takes a while to get the hang of it.", "I'm starting to get the hang of this software."], synonyms: ["learn", "master", "understand"], tag: "slang" },
+  "out of the loop": { phonetic: "", meaning: "不知情，脱节", examples: ["I've been out of the loop — what happened?", "Sorry, I'm a bit out of the loop on this."], synonyms: ["uninformed", "unaware", "behind"], tag: "slang" },
+  "the elephant in the room": { phonetic: "", meaning: "房间里的大象（大家回避的问题）", examples: ["Let's address the elephant in the room.", "Nobody wants to talk about the elephant in the room."], synonyms: ["obvious problem", "unspoken issue", "taboo topic"], tag: "slang" },
+  "play it by ear": { phonetic: "", meaning: "到时候再说，随机应变", examples: ["I don't have a plan — let's play it by ear.", "We'll play it by ear depending on the weather."], synonyms: ["improvise", "wing it", "see how it goes"], tag: "slang" },
+  "it is what it is": { phonetic: "", meaning: "事已至此，无法改变", examples: ["The deadline is tomorrow. It is what it is.", "I didn't get the job, but it is what it is."], synonyms: ["accept it", "that's life", "nothing to do"], tag: "slang" },
+  "24/7": { phonetic: "/ˌtwentiˌfɔːˈsevn/", meaning: "全天候，一直", examples: ["This store is open 24/7.", "She works 24/7 — she never stops."], synonyms: ["always", "non-stop", "around the clock"], tag: "slang" },
+  "give it a shot": { phonetic: "", meaning: "试一试", examples: ["I've never tried sushi, but I'll give it a shot.", "Just give it a shot — you have nothing to lose."], synonyms: ["try", "attempt", "have a go"], tag: "slang" },
+  "nailed it": { phonetic: "", meaning: "做得太好了，完美", examples: ["Your presentation? You absolutely nailed it.", "She nailed the interview."], synonyms: ["aced it", "killed it", "crushed it"], tag: "slang" },
+  "mind-blowing": { phonetic: "", meaning: "令人震惊的，不可思议的", examples: ["The special effects were mind-blowing.", "She shared some mind-blowing statistics."], synonyms: ["amazing", "incredible", "astonishing"], tag: "slang" },
+  "the real deal": { phonetic: "", meaning: "真材实料，货真价实", examples: ["This restaurant is the real deal.", "She's the real deal — incredibly talented."], synonyms: ["authentic", "genuine", "legitimate"], tag: "slang" },
+  "throw shade": { phonetic: "", meaning: "暗中嘲讽", examples: ["Was she throwing shade at me?", "He threw shade at his competitor during the interview."], synonyms: ["diss", "insult subtly", "mock"], tag: "slang" },
+  "dead": { phonetic: "/ded/", meaning: "（俚语）笑死了", examples: ["That meme has me dead.", "I'm dead — that's the funniest thing I've ever seen."], synonyms: ["dying of laughter", "hilarious", "can't stop laughing"], tag: "slang" },
+  "rent-free": { phonetic: "", meaning: "（某人/事）总在脑海里", examples: ["That song is living in my head rent-free.", "He's living rent-free in my mind."], synonyms: ["stuck in your head", "obsessed", "can't stop thinking about"], tag: "slang" },
+  "main character energy": { phonetic: "", meaning: "主角光环/气场", examples: ["She walked in with main character energy.", "Today I'm giving main character energy."], synonyms: ["confidence", "protagonist vibe", "star quality"], tag: "slang" },
 };
 
 
@@ -335,9 +367,22 @@ async function autoLookup(word) {
     const phonetic = britishPh?.text || entry.phonetic || anyPh?.text || '';
     const meanings = entry.meanings || [];
     const firstDef = meanings[0]?.definitions?.[0];
-    const meaning = firstDef?.definition || '';
+    const enMeaning = firstDef?.definition || '';
     const example = firstDef?.example || '';
     const synonyms = (firstDef?.synonyms || []).slice(0, 4);
+    
+    // Translate to Chinese via MyMemory API
+    let meaning = enMeaning;
+    if (enMeaning) {
+      try {
+        const trRes = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(enMeaning.slice(0, 200))}&langpair=en|zh-CN`);
+        const trData = await trRes.json();
+        const cnText = trData?.responseData?.translatedText;
+        if (cnText && cnText !== enMeaning && !cnText.includes('MYMEMORY')) {
+          meaning = cnText;
+        }
+      } catch {}
+    }
     
     return { phonetic, meaning, examples: example ? [example] : [], synonyms, tag: '' };
   } catch {
@@ -964,8 +1009,8 @@ const App = {
         const phonetic = w.phonetic || (dbEntry && dbEntry.phonetic) || '';
         const meaning = w.meaning || (dbEntry && dbEntry.meaning) || '';
         const tag = w.tag || (dbEntry && dbEntry.tag) || '';
-        const tagClass = tag === 'tech' ? 'rc-tag-tech' : tag === 'design' ? 'rc-tag-design' : tag ? 'rc-tag-daily' : '';
-        const tagLabel = tag === 'tech' ? 'Tech' : tag === 'design' ? 'Design' : tag ? 'Daily' : '';
+        const tagClass = tag === 'tech' ? 'rc-tag-tech' : tag === 'design' ? 'rc-tag-design' : tag === 'slang' ? 'rc-tag-slang' : tag ? 'rc-tag-daily' : '';
+        const tagLabel = tag === 'tech' ? 'Tech' : tag === 'design' ? 'Design' : tag === 'slang' ? 'Slang' : tag ? 'Daily' : '';
         return `<div class="recommend-card" onclick="App.navigate('vocabulary')">
           <div class="rc-left">
             <div class="rc-word-row">
@@ -999,8 +1044,8 @@ const App = {
     grid.innerHTML = words.map(w => {
       const isAdded = existingSet.has(w.key.toLowerCase());
       const isLearned = todayLearned.has(w.key.toLowerCase());
-      const tagClass = w.tag === 'tech' ? 'rc-tag-tech' : w.tag === 'design' ? 'rc-tag-design' : 'rc-tag-daily';
-      const tagLabel = w.tag === 'tech' ? 'Tech' : w.tag === 'design' ? 'Design' : 'Daily';
+      const tagClass = w.tag === 'tech' ? 'rc-tag-tech' : w.tag === 'design' ? 'rc-tag-design' : w.tag === 'slang' ? 'rc-tag-slang' : 'rc-tag-daily';
+      const tagLabel = w.tag === 'tech' ? 'Tech' : w.tag === 'design' ? 'Design' : w.tag === 'slang' ? 'Slang' : 'Daily';
       return `<div class="recommend-card ${isLearned ? 'rc-learned' : ''}" onclick="App.showWordDetail('${w.key.replace(/'/g, "\\'")}')">
         <button class="rc-dismiss" onclick="event.stopPropagation();App.masterWord('${w.key.replace(/'/g, "\\'")}')" title="I know this word — dismiss">×</button>
         ${isLearned ? '<span class="rc-learned-badge">Learned</span>' : ''}
@@ -2157,8 +2202,8 @@ const DailyModule = {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
         </button>
       </div>
-      ${meaning ? `<div class="qap-meaning">${meaning}</div>` : ''}
-      <textarea class="qap-input" id="qapInput" placeholder="Add a note (optional)...">${meaning ? '' : text}</textarea>
+      <div class="qap-meaning" id="qapMeaning">${meaning || '<span style="color:var(--text-muted)">Looking up...</span>'}</div>
+      <textarea class="qap-input" id="qapInput" placeholder="Add a note (optional)..."></textarea>
       <div class="qap-buttons">
         <button class="qap-btn-cancel" onclick="this.closest('.quick-add-popup').remove()">Cancel</button>
         <button class="qap-btn-confirm" onclick="DailyModule._confirmQuickAdd('${text.replace(/'/g, "\\'")}')">Confirm</button>
@@ -2174,6 +2219,21 @@ const DailyModule = {
     
     // Auto-speak
     speakWord(text);
+    
+    // Auto-lookup if no meaning in DB
+    if (!meaning) {
+      autoLookup(text).then(result => {
+        const el = document.getElementById('qapMeaning');
+        if (el && result && result.meaning) {
+          el.textContent = result.meaning;
+          // Store for confirm
+          popup.dataset.autoMeaning = result.meaning;
+          popup.dataset.autoPhonetic = result.phonetic || '';
+        } else if (el) {
+          el.innerHTML = '<span style="color:var(--text-muted)">No definition found</span>';
+        }
+      });
+    }
   },
   
   _confirmQuickAdd(text) {
