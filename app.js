@@ -676,10 +676,28 @@ const App = {
   updateGreeting() {
     const h = new Date().getHours();
     let greeting = 'Good evening!';
-    if (h < 12) greeting = 'Good morning!';
+    if (h < 6) greeting = 'Still up? 🦉';
+    else if (h < 12) greeting = 'Good morning!';
     else if (h < 18) greeting = 'Good afternoon!';
     document.getElementById('greeting').textContent = greeting;
-    // Load avatar
+    
+    // Motivational sub-greeting
+    const wordCount = (this.data.words || []).length;
+    const subs = wordCount > 0 ? [
+      `You've collected ${wordCount} words so far. Keep going! ✨`,
+      `Every word is a tiny victory. ${wordCount} and counting.`,
+      `${wordCount} words in your pocket. What's next?`,
+      `Small steps, big fluency. You have ${wordCount} words already.`,
+      `Your future self will thank you. ${wordCount} words strong.`,
+    ] : [
+      'Ready to learn something new today?',
+      'One word a day keeps the translator away.',
+      'Start with one word. Just one. 🌱',
+      'The best time to start was yesterday. The next best time is now.',
+    ];
+    const subEl = document.getElementById('subGreeting');
+    if (subEl) subEl.textContent = subs[Math.floor(Math.random() * subs.length)];
+    
     this._loadAvatar();
   },
 
