@@ -1409,8 +1409,8 @@ const VocabModule = {
       const isDue = !w.nextReview || w.nextReview <= todayStr();
       const dbEntry = WORD_DB[w.word.toLowerCase()];
       const tag = w.tag || (dbEntry && dbEntry.tag) || '';
-      const tagLabels = { tech: 'Tech', design: 'Design', daily: 'Daily', slang: 'Slang', mine: 'My Word' };
-      const tagHtml = tag ? `<span class="vocab-tag vocab-tag-${tag}">${tagLabels[tag] || tag}</span>` : '';
+      const tagLabels = { tech: 'Tech', design: 'Design', daily: 'Daily', slang: 'Slang' };
+      const tagHtml = (tag && tag !== 'mine') ? `<span class="vocab-tag vocab-tag-${tag}">${tagLabels[tag] || tag}</span>` : '';
       const phonetic = w.phonetic || (dbEntry && dbEntry.phonetic) || '';
       const examples = w.examples || (dbEntry && dbEntry.examples) || [];
       const synonyms = w.synonyms || (dbEntry && dbEntry.synonyms) || [];
