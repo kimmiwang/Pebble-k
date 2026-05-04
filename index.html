@@ -69,29 +69,27 @@
         <div>
           <h1 class="greeting" id="greeting">Good morning!</h1>
           <p class="sub-greeting" id="subGreeting">Ready to learn something new today?</p>
-        </div>
-        <div class="header-right">
-          <div class="focus-timer" id="focusTimer">
-            <div class="ft-ring" id="ftRing">
-              <svg viewBox="0 0 36 36" width="44" height="44">
-                <circle cx="18" cy="18" r="16" fill="none" stroke="#e7e5e4" stroke-width="2.5"/>
-                <circle cx="18" cy="18" r="16" fill="none" stroke="#e8590c" stroke-width="2.5"
-                  stroke-dasharray="100.53" stroke-dashoffset="100.53" stroke-linecap="round"
-                  transform="rotate(-90 18 18)" id="ftProgress"/>
-              </svg>
-              <span class="ft-time" id="ftTime">30:00</span>
-            </div>
-            <div class="ft-info">
-              <span class="ft-label" id="ftLabel">DAILY FOCUS</span>
-              <span class="ft-sub" id="ftSub">30 min goal</span>
-            </div>
-            <button class="ft-btn" id="ftBtn" onclick="FocusTimer.toggle()">START</button>
-          </div>
           <div class="streak-badge" id="streakBadge">
             <span class="streak-fire">&#x1F525;</span>
             <span class="streak-num" id="streakNum">0</span>
             <span class="streak-label">day streak</span>
           </div>
+        </div>
+        <div class="focus-timer" id="focusTimer">
+          <div class="ft-ring" id="ftRing">
+            <svg viewBox="0 0 36 36" width="44" height="44">
+              <circle cx="18" cy="18" r="16" fill="none" stroke="#e7e5e4" stroke-width="2.5"/>
+              <circle cx="18" cy="18" r="16" fill="none" stroke="#e8590c" stroke-width="2.5"
+                stroke-dasharray="100.53" stroke-dashoffset="100.53" stroke-linecap="round"
+                transform="rotate(-90 18 18)" id="ftProgress"/>
+            </svg>
+            <span class="ft-time" id="ftTime">30:00</span>
+          </div>
+          <div class="ft-info">
+            <span class="ft-label" id="ftLabel">DAILY FOCUS</span>
+            <span class="ft-sub" id="ftSub">30 min goal</span>
+          </div>
+          <button class="ft-btn" id="ftBtn" onclick="FocusTimer.toggle()">START</button>
         </div>
       </div>
 

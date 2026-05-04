@@ -184,13 +184,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   max-width: 400px;
 }
 
-/* ══════ Header Right ══════ */
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 /* ══════ Focus Timer ══════ */
 .focus-timer {
   display: flex;
@@ -292,16 +285,15 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 
 /* ══════ Streak Badge ══════ */
 .streak-badge {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: var(--bg-card);
-  padding: 10px 20px;
-  border-radius: 40px;
-  border: 1px solid var(--border);
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
 }
-.streak-fire { font-size: 20px; }
-.streak-num { font-size: 22px; color: var(--accent); font-weight: 800; letter-spacing: -1px; font-family: var(--font-serif); }
+.streak-fire { font-size: 16px; }
+.streak-num { font-size: 14px; color: var(--accent); font-weight: 700; }
 .streak-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ══════ Dashboard Grid ══════ */
@@ -923,9 +915,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 /* ══════ Check-in ══════ */
 .checkin-top { display: flex; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
 .checkin-level-card {
-  background: var(--text);
-  color: #fff;
-  border: none;
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 32px;
   display: flex; align-items: center; gap: 24px;
@@ -933,16 +925,17 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 }
 .level-circle {
   width: 72px; height: 72px; border-radius: 50%;
-  background: rgba(255,255,255,0.15);
+  background: var(--bg);
+  border: 2px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.level-num { font-family: var(--font-sans); font-size: 32px; font-weight: 700; color: #fff; line-height: 1; }
+.level-num { font-family: var(--font-sans); font-size: 32px; font-weight: 700; color: var(--text); line-height: 1; }
 .level-info { flex: 1; }
-.level-title { font-weight: 700; font-size: 18px; display: block; margin-bottom: 10px; color: #fff; }
-.xp-bar { height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+.level-title { font-weight: 700; font-size: 18px; display: block; margin-bottom: 10px; color: var(--text); }
+.xp-bar { height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
 .xp-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.5s ease; }
-.xp-text { font-size: 12px; color: rgba(255,255,255,0.6); }
+.xp-text { font-size: 12px; color: var(--text-muted); }
 .checkin-stats { display: flex; gap: 12px; flex: 1; min-width: 300px; }
 .stat-item {
   flex: 1;
