@@ -155,7 +155,165 @@ const WORD_DB = {
   "go the extra mile": { phonetic: "", meaning: "付出额外努力", examples: ["She always goes the extra mile for her clients.", "Going the extra mile sets you apart from competitors."], synonyms: ["make extra effort", "exceed expectations", "do more"], tag: "daily" },
   "rule of thumb": { phonetic: "", meaning: "经验法则，大致规则", examples: ["As a rule of thumb, keep your functions under 20 lines.", "A good rule of thumb is to save 20% of your income."], synonyms: ["guideline", "general principle", "rough estimate"], tag: "tech" },
   "at the end of the day": { phonetic: "", meaning: "归根结底，最终", examples: ["At the end of the day, user experience is what matters most.", "At the end of the day, it's your decision."], synonyms: ["ultimately", "in the end", "when all is said and done"], tag: "daily" },
+
+  // ═══ EXPANDED DAILY LIFE — Conversations & Social ═══
+  "awkward": { phonetic: "/ˈɔːkwəd/", meaning: "尴尬的，笨拙的", examples: ["There was an awkward silence after he said that.", "I felt awkward meeting her parents for the first time."], synonyms: ["uncomfortable", "clumsy", "embarrassing"], tag: "daily" },
+  "grateful": { phonetic: "/ˈɡreɪtfʊl/", meaning: "感激的", examples: ["I'm really grateful for your help.", "She was grateful to have such supportive friends."], synonyms: ["thankful", "appreciative", "obliged"], tag: "daily" },
+  "genuine": { phonetic: "/ˈdʒenjuɪn/", meaning: "真正的，真诚的", examples: ["He seems like a genuine person.", "That was a genuine smile, not a fake one."], synonyms: ["authentic", "real", "sincere"], tag: "daily" },
+  "hilarious": { phonetic: "/hɪˈleəriəs/", meaning: "极其搞笑的", examples: ["That comedy show was absolutely hilarious.", "She told a hilarious story about her cat."], synonyms: ["very funny", "hysterical", "amusing"], tag: "daily" },
+  "stunning": { phonetic: "/ˈstʌnɪŋ/", meaning: "令人惊叹的，极漂亮的", examples: ["The view from the top was stunning.", "She looked stunning in that dress."], synonyms: ["gorgeous", "breathtaking", "beautiful"], tag: "daily" },
+  "hang out": { phonetic: "", meaning: "闲逛，一起玩", examples: ["Let's hang out this weekend.", "We usually hang out at the coffee shop after work."], synonyms: ["spend time", "chill", "socialize"], tag: "daily" },
+  "figure out": { phonetic: "", meaning: "弄明白，想出", examples: ["I can't figure out how to use this app.", "We need to figure out a solution quickly."], synonyms: ["solve", "work out", "understand"], tag: "daily" },
+  "catch up": { phonetic: "", meaning: "叙旧，赶上进度", examples: ["Let's catch up over coffee sometime.", "I need to catch up on my emails."], synonyms: ["reconnect", "get up to speed", "update"], tag: "daily" },
+  "vibe": { phonetic: "/vaɪb/", meaning: "氛围，感觉", examples: ["This café has a really nice vibe.", "I got a weird vibe from that place."], synonyms: ["atmosphere", "feeling", "energy"], tag: "daily" },
+  "chill": { phonetic: "/tʃɪl/", meaning: "放松，冷静的", examples: ["Let's just chill at home tonight.", "He's a really chill guy."], synonyms: ["relax", "laid-back", "calm"], tag: "daily" },
+  "ghosting": { phonetic: "/ˈɡəʊstɪŋ/", meaning: "突然不回消息（社交中）", examples: ["She started ghosting me after the third date.", "Ghosting is really hurtful behavior."], synonyms: ["ignoring", "disappearing", "cutting off"], tag: "daily" },
+  "cringe": { phonetic: "/krɪndʒ/", meaning: "让人尴尬的，社死", examples: ["That joke was so cringe.", "I cringe every time I think about what I said."], synonyms: ["embarrassing", "awkward", "uncomfortable"], tag: "daily" },
+  "lowkey": { phonetic: "/ˌləʊˈkiː/", meaning: "暗地里，有一点", examples: ["I lowkey want to skip the party.", "She's lowkey the smartest person in the room."], synonyms: ["secretly", "quietly", "subtly"], tag: "daily" },
+  "salty": { phonetic: "/ˈsɔːlti/", meaning: "（俚语）生气的，不爽的", examples: ["He's still salty about losing the game.", "Don't be so salty — it was just a joke."], synonyms: ["bitter", "upset", "annoyed"], tag: "daily" },
+  "FOMO": { phonetic: "/ˈfəʊməʊ/", meaning: "错过恐惧症", examples: ["I have serious FOMO when I see everyone at the party.", "Social media gives me FOMO."], synonyms: ["fear of missing out", "anxiety", "envy"], tag: "daily" },
+  "subtle": { phonetic: "/ˈsʌtl/", meaning: "微妙的，不明显的", examples: ["There's a subtle difference between the two colors.", "He gave a subtle hint that he was bored."], synonyms: ["understated", "delicate", "slight"], tag: "daily" },
+  "toxic": { phonetic: "/ˈtɒksɪk/", meaning: "有毒的，（关系）不健康的", examples: ["That was a really toxic work environment.", "She finally left the toxic relationship."], synonyms: ["harmful", "unhealthy", "poisonous"], tag: "daily" },
+  "boundaries": { phonetic: "/ˈbaʊndəriz/", meaning: "界限，边界", examples: ["It's important to set boundaries at work.", "She needs to respect my boundaries."], synonyms: ["limits", "borders", "lines"], tag: "daily" },
+  "overwhelmed": { phonetic: "/ˌəʊvəˈwelmd/", meaning: "不堪重负的，被压垮的", examples: ["I feel overwhelmed by all the deadlines.", "She was overwhelmed with emotion."], synonyms: ["swamped", "stressed", "overloaded"], tag: "daily" },
+  "literally": { phonetic: "/ˈlɪtərəli/", meaning: "字面上地；（口语）简直", examples: ["I literally just walked in the door.", "I'm literally dying of laughter."], synonyms: ["actually", "truly", "really"], tag: "daily" },
+  "random": { phonetic: "/ˈrændəm/", meaning: "随机的，莫名其妙的", examples: ["That was such a random thing to say.", "I got a random text from an unknown number."], synonyms: ["arbitrary", "unexpected", "haphazard"], tag: "daily" },
+  "iconic": { phonetic: "/aɪˈkɒnɪk/", meaning: "标志性的，经典的", examples: ["That scene in the movie is absolutely iconic.", "She has an iconic fashion style."], synonyms: ["legendary", "classic", "symbolic"], tag: "daily" },
+  "wholesome": { phonetic: "/ˈhəʊlsəm/", meaning: "温馨的，正能量的", examples: ["That video of the dog was so wholesome.", "They have a really wholesome relationship."], synonyms: ["heartwarming", "sweet", "pure"], tag: "daily" },
+  "relatable": { phonetic: "/rɪˈleɪtəbl/", meaning: "有共鸣的", examples: ["Her comedy is so relatable.", "That meme is really relatable."], synonyms: ["understandable", "identifiable", "familiar"], tag: "daily" },
+  "savage": { phonetic: "/ˈsævɪdʒ/", meaning: "（俚语）犀利的，毒舌的", examples: ["That comeback was absolutely savage.", "She's savage — she doesn't hold back."], synonyms: ["brutal", "fierce", "ruthless"], tag: "daily" },
+  "flex": { phonetic: "/fleks/", meaning: "炫耀", examples: ["He's always flexing his new car on Instagram.", "That's a weird flex but okay."], synonyms: ["show off", "brag", "flaunt"], tag: "daily" },
+  "sus": { phonetic: "/sʌs/", meaning: "可疑的", examples: ["That excuse sounds really sus.", "He was acting sus the whole time."], synonyms: ["suspicious", "shady", "questionable"], tag: "daily" },
+  "aesthetic": { phonetic: "/esˈθetɪk/", meaning: "美学的，有美感的", examples: ["I love the aesthetic of that café.", "Her Instagram has such a nice aesthetic."], synonyms: ["visual style", "look", "appearance"], tag: "daily" },
+  "cozy": { phonetic: "/ˈkəʊzi/", meaning: "温馨舒适的", examples: ["This blanket is so cozy.", "We found a cozy little restaurant."], synonyms: ["comfortable", "snug", "warm"], tag: "daily" },
+  "spontaneous": { phonetic: "/spɒnˈteɪniəs/", meaning: "自发的，随性的", examples: ["Let's be spontaneous and go on a road trip.", "She's a very spontaneous person."], synonyms: ["impulsive", "unplanned", "impromptu"], tag: "daily" },
+  "overthink": { phonetic: "/ˌəʊvəˈθɪŋk/", meaning: "过度思考", examples: ["Stop overthinking it and just go for it.", "I tend to overthink everything."], synonyms: ["overanalyze", "worry", "ruminate"], tag: "daily" },
+  "petty": { phonetic: "/ˈpeti/", meaning: "小气的，斤斤计较的", examples: ["Don't be so petty about who pays.", "That was a petty argument."], synonyms: ["trivial", "small-minded", "minor"], tag: "daily" },
+  "legit": { phonetic: "/lɪˈdʒɪt/", meaning: "合法的，真实的", examples: ["Is this website legit?", "That was legit the best meal I've ever had."], synonyms: ["legitimate", "genuine", "real"], tag: "daily" },
+  "shady": { phonetic: "/ˈʃeɪdi/", meaning: "可疑的，不正当的", examples: ["That deal sounds kind of shady.", "He's been acting shady lately."], synonyms: ["suspicious", "dubious", "questionable"], tag: "daily" },
+  "down-to-earth": { phonetic: "", meaning: "脚踏实地的，接地气的", examples: ["She's famous but really down-to-earth.", "I like people who are down-to-earth."], synonyms: ["practical", "humble", "grounded"], tag: "daily" },
+  "burnt out": { phonetic: "", meaning: "精疲力竭的", examples: ["I'm completely burnt out from work.", "Many employees feel burnt out after the pandemic."], synonyms: ["exhausted", "drained", "worn out"], tag: "daily" },
+  "side hustle": { phonetic: "", meaning: "副业", examples: ["She has a side hustle selling handmade jewelry.", "Many people need a side hustle to make ends meet."], synonyms: ["part-time job", "gig", "freelance work"], tag: "daily" },
+  "adulting": { phonetic: "/ˈædʌltɪŋ/", meaning: "做成人该做的事", examples: ["Paying bills is the worst part of adulting.", "I'm not good at adulting."], synonyms: ["being responsible", "growing up", "being mature"], tag: "daily" },
+  "YOLO": { phonetic: "/ˈjəʊləʊ/", meaning: "人生只有一次", examples: ["I booked the trip. YOLO!", "YOLO is not a financial strategy."], synonyms: ["you only live once", "carpe diem", "seize the day"], tag: "daily" },
+  "no-brainer": { phonetic: "", meaning: "显而易见的选择", examples: ["Accepting that job offer was a no-brainer.", "It's a no-brainer — just do it."], synonyms: ["obvious choice", "easy decision", "clear call"], tag: "daily" },
+  "dealbreaker": { phonetic: "/ˈdiːlbreɪkə/", meaning: "不可接受的条件", examples: ["Smoking is a dealbreaker for me.", "That salary is a dealbreaker."], synonyms: ["non-negotiable", "disqualifier", "red flag"], tag: "daily" },
+
+  // ═══ EXPANDED DAILY — Food & Travel ═══
+  "foodie": { phonetic: "/ˈfuːdi/", meaning: "美食爱好者", examples: ["She's a real foodie — always trying new restaurants.", "This city is a paradise for foodies."], synonyms: ["food lover", "gourmet", "epicure"], tag: "daily" },
+  "mouthwatering": { phonetic: "/ˈmaʊθwɔːtərɪŋ/", meaning: "令人垂涎的", examples: ["The dessert looked absolutely mouthwatering.", "She posted a mouthwatering photo of her dinner."], synonyms: ["delicious-looking", "appetizing", "tempting"], tag: "daily" },
+  "bland": { phonetic: "/blænd/", meaning: "淡而无味的", examples: ["The soup was a bit bland — it needed more salt.", "Hospital food is notoriously bland."], synonyms: ["tasteless", "plain", "flavorless"], tag: "daily" },
+  "jet lag": { phonetic: "/ˈdʒet læɡ/", meaning: "时差反应", examples: ["I always get terrible jet lag flying to Europe.", "It took me three days to recover from jet lag."], synonyms: ["time zone fatigue", "travel fatigue"], tag: "daily" },
+  "itinerary": { phonetic: "/aɪˈtɪnərəri/", meaning: "行程安排", examples: ["What's our itinerary for tomorrow?", "She planned a detailed itinerary for the trip."], synonyms: ["schedule", "plan", "route"], tag: "daily" },
+  "bucket list": { phonetic: "", meaning: "人生愿望清单", examples: ["Visiting Japan is on my bucket list.", "I'm slowly checking things off my bucket list."], synonyms: ["wish list", "life goals", "dream list"], tag: "daily" },
+  "wanderlust": { phonetic: "/ˈwɒndəlʌst/", meaning: "旅行的渴望", examples: ["I have serious wanderlust — I want to travel everywhere.", "Her Instagram feed is full of wanderlust."], synonyms: ["travel bug", "desire to travel", "restlessness"], tag: "daily" },
+  "souvenir": { phonetic: "/ˌsuːvəˈnɪə/", meaning: "纪念品", examples: ["I bought a souvenir for my mom.", "The best souvenirs are the memories you make."], synonyms: ["memento", "keepsake", "token"], tag: "daily" },
+
+  // ═══ EXPANDED DAILY — Emotions & Mindset ═══
+  "anxious": { phonetic: "/ˈæŋkʃəs/", meaning: "焦虑的", examples: ["I feel anxious about the interview tomorrow.", "Don't be so anxious — everything will be fine."], synonyms: ["worried", "nervous", "uneasy"], tag: "daily" },
+  "motivated": { phonetic: "/ˈməʊtɪveɪtɪd/", meaning: "有动力的", examples: ["I feel really motivated after watching that video.", "She's highly motivated to succeed."], synonyms: ["driven", "inspired", "determined"], tag: "daily" },
+  "insecure": { phonetic: "/ˌɪnsɪˈkjʊə/", meaning: "没有安全感的，不自信的", examples: ["He feels insecure about his English.", "Social media makes people feel insecure."], synonyms: ["self-conscious", "uncertain", "unconfident"], tag: "daily" },
+  "mindful": { phonetic: "/ˈmaɪndfʊl/", meaning: "正念的，留心的", examples: ["Try to be more mindful of your spending.", "Mindful meditation can reduce stress."], synonyms: ["aware", "conscious", "attentive"], tag: "daily" },
+  "nostalgic": { phonetic: "/nɒˈstældʒɪk/", meaning: "怀旧的", examples: ["This song makes me feel nostalgic.", "I'm feeling nostalgic for my college days."], synonyms: ["sentimental", "wistful", "longing"], tag: "daily" },
+  "frustrated": { phonetic: "/frʌˈstreɪtɪd/", meaning: "沮丧的，受挫的", examples: ["I'm so frustrated with this bug.", "He got frustrated and gave up."], synonyms: ["annoyed", "irritated", "disappointed"], tag: "daily" },
+  "grateful": { phonetic: "/ˈɡreɪtfʊl/", meaning: "感恩的", examples: ["I'm grateful for everything you've done.", "Keep a grateful journal."], synonyms: ["thankful", "appreciative"], tag: "daily" },
+  "vulnerable": { phonetic: "/ˈvʌlnərəbl/", meaning: "脆弱的，易受伤的", examples: ["It takes courage to be vulnerable.", "Children are especially vulnerable."], synonyms: ["exposed", "sensitive", "defenseless"], tag: "daily" },
+  "empathy": { phonetic: "/ˈempəθi/", meaning: "共情，同理心", examples: ["She has a lot of empathy for others.", "Empathy is an important leadership skill."], synonyms: ["compassion", "understanding", "sensitivity"], tag: "daily" },
+
+  // ═══ EXPANDED TECH & WORK — Common workplace ═══
+  "deadline": { phonetic: "/ˈdedlaɪn/", meaning: "截止日期", examples: ["The deadline is next Friday.", "We need to meet the deadline no matter what."], synonyms: ["due date", "time limit", "cutoff"], tag: "tech" },
+  "prioritize": { phonetic: "/praɪˈɒrɪtaɪz/", meaning: "排优先级", examples: ["We need to prioritize the most critical bugs.", "Learn to prioritize your tasks."], synonyms: ["rank", "order", "focus on"], tag: "tech" },
+  "bottleneck": { phonetic: "/ˈbɒtlnek/", meaning: "瓶颈", examples: ["The API is the bottleneck in our system.", "We need to identify the bottleneck in the process."], synonyms: ["obstacle", "constraint", "chokepoint"], tag: "tech" },
+  "workaround": { phonetic: "/ˈwɜːkəraʊnd/", meaning: "变通方法", examples: ["We found a workaround for the bug.", "It's not ideal, but it's a workaround."], synonyms: ["temporary fix", "hack", "alternative"], tag: "tech" },
+  "blocker": { phonetic: "/ˈblɒkə/", meaning: "阻碍因素", examples: ["This bug is a blocker for the release.", "What's the main blocker right now?"], synonyms: ["obstacle", "impediment", "barrier"], tag: "tech" },
+  "bandwidth": { phonetic: "/ˈbændwɪdθ/", meaning: "带宽；（俚语）精力/时间", examples: ["I don't have the bandwidth to take on another project.", "We need more bandwidth on the server."], synonyms: ["capacity", "resources", "availability"], tag: "tech" },
+  "leverage": { phonetic: "/ˈlevərɪdʒ/", meaning: "利用，借助", examples: ["We can leverage this technology to improve efficiency.", "She leveraged her connections to get the job."], synonyms: ["utilize", "exploit", "capitalize on"], tag: "tech" },
+  "streamline": { phonetic: "/ˈstriːmlaɪn/", meaning: "简化，精简流程", examples: ["We need to streamline our onboarding process.", "The new tool will streamline our workflow."], synonyms: ["simplify", "optimize", "make efficient"], tag: "tech" },
+  "scalable": { phonetic: "/ˈskeɪləbl/", meaning: "可扩展的", examples: ["We need a more scalable architecture.", "Is this solution scalable?"], synonyms: ["expandable", "extensible", "flexible"], tag: "tech" },
+  "onboard": { phonetic: "/ˈɒnbɔːd/", meaning: "入职培训，引导使用", examples: ["We need to onboard the new team member.", "The app has a great onboarding experience."], synonyms: ["orient", "train", "introduce"], tag: "tech" },
+  "sync": { phonetic: "/sɪŋk/", meaning: "同步", examples: ["Let's sync up after lunch.", "Make sure your files are synced to the cloud."], synonyms: ["synchronize", "align", "coordinate"], tag: "tech" },
+  "heads-up": { phonetic: "", meaning: "预先提醒", examples: ["Just a heads-up — the meeting has been moved to 3 PM.", "Thanks for the heads-up."], synonyms: ["warning", "notice", "alert"], tag: "tech" },
+  "follow up": { phonetic: "", meaning: "跟进", examples: ["I'll follow up with the client tomorrow.", "Did you follow up on that issue?"], synonyms: ["check in", "revisit", "pursue"], tag: "tech" },
+  "ETA": { phonetic: "/ˌiːtiːˈeɪ/", meaning: "预计到达/完成时间", examples: ["What's the ETA on that feature?", "My ETA is around 6 PM."], synonyms: ["estimated time", "timeline", "deadline"], tag: "tech" },
+  "EOD": { phonetic: "/ˌiːəʊˈdiː/", meaning: "今天结束前", examples: ["Can you send me the report by EOD?", "I'll have it done by EOD."], synonyms: ["end of day", "by close of business", "today"], tag: "tech" },
+  "ASAP": { phonetic: "/ˌeɪesˌeɪˈpiː/", meaning: "尽快", examples: ["We need this fixed ASAP.", "Please reply ASAP."], synonyms: ["as soon as possible", "immediately", "urgently"], tag: "tech" },
+  "FYI": { phonetic: "/ˌefwaɪˈaɪ/", meaning: "供参考", examples: ["FYI, the meeting room has changed.", "Just FYI, I'll be out tomorrow."], synonyms: ["for your information", "just so you know", "heads up"], tag: "tech" },
+  "TL;DR": { phonetic: "", meaning: "太长不看（摘要版）", examples: ["TL;DR: we need to redesign the homepage.", "Can you give me the TL;DR?"], synonyms: ["summary", "in short", "bottom line"], tag: "tech" },
+  "scope": { phonetic: "/skəʊp/", meaning: "范围", examples: ["That's outside the scope of this project.", "We need to define the scope first."], synonyms: ["range", "extent", "boundaries"], tag: "tech" },
+  "scope creep": { phonetic: "", meaning: "需求蔓延", examples: ["Scope creep is killing our timeline.", "We need to prevent scope creep."], synonyms: ["feature creep", "requirement expansion"], tag: "tech" },
+  "trade-off": { phonetic: "", meaning: "权衡取舍", examples: ["There's always a trade-off between speed and quality.", "We need to discuss the trade-offs."], synonyms: ["compromise", "balance", "exchange"], tag: "tech" },
+  "pain point": { phonetic: "", meaning: "痛点", examples: ["What are the main pain points for our users?", "This feature addresses a real pain point."], synonyms: ["problem", "issue", "frustration"], tag: "tech" },
+  "touch base": { phonetic: "", meaning: "简单沟通一下", examples: ["Let's touch base next week.", "I just wanted to touch base on the project status."], synonyms: ["check in", "connect", "catch up"], tag: "tech" },
+  "takeaway": { phonetic: "/ˈteɪkəweɪ/", meaning: "要点，收获", examples: ["What's the key takeaway from this meeting?", "My main takeaway is that we need to move faster."], synonyms: ["lesson", "insight", "conclusion"], tag: "tech" },
+  "actionable": { phonetic: "/ˈækʃənəbl/", meaning: "可执行的", examples: ["We need actionable feedback, not vague suggestions.", "Make sure every task is actionable."], synonyms: ["practical", "doable", "implementable"], tag: "tech" },
+  "deliverable": { phonetic: "/dɪˈlɪvərəbl/", meaning: "交付物", examples: ["What are the deliverables for this sprint?", "The final deliverable is due on Friday."], synonyms: ["output", "product", "result"], tag: "tech" },
+  "stakeholder": { phonetic: "/ˈsteɪkhəʊldə/", meaning: "利益相关方", examples: ["We need to get buy-in from all stakeholders.", "The stakeholders approved the design."], synonyms: ["interested party", "participant", "investor"], tag: "tech" },
+  "KPI": { phonetic: "/ˌkeɪpiːˈaɪ/", meaning: "关键绩效指标", examples: ["What KPIs are we tracking this quarter?", "Our main KPI is user retention."], synonyms: ["key performance indicator", "metric", "target"], tag: "tech" },
+  "ROI": { phonetic: "/ˌɑːrəʊˈaɪ/", meaning: "投资回报率", examples: ["What's the ROI on this campaign?", "We need to prove the ROI before getting more budget."], synonyms: ["return on investment", "payback", "profit"], tag: "tech" },
+  "pivot": { phonetic: "/ˈpɪvət/", meaning: "转型，调整方向", examples: ["The company decided to pivot to mobile.", "Sometimes you need to pivot when things aren't working."], synonyms: ["shift", "change direction", "adapt"], tag: "tech" },
+  "disrupt": { phonetic: "/dɪsˈrʌpt/", meaning: "颠覆", examples: ["Uber disrupted the entire taxi industry.", "AI is disrupting traditional workflows."], synonyms: ["revolutionize", "transform", "shake up"], tag: "tech" },
+  "cutting-edge": { phonetic: "", meaning: "前沿的，尖端的", examples: ["They're using cutting-edge technology.", "It's a cutting-edge research lab."], synonyms: ["state-of-the-art", "advanced", "innovative"], tag: "tech" },
+  "hands-on": { phonetic: "", meaning: "动手实践的", examples: ["I prefer a hands-on approach to learning.", "She's a very hands-on manager."], synonyms: ["practical", "involved", "interactive"], tag: "tech" },
+  "deep dive": { phonetic: "", meaning: "深入研究", examples: ["Let's do a deep dive into the analytics.", "This article is a deep dive into machine learning."], synonyms: ["thorough analysis", "detailed look", "in-depth study"], tag: "tech" },
+  "low-hanging fruit": { phonetic: "", meaning: "容易实现的成果", examples: ["Let's start with the low-hanging fruit.", "These quick wins are low-hanging fruit."], synonyms: ["easy wins", "quick fixes", "simple tasks"], tag: "tech" },
+  "boilerplate": { phonetic: "/ˈbɔɪləpleɪt/", meaning: "样板代码/模板", examples: ["This is just boilerplate code, nothing custom.", "We can use the boilerplate to get started quickly."], synonyms: ["template", "standard text", "generic code"], tag: "tech" },
+  "edge case": { phonetic: "", meaning: "边界情况", examples: ["We need to handle this edge case.", "Don't forget about edge cases in your testing."], synonyms: ["corner case", "boundary condition", "unusual scenario"], tag: "tech" },
+  "ship": { phonetic: "/ʃɪp/", meaning: "发布，交付（产品）", examples: ["We need to ship this feature by Friday.", "Move fast and ship things."], synonyms: ["release", "launch", "deliver"], tag: "tech" },
+  "dogfood": { phonetic: "/ˈdɒɡfuːd/", meaning: "自己使用自己的产品", examples: ["We should dogfood our own app before releasing.", "Dogfooding helps you find real issues."], synonyms: ["eat your own cooking", "self-test", "use internally"], tag: "tech" },
+
+  // ═══ EXPANDED DESIGN — UI/UX & Visual ═══
+  "grid": { phonetic: "/ɡrɪd/", meaning: "网格", examples: ["The layout is based on a 12-column grid.", "Use the grid to align your elements."], synonyms: ["layout system", "columns", "framework"], tag: "design" },
+  "responsive": { phonetic: "/rɪˈspɒnsɪv/", meaning: "响应式的", examples: ["The website needs to be responsive on mobile.", "Responsive design adapts to different screen sizes."], synonyms: ["adaptive", "flexible", "mobile-friendly"], tag: "design" },
+  "contrast": { phonetic: "/ˈkɒntrɑːst/", meaning: "对比度", examples: ["The text needs more contrast against the background.", "Good contrast makes content more readable."], synonyms: ["difference", "distinction", "variation"], tag: "design" },
+  "alignment": { phonetic: "/əˈlaɪnmənt/", meaning: "对齐", examples: ["Check the alignment of these buttons.", "Good alignment creates a sense of order."], synonyms: ["positioning", "arrangement", "lineup"], tag: "design" },
+  "padding": { phonetic: "/ˈpædɪŋ/", meaning: "内边距", examples: ["Add more padding around the text.", "The padding is too tight on mobile."], synonyms: ["spacing", "margin", "buffer"], tag: "design" },
+  "serif": { phonetic: "/ˈserɪf/", meaning: "衬线（字体）", examples: ["Serif fonts are more traditional and formal.", "Times New Roman is a classic serif font."], synonyms: ["decorative stroke", "typeface detail"], tag: "design" },
+  "sans-serif": { phonetic: "/ˌsænˈserɪf/", meaning: "无衬线（字体）", examples: ["Most modern apps use sans-serif fonts.", "Helvetica is a famous sans-serif font."], synonyms: ["clean font", "modern typeface"], tag: "design" },
+  "hover state": { phonetic: "", meaning: "悬停状态", examples: ["The button needs a hover state.", "Don't forget to design the hover state."], synonyms: ["mouseover", "interactive state", "rollover"], tag: "design" },
+  "above the fold": { phonetic: "", meaning: "首屏（不需滚动就能看到的区域）", examples: ["Put the CTA above the fold.", "The key message should be above the fold."], synonyms: ["top of page", "visible area", "first screen"], tag: "design" },
+  "CTA": { phonetic: "/ˌsiːtiːˈeɪ/", meaning: "行动号召按钮", examples: ["The CTA should be more prominent.", "What's the primary CTA on this page?"], synonyms: ["call to action", "button", "prompt"], tag: "design" },
+  "wireframe": { phonetic: "/ˈwaɪəfreɪm/", meaning: "线框图", examples: ["Let me show you the wireframe first.", "We need to finalize the wireframes before design."], synonyms: ["sketch", "blueprint", "layout draft"], tag: "design" },
+  "moodboard": { phonetic: "/ˈmuːdbɔːd/", meaning: "情绪板", examples: ["I created a moodboard for the new branding.", "The moodboard captures the visual direction."], synonyms: ["inspiration board", "visual reference", "collage"], tag: "design" },
+  "drop shadow": { phonetic: "", meaning: "投影效果", examples: ["Add a subtle drop shadow to the card.", "Don't overuse drop shadows."], synonyms: ["shadow", "depth effect", "elevation"], tag: "design" },
+  "opacity": { phonetic: "/əʊˈpæsəti/", meaning: "透明度", examples: ["Set the overlay opacity to 50%.", "Reduce the opacity of the background image."], synonyms: ["transparency", "alpha", "visibility"], tag: "design" },
+  "gradient": { phonetic: "/ˈɡreɪdiənt/", meaning: "渐变", examples: ["Use a subtle gradient for the background.", "Gradients are trendy again in design."], synonyms: ["color transition", "blend", "fade"], tag: "design" },
+  "icon set": { phonetic: "", meaning: "图标集", examples: ["We need a consistent icon set for the app.", "I'm using the Feather icon set."], synonyms: ["icon library", "icon pack", "symbol set"], tag: "design" },
+  "dark mode": { phonetic: "", meaning: "暗色模式", examples: ["Does the app support dark mode?", "Dark mode is easier on the eyes at night."], synonyms: ["night mode", "dark theme", "low-light mode"], tag: "design" },
+  "pixel-perfect": { phonetic: "", meaning: "像素级精确", examples: ["The implementation needs to be pixel-perfect.", "She's a pixel-perfect designer."], synonyms: ["precise", "exact", "meticulous"], tag: "design" },
+  "breakpoint": { phonetic: "/ˈbreɪkpɔɪnt/", meaning: "断点（响应式设计）", examples: ["We have breakpoints at 768px and 1024px.", "The layout breaks at this breakpoint."], synonyms: ["threshold", "screen size", "media query"], tag: "design" },
+  "handoff": { phonetic: "/ˈhændɒf/", meaning: "设计交付（给开发）", examples: ["The design handoff is scheduled for Monday.", "Use Figma for seamless handoff."], synonyms: ["delivery", "transfer", "pass-off"], tag: "design" },
+  "red line": { phonetic: "", meaning: "标注（设计稿上的尺寸标注）", examples: ["I added red lines to the spec.", "Make sure the red lines are accurate."], synonyms: ["annotation", "specification", "markup"], tag: "design" },
+  "brand guidelines": { phonetic: "", meaning: "品牌规范", examples: ["Please follow the brand guidelines.", "The brand guidelines specify the exact colors to use."], synonyms: ["style guide", "brand standards", "visual identity"], tag: "design" },
+  "A/B test": { phonetic: "", meaning: "A/B测试", examples: ["Let's A/B test the two versions of the button.", "The A/B test showed a 15% improvement."], synonyms: ["split test", "experiment", "comparison test"], tag: "design" },
+  "heuristic": { phonetic: "/hjʊˈrɪstɪk/", meaning: "启发式（评估）", examples: ["We did a heuristic evaluation of the design.", "Nielsen's heuristics are a good starting point."], synonyms: ["rule of thumb", "guideline", "principle"], tag: "design" },
+  "affordance": { phonetic: "/əˈfɔːdəns/", meaning: "可供性（设计中暗示可操作性的特征）", examples: ["The button has good affordance — it looks clickable.", "Good affordance reduces the learning curve."], synonyms: ["usability cue", "interaction hint", "visual clue"], tag: "design" },
+  "cognitive load": { phonetic: "", meaning: "认知负荷", examples: ["Too many options increase cognitive load.", "Reduce cognitive load by simplifying the interface."], synonyms: ["mental effort", "brain load", "complexity"], tag: "design" },
+  "whitespace": { phonetic: "/ˈwaɪtspeɪs/", meaning: "留白", examples: ["Don't be afraid of whitespace.", "Good use of whitespace makes design breathe."], synonyms: ["negative space", "empty space", "breathing room"], tag: "design" },
+
+  // ═══ EXPANDED DAILY — Internet & Pop Culture ═══
+  "viral": { phonetic: "/ˈvaɪrəl/", meaning: "（网络上）病毒式传播的", examples: ["That video went viral overnight.", "She became famous after her tweet went viral."], synonyms: ["trending", "widespread", "popular"], tag: "daily" },
+  "meme": { phonetic: "/miːm/", meaning: "梗，网络迷因", examples: ["This meme is hilarious.", "He's always sending me memes."], synonyms: ["internet joke", "viral image", "cultural reference"], tag: "daily" },
+  "binge-watch": { phonetic: "", meaning: "一口气刷完（剧）", examples: ["I binge-watched the whole season in one night.", "It's the kind of show you just binge-watch."], synonyms: ["marathon-watch", "watch non-stop"], tag: "daily" },
+  "spoiler": { phonetic: "/ˈspɔɪlə/", meaning: "剧透", examples: ["No spoilers please! I haven't seen it yet.", "She accidentally dropped a huge spoiler."], synonyms: ["plot reveal", "giveaway"], tag: "daily" },
+  "binge": { phonetic: "/bɪndʒ/", meaning: "（无节制地）沉迷，狂看", examples: ["I binge-watched the entire series over the weekend.", "She went on a shopping binge."], synonyms: ["spree", "splurge", "marathon"], tag: "daily" },
+  "streamer": { phonetic: "/ˈstriːmə/", meaning: "直播主播", examples: ["He's a popular gaming streamer on Twitch.", "Many streamers make a living from donations."], synonyms: ["broadcaster", "content creator", "live host"], tag: "daily" },
+  "influencer": { phonetic: "/ˈɪnfluənsə/", meaning: "网红，有影响力的人", examples: ["She's a popular fashion influencer.", "Brands pay influencers to promote their products."], synonyms: ["content creator", "KOL", "opinion leader"], tag: "daily" },
+  "clickbait": { phonetic: "/ˈklɪkbeɪt/", meaning: "标题党", examples: ["That article is pure clickbait.", "Don't fall for clickbait headlines."], synonyms: ["sensational headline", "misleading title"], tag: "daily" },
+  "algorithm": { phonetic: "/ˈælɡərɪðəm/", meaning: "算法", examples: ["The algorithm decides what you see on social media.", "I think the algorithm knows me too well."], synonyms: ["formula", "procedure", "system"], tag: "daily" },
+  "notification": { phonetic: "/ˌnəʊtɪfɪˈkeɪʃn/", meaning: "通知提醒", examples: ["I turned off all notifications to focus.", "The constant notifications are distracting."], synonyms: ["alert", "reminder", "ping"], tag: "daily" },
+  "screenshot": { phonetic: "/ˈskriːnʃɒt/", meaning: "截图", examples: ["Can you send me a screenshot?", "I took a screenshot of the error message."], synonyms: ["screen capture", "snap", "screen grab"], tag: "daily" },
+  "lag": { phonetic: "/læɡ/", meaning: "卡顿，延迟", examples: ["The game has terrible lag.", "There's a slight lag in the video call."], synonyms: ["delay", "latency", "slowdown"], tag: "daily" },
+  "glitch": { phonetic: "/ɡlɪtʃ/", meaning: "小故障", examples: ["There's a glitch in the app.", "It was just a minor glitch."], synonyms: ["bug", "error", "malfunction"], tag: "daily" },
+  "scroll": { phonetic: "/skrəʊl/", meaning: "滚动浏览", examples: ["I spent an hour scrolling through Instagram.", "Just scroll down to find the button."], synonyms: ["browse", "swipe", "navigate"], tag: "daily" },
+  "DM": { phonetic: "/ˌdiːˈem/", meaning: "私信", examples: ["She slid into my DMs.", "Just DM me the details."], synonyms: ["direct message", "private message", "PM"], tag: "daily" },
+  "IRL": { phonetic: "/ˌaɪɑːrˈel/", meaning: "在现实生活中", examples: ["She's even nicer IRL than online.", "Have you ever met IRL?"], synonyms: ["in real life", "offline", "face to face"], tag: "daily" },
+  "GOAT": { phonetic: "/ɡəʊt/", meaning: "史上最强（Greatest Of All Time）", examples: ["Messi is the GOAT.", "That album is the GOAT of hip-hop."], synonyms: ["greatest of all time", "best ever", "legend"], tag: "daily" },
+  "slay": { phonetic: "/sleɪ/", meaning: "（俚语）太厉害了，杀疯了", examples: ["She absolutely slayed that performance.", "You slay every time!"], synonyms: ["dominate", "crush it", "kill it"], tag: "daily" },
+  "tea": { phonetic: "/tiː/", meaning: "（俚语）八卦", examples: ["Spill the tea! What happened?", "I heard some tea about them."], synonyms: ["gossip", "drama", "scoop"], tag: "daily" },
+  "cap": { phonetic: "/kæp/", meaning: "（俚语）说谎 / no cap = 不骗你", examples: ["That's cap — I don't believe you.", "No cap, that was the best movie I've ever seen."], synonyms: ["lie", "falsehood", "untruth"], tag: "daily" },
+  "lit": { phonetic: "/lɪt/", meaning: "（俚语）很嗨，很精彩", examples: ["The party was absolutely lit.", "This song is so lit."], synonyms: ["amazing", "exciting", "awesome"], tag: "daily" },
 };
+
 
 // ───────── Auto-lookup dictionary for unknown words ─────────
 async function autoLookup(word) {
@@ -1450,6 +1608,19 @@ const VocabModule = {
     // Back: word + phonetic + speak row at top
     document.getElementById('fcBackWord').innerHTML = `${w.word} <span class="dl-back-phonetic">${phonetic}</span> <button class="speak-btn speak-btn-card" onclick="event.stopPropagation();speakWord('${w.word.replace(/'/g, "\\'")}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>`;
     document.getElementById('fcMeaning').textContent = meaning;
+    // Chinese meaning: show DB meaning if current meaning is English-only
+    const cnEl = document.getElementById('fcMeaningCn');
+    if (cnEl) {
+      const dbMeaning = dbEntry.meaning || '';
+      const hasChinese = /[\u4e00-\u9fff]/.test(meaning);
+      if (!hasChinese && dbMeaning && /[\u4e00-\u9fff]/.test(dbMeaning)) {
+        cnEl.textContent = dbMeaning;
+      } else if (!hasChinese) {
+        cnEl.textContent = '';
+      } else {
+        cnEl.textContent = '';
+      }
+    }
     document.getElementById('fcExample').textContent = examples[0] || '';
     document.getElementById('fcSynonyms').textContent = synonyms.length ? `Synonyms: ${synonyms.join(', ')}` : '';
     const imgEl = document.getElementById('fcImage');
@@ -1839,11 +2010,10 @@ const ShadowModule = {
       if (urlObj.hostname.includes('youtube.com')) ytId = urlObj.searchParams.get('v') || '';
       else if (urlObj.hostname === 'youtu.be') ytId = urlObj.pathname.slice(1);
       else if (urlObj.hostname.includes('bilibili.com')) {
-        titleInput.value = 'Loading title...';
-        fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`)
-          .then(r => r.json())
-          .then(data => { titleInput.value = data.title || ''; })
-          .catch(() => { titleInput.value = ''; });
+        // Bilibili doesn't support cross-origin title fetch
+        titleInput.value = '';
+        titleInput.placeholder = 'Enter title manually for Bilibili videos';
+        titleInput.focus();
         return;
       }
     } catch { return; }

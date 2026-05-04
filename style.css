@@ -179,7 +179,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
   gap: 16px;
 }
@@ -223,8 +223,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .sidebar-timer.completed { border-color: var(--green); }
 .ft-ring {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   flex-shrink: 0;
 }
 .ft-ring svg { display: block; }
@@ -233,7 +233,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: -0.3px;
   font-variant-numeric: tabular-nums;
@@ -365,7 +365,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 6px;
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -609,11 +609,11 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 @keyframes modalIn { from { opacity: 0; transform: scale(0.96) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 .modal-header {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 .modal-header h2 {
   font-family: var(--font-serif);
-  font-size: 22px; font-weight: 700; letter-spacing: -0.5px;
+  font-size: 28px; font-weight: 700; letter-spacing: -0.5px;
 }
 .modal-close {
   background: none; font-size: 24px;
@@ -689,6 +689,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .fc-front-phonetic { color: var(--text-secondary); font-size: 16px; margin-top: 8px; display: flex; align-items: center; gap: 8px; }
 .fc-phonetic { color: var(--text-secondary); font-size: 15px; }
 .fc-meaning { font-size: 18px; font-weight: 600; color: var(--accent); }
+.fc-meaning-cn { font-size: 15px; color: var(--text-secondary); }
 .fc-example { font-size: 14px; line-height: 1.7; color: var(--text-secondary); background: var(--bg); padding: 14px; border-radius: var(--radius-sm); width: 100%; border-left: 3px solid var(--accent); }
 .fc-image { width: 100%; text-align: center; }
 .fc-image img { max-height: 100px; border-radius: var(--radius-sm); }
@@ -1245,7 +1246,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 
 /* ══════ Word Detail Modal ══════ */
 .wd-modal { width: 520px; }
-.wd-phonetic { color: var(--text-secondary); font-size: 15px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.wd-phonetic { color: var(--text-secondary); font-size: 15px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
 .wd-meaning { font-size: 20px; font-weight: 700; color: var(--accent); margin-bottom: 16px; line-height: 1.4; }
 .wd-image { margin-bottom: 16px; text-align: center; }
 .wd-image img { max-height: 160px; border-radius: var(--radius-sm); max-width: 100%; }
