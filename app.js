@@ -1244,16 +1244,14 @@ const App = {
   },
 
   _updateLearnProgress() {
-    const recommended = getDailyRecommendedWords(this.data.words, this.data.mastered);
     const todayLearned = (this.data.dailyLearned || {})[todayStr()] || [];
-    const todaySet = new Set(todayLearned.map(w => w.toLowerCase()));
-    const learnedCount = recommended.filter(w => todaySet.has(w.toLowerCase())).length;
-    const total = recommended.length;
-    const pct = total > 0 ? Math.round((learnedCount / total) * 100) : 0;
+    const learnedCount = todayLearned.length;
+    const total = 30;
+    const pct = total > 0 ? Math.min(Math.round((learnedCount / total) * 100), 100) : 0;
     document.getElementById('learnProgressFill').style.width = pct + '%';
     document.getElementById('learnProgressText').textContent = `${learnedCount} / ${total} learned`;
     const btn = document.getElementById('btnStartLearn');
-    if (learnedCount >= total && total > 0) {
+    if (learnedCount >= total) {
       btn.textContent = 'All Done Today ✓';
       btn.className = 'btn-secondary';
     } else {
