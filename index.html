@@ -268,7 +268,10 @@
                 <div class="fc-example" id="fcExample"></div>
                 <div class="fc-synonyms" id="fcSynonyms"></div>
                 <div class="fc-image" id="fcImage"></div>
-                <div class="fc-note" id="fcNote"></div>
+                <div class="fc-note-edit">
+                  <textarea class="fc-note-input" id="fcNoteInput" placeholder="Add a note..." onclick="event.stopPropagation()"></textarea>
+                  <button class="fc-note-save" onclick="event.stopPropagation();VocabModule.saveReviewNote()">Save</button>
+                </div>
               </div>
             </div>
           </div>

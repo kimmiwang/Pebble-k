@@ -696,6 +696,22 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .fc-image { width: 100%; text-align: center; }
 .fc-image img { max-height: 100px; border-radius: var(--radius-sm); }
 .fc-note { font-size: 13px; color: var(--text-muted); font-style: italic; }
+.fc-note-edit { display: flex; gap: 8px; align-items: flex-start; width: 100%; }
+.fc-note-input {
+  flex: 1; padding: 8px 12px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 13px; color: var(--text); background: var(--bg);
+  resize: none; min-height: 36px; outline: none;
+  font-family: inherit; transition: var(--transition);
+}
+.fc-note-input:focus { border-color: var(--text); }
+.fc-note-save {
+  padding: 8px 14px; border-radius: 20px;
+  background: var(--text); color: #fff;
+  font-size: 11px; font-weight: 600; border: none;
+  cursor: pointer; white-space: nowrap;
+}
+.fc-note-save:hover { background: #333; }
 .fc-synonyms { font-size: 13px; color: var(--text-secondary); }
 
 .review-buttons { display: flex; gap: 10px; margin-top: 20px; }

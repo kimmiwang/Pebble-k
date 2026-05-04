@@ -1178,6 +1178,8 @@ const App = {
     inner.offsetHeight;
     inner.style.transition = '';
     document.getElementById('dlButtons').style.visibility = 'hidden';
+    // Auto-speak the word
+    setTimeout(() => speakWord(w.key), 300);
   },
 
   flipDailyCard() {
@@ -1670,7 +1672,7 @@ const VocabModule = {
     document.getElementById('fcSynonyms').textContent = synonyms.length ? `Synonyms: ${synonyms.join(', ')}` : '';
     const imgEl = document.getElementById('fcImage');
     imgEl.innerHTML = image ? `<img src="${image}" alt="${w.word}" onerror="this.style.display='none'">` : '';
-    document.getElementById('fcNote').textContent = w.note ? `📝 ${w.note}` : '';
+    document.getElementById('fcNoteInput').value = w.note || '';
     
     // Instant flip back without animation
     const inner = document.getElementById('flashcardInner');
@@ -1678,9 +1680,22 @@ const VocabModule = {
     inner.classList.remove('flipped');
     inner.offsetHeight;
     inner.style.transition = '';
+    // Auto-speak the word
+    setTimeout(() => speakWord(w.word), 300);
   },
   flipCard() {
     document.getElementById('flashcardInner').classList.toggle('flipped');
+  },
+  saveReviewNote() {
+    const w = this.reviewQueue[this.reviewIndex];
+    if (!w) return;
+    const note = document.getElementById('fcNoteInput').value.trim();
+    const realWord = App.data.words.find(x => x.id === w.id);
+    if (realWord) {
+      realWord.note = note;
+      Store.save(App.data);
+      toast('Note saved!');
+    }
   },
   reviewAnswer(quality) {
     const w = this.reviewQueue[this.reviewIndex];
@@ -2359,6 +2374,8 @@ const DailyModule = {
       Store.save(App.data);
     }
     this.renderHistory();
+    // Auto-speak the sentence
+    setTimeout(() => speakWord(s.en), 300);
   },
 
   renderHistory() {
