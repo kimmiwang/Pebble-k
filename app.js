@@ -1680,7 +1680,7 @@ const ShadowModule = {
     if (list.length === 0) { container.innerHTML = ''; return; }
     
     // Render with placeholder avatars first, then fetch real ones
-    const colors = ['#6366f1','#8b5cf6','#ec4899','#f59e0b','#10b981','#3b82f6','#ef4444','#14b8a6'];
+    const colors = ['#1a1a1a','#3a3a3a','#555555','#2d2d2d','#444444','#1a1a1a','#333333','#4a4a4a'];
     const channelCache = YTApi._loadChannelInfoCache();
     
     container.innerHTML = list.map((yt, i) => {

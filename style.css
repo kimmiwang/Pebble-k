@@ -332,11 +332,11 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .card-daily .dash-card-icon { background: var(--bg); color: var(--text); }
 .card-checkin .dash-card-icon { background: var(--accent-light); color: var(--accent); }
 .dash-card-num {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 36px;
   font-weight: 700;
   display: block;
-  letter-spacing: -1.5px;
+  letter-spacing: -1px;
   line-height: 1;
 }
 .dash-card-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 500; }
@@ -937,7 +937,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.level-num { font-family: var(--font-serif); font-size: 32px; font-weight: 700; color: #fff; }
+.level-num { font-family: var(--font-sans); font-size: 32px; font-weight: 700; color: #fff; line-height: 1; }
 .level-info { flex: 1; }
 .level-title { font-weight: 700; font-size: 18px; display: block; margin-bottom: 10px; color: #fff; }
 .xp-bar { height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
@@ -954,9 +954,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 }
 .stat-num {
   display: block;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 32px; font-weight: 700; color: var(--text);
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
 }
 .stat-label { font-size: 10px; color: var(--text-muted); margin-top: 4px; display: block; text-transform: uppercase; letter-spacing: 0.8px; }
 
