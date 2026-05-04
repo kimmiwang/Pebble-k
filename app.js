@@ -21,7 +21,7 @@ const WORD_DB = {
   "plot twist": { phonetic: "/plɒt twɪst/", meaning: "剧情反转", examples: ["I didn't see that plot twist coming at all!", "The movie is full of unexpected plot twists."], synonyms: ["surprise ending", "turn of events", "reversal"], tag: "daily", image: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=300&h=200&fit=crop" },
   "gist": { phonetic: "/dʒɪst/", meaning: "要点，大意", examples: ["I didn't catch every word, but I got the gist of it.", "Can you give me the gist of the meeting?"], synonyms: ["essence", "core", "main point"], tag: "daily", image: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=300&h=200&fit=crop" },
   "commute": { phonetic: "/kəˈmjuːt/", meaning: "通勤", examples: ["My commute takes about 45 minutes each way.", "I listen to podcasts during my commute."], synonyms: ["travel", "journey", "trip"], tag: "daily", image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=300&h=200&fit=crop" },
-  "cringe": { phonetic: "/krɪndʒ/", meaning: "让人尴尬的，社死", examples: ["That joke was so cringe.", "I cringe every time I think about what I said."], synonyms: ["embarrassing", "awkward", "uncomfortable"], tag: "slang" }, image: "https://images.unsplash.com/photo-1520462100942-63e8dbf41a8c?w=300&h=200&fit=crop" },
+  "cringe": { phonetic: "/krɪndʒ/", meaning: "让人尴尬的，社死", examples: ["That joke was so cringe.", "I cringe every time I think about what I said."], synonyms: ["embarrassing", "awkward", "uncomfortable"], tag: "slang", image: "https://images.unsplash.com/photo-1520462100942-63e8dbf41a8c?w=300&h=200&fit=crop" },
   "anecdote": { phonetic: "/ˈænɪkdəʊt/", meaning: "趣闻，轶事", examples: ["He told a funny anecdote about his first job.", "The speech was full of personal anecdotes."], synonyms: ["story", "tale", "yarn"], tag: "daily" },
   "etiquette": { phonetic: "/ˈetɪket/", meaning: "礼仪，礼节", examples: ["Business etiquette varies across cultures.", "It's basic email etiquette to reply within 24 hours."], synonyms: ["manners", "protocol", "decorum"], tag: "daily" },
   "versatile": { phonetic: "/ˈvɜːsətaɪl/", meaning: "多才多艺的；多功能的", examples: ["She's a versatile actress who can play any role.", "This is a very versatile kitchen gadget."], synonyms: ["adaptable", "flexible", "all-round"], tag: "daily" },
@@ -167,9 +167,9 @@ const WORD_DB = {
   "catch up": { phonetic: "", meaning: "叙旧，赶上进度", examples: ["Let's catch up over coffee sometime.", "I need to catch up on my emails."], synonyms: ["reconnect", "get up to speed", "update"], tag: "daily" },
   "vibe": { phonetic: "/vaɪb/", meaning: "氛围，感觉", examples: ["This café has a really nice vibe.", "I got a weird vibe from that place."], synonyms: ["atmosphere", "feeling", "energy"], tag: "daily" },
   "chill": { phonetic: "/tʃɪl/", meaning: "放松，冷静的", examples: ["Let's just chill at home tonight.", "He's a really chill guy."], synonyms: ["relax", "laid-back", "calm"], tag: "daily" },
-  "ghosting": { phonetic: "/ˈɡəʊstɪŋ/", meaning: "突然不回消息（社交中）", examples: ["She started ghosting me after the third date.", "Ghosting is really hurtful behavior."], synonyms: ["ignoring", "disappearing", "cutting off"], tag: "slang" } },
-  "cringe": { phonetic: "/krɪndʒ/", meaning: "让人尴尬的，社死", examples: ["That joke was so cringe.", "I cringe every time I think about what I said."], synonyms: ["embarrassing", "awkward", "uncomfortable"], tag: "slang" } },
-  "lowkey": { phonetic: "/ˌləʊˈkiː/", meaning: "暗地里，有一点", examples: ["I lowkey want to skip the party.", "She's lowkey the smartest person in the room."], synonyms: ["secretly", "quietly", "subtly"], tag: "slang" } },
+  "ghosting": { phonetic: "/ˈɡəʊstɪŋ/", meaning: "突然不回消息（社交中）", examples: ["She started ghosting me after the third date.", "Ghosting is really hurtful behavior."], synonyms: ["ignoring", "disappearing", "cutting off"], tag: "slang" },
+  "cringe": { phonetic: "/krɪndʒ/", meaning: "让人尴尬的，社死", examples: ["That joke was so cringe.", "I cringe every time I think about what I said."], synonyms: ["embarrassing", "awkward", "uncomfortable"], tag: "slang" },
+  "lowkey": { phonetic: "/ˌləʊˈkiː/", meaning: "暗地里，有一点", examples: ["I lowkey want to skip the party.", "She's lowkey the smartest person in the room."], synonyms: ["secretly", "quietly", "subtly"], tag: "slang" },
   "salty": { phonetic: "/ˈsɔːlti/", meaning: "（俚语）生气的，不爽的", examples: ["He's still salty about losing the game.", "Don't be so salty — it was just a joke."], synonyms: ["bitter", "upset", "annoyed"], tag: "daily" },
   "FOMO": { phonetic: "/ˈfəʊməʊ/", meaning: "错过恐惧症", examples: ["I have serious FOMO when I see everyone at the party.", "Social media gives me FOMO."], synonyms: ["fear of missing out", "anxiety", "envy"], tag: "daily" },
   "subtle": { phonetic: "/ˈsʌtl/", meaning: "微妙的，不明显的", examples: ["There's a subtle difference between the two colors.", "He gave a subtle hint that he was bored."], synonyms: ["understated", "delicate", "slight"], tag: "daily" },
@@ -2341,7 +2341,18 @@ const DailyModule = {
     document.getElementById('dailyScene').textContent = s.scene;
     document.getElementById('dailyEnglish').textContent = s.en;
     document.getElementById('dailyChinese').textContent = s.zh;
-    document.getElementById('dailyContext').textContent = s.context;
+    document.getElementById('dailyContext').innerHTML = s.context + '<div class="daily-context-cn" id="dailyContextCn"></div>';
+    
+    // Auto-translate context to Chinese
+    if (s.context) {
+      fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(s.context.slice(0, 400))}&langpair=en|zh-CN`)
+        .then(r => r.json())
+        .then(data => {
+          const cn = data?.responseData?.translatedText;
+          const el = document.getElementById('dailyContextCn');
+          if (el && cn && !cn.includes('MYMEMORY')) el.textContent = cn;
+        }).catch(() => {});
+    }
 
     if (!App.data.dailySeen.includes(idx)) {
       App.data.dailySeen.push(idx);

@@ -927,6 +927,12 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   color: var(--text-secondary); margin-bottom: 28px;
   border-left: 3px solid var(--accent);
 }
+.daily-context-cn {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
 .daily-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .daily-actions .btn-secondary { display: flex; align-items: center; gap: 6px; }
 .daily-history h3 {
