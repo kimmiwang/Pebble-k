@@ -1399,6 +1399,7 @@ const VocabModule = {
     const container = document.getElementById('vocabList');
     let words = [...App.data.words].sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt));
     if (filter) words = words.filter(w => w.word.toLowerCase().includes(filter.toLowerCase()) || (w.meaning && w.meaning.toLowerCase().includes(filter.toLowerCase())));
+    if (this._tagFilter) words = words.filter(w => w.tag === this._tagFilter);
 
     if (words.length === 0) {
       container.innerHTML = '<p class="empty-hint">Your vocabulary book is empty. Add your first word!</p>';
@@ -1466,7 +1467,13 @@ const VocabModule = {
 
   filterWords() {
     const q = document.getElementById('vocabSearchInput').value;
+    this._tagFilter = '';
     this.renderList(q);
+  },
+
+  filterByTag(tag) {
+    this._tagFilter = this._tagFilter === tag ? '' : tag;
+    this.renderList();
   },
 
   updateReviewBtn() {
