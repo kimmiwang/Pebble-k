@@ -184,6 +184,78 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   max-width: 400px;
 }
 
+/* ══════ Header Right ══════ */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ══════ Focus Timer ══════ */
+.focus-timer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  padding: 8px 16px 8px 8px;
+  transition: var(--transition);
+}
+.focus-timer.running { border-color: var(--accent); }
+.focus-timer.completed { border-color: var(--green); }
+.ft-ring {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+.ft-ring svg { display: block; }
+.ft-time {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.ft-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.ft-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text);
+}
+.ft-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.focus-timer.running .ft-label { color: var(--accent); }
+.focus-timer.completed .ft-label { color: var(--green); }
+.ft-btn {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  background: var(--text);
+  color: #fff;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.ft-btn:hover { background: #333; }
+.focus-timer.running .ft-btn { background: var(--accent); }
+.focus-timer.completed .ft-btn { background: var(--green); }
+
 /* ══════ Buttons ══════ */
 .btn-primary {
   background: var(--text);

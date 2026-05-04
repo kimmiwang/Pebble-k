@@ -2293,8 +2293,136 @@ const CheckinModule = {
 };
 
 // ───────── Bootstrap ─────────
+// ═════════════════════════════════════════
+//  FOCUS TIMER MODULE
+// ═════════════════════════════════════════
+const FocusTimer = {
+  GOAL: 30 * 60, // 30 minutes in seconds
+  _interval: null,
+  _startTime: null,
+  _elapsed: 0, // seconds already elapsed today
+  _running: false,
+  _KEY: 'pebble_focus',
+
+  init() {
+    const saved = this._load();
+    const today = todayStr();
+    if (saved.date === today) {
+      this._elapsed = saved.elapsed || 0;
+    } else {
+      this._elapsed = 0;
+    }
+    this._running = false;
+    this._render();
+  },
+
+  _load() {
+    try { return JSON.parse(localStorage.getItem(this._KEY)) || {}; } catch { return {}; }
+  },
+
+  _save() {
+    localStorage.setItem(this._KEY, JSON.stringify({
+      date: todayStr(),
+      elapsed: this._elapsed,
+    }));
+  },
+
+  toggle() {
+    if (this._elapsed >= this.GOAL) return; // already done
+    if (this._running) {
+      this._pause();
+    } else {
+      this._start();
+    }
+  },
+
+  _start() {
+    this._running = true;
+    this._startTime = Date.now();
+    this._baseElapsed = this._elapsed; // snapshot current elapsed
+    this._interval = setInterval(() => this._tick(), 1000);
+    this._render();
+  },
+
+  _pause() {
+    this._running = false;
+    clearInterval(this._interval);
+    this._interval = null;
+    this._save();
+    this._render();
+  },
+
+  _tick() {
+    const sessionSec = Math.floor((Date.now() - this._startTime) / 1000);
+    this._elapsed = this._baseElapsed + sessionSec;
+
+    if (this._elapsed >= this.GOAL) {
+      this._elapsed = this.GOAL;
+      this._pause();
+      toast('30 minutes done! Great focus today! 🎉');
+      App.addXP(15);
+      Store.save(App.data);
+    }
+    this._render();
+  },
+
+  _render() {
+    const remaining = Math.max(0, this.GOAL - this._elapsed);
+    const min = Math.floor(remaining / 60);
+    const sec = remaining % 60;
+    const pct = Math.min(this._elapsed / this.GOAL, 1);
+    const done = pct >= 1;
+
+    // Time
+    const timeEl = document.getElementById('ftTime');
+    if (timeEl) timeEl.textContent = `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+
+    // Progress ring (circumference = 2 * π * 16 ≈ 100.53)
+    const circumference = 100.53;
+    const progressEl = document.getElementById('ftProgress');
+    if (progressEl) progressEl.setAttribute('stroke-dashoffset', circumference * (1 - pct));
+
+    // Button
+    const btn = document.getElementById('ftBtn');
+    if (btn) {
+      if (done) btn.textContent = 'DONE ✓';
+      else if (this._running) btn.textContent = 'PAUSE';
+      else if (this._elapsed > 0) btn.textContent = 'RESUME';
+      else btn.textContent = 'START';
+    }
+
+    // Label
+    const label = document.getElementById('ftLabel');
+    if (label) {
+      if (done) label.textContent = 'COMPLETED';
+      else if (this._running) label.textContent = 'FOCUSING...';
+      else label.textContent = 'DAILY FOCUS';
+    }
+
+    // Sub
+    const sub = document.getElementById('ftSub');
+    if (sub) {
+      if (done) sub.textContent = '30 min done today';
+      else sub.textContent = `${Math.floor(this._elapsed / 60)}/${this.GOAL / 60} min`;
+    }
+
+    // Container state
+    const container = document.getElementById('focusTimer');
+    if (container) {
+      container.classList.toggle('running', this._running && !done);
+      container.classList.toggle('completed', done);
+    }
+
+    // Ring color
+    if (progressEl) {
+      progressEl.setAttribute('stroke', done ? '#16a34a' : '#e8590c');
+    }
+  },
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   App.init();
+  FocusTimer.init();
   
   // Click outside modal to close
   document.querySelectorAll('.modal-overlay').forEach(overlay => {
