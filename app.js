@@ -782,6 +782,12 @@ const App = {
 
   init() {
     this.data = Store.load();
+    // Backfill: tag empty words as 'mine'
+    let patched = false;
+    for (const w of this.data.words) {
+      if (!w.tag) { w.tag = 'mine'; patched = true; }
+    }
+    if (patched) Store.save(this.data);
     this.bindNav();
     this.updateGreeting();
     this.refreshDashboard();
