@@ -1,5 +1,5 @@
 /* ====================================================================
-   EnglishDaily — App.js
+   pebble-k — App.js
    All-in-one client-side app: Dashboard, Vocab, Shadow Learn, Daily, Check-in
    Data persisted in localStorage
    ==================================================================== */
@@ -214,23 +214,75 @@ const YTApi = {
   KEY: 'AIzaSyBDvV2zlechm8PnvMK7W-bEZlZe6hdz6Lo',
   BASE: 'https://www.googleapis.com/youtube/v3',
   _cache: {},
+  _DISK_KEY: 'ytapi_cache',
+  _CACHE_TTL: 24 * 60 * 60 * 1000, // 24h
+
+  _loadDiskCache() {
+    try {
+      const raw = localStorage.getItem(this._DISK_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      const now = Date.now();
+      // prune expired entries
+      for (const k of Object.keys(parsed)) {
+        if (now - parsed[k].ts > this._CACHE_TTL) delete parsed[k];
+      }
+      return parsed;
+    } catch { return {}; }
+  },
+  _saveDiskCache(url, data) {
+    try {
+      const disk = this._loadDiskCache();
+      disk[url] = { data, ts: Date.now() };
+      localStorage.setItem(this._DISK_KEY, JSON.stringify(disk));
+    } catch {}
+  },
 
   async _fetch(endpoint, params) {
     params.key = this.KEY;
     const qs = new URLSearchParams(params).toString();
     const url = `${this.BASE}/${endpoint}?${qs}`;
+    // memory cache
     if (this._cache[url]) return this._cache[url];
+    // disk cache (localStorage)
+    const disk = this._loadDiskCache();
+    if (disk[url]) {
+      this._cache[url] = disk[url].data;
+      return disk[url].data;
+    }
     try {
       const res = await fetch(url);
       if (!res.ok) return null;
       const data = await res.json();
       this._cache[url] = data;
+      this._saveDiskCache(url, data);
       return data;
     } catch { return null; }
   },
 
   // Get channel info (avatar, id) by handle/name
+  _channelInfoCache: null,
+  _loadChannelInfoCache() {
+    if (this._channelInfoCache) return this._channelInfoCache;
+    try {
+      const raw = localStorage.getItem('ytapi_channel_info');
+      this._channelInfoCache = raw ? JSON.parse(raw) : {};
+    } catch { this._channelInfoCache = {}; }
+    return this._channelInfoCache;
+  },
+  _saveChannelInfo(handle, info) {
+    const cache = this._loadChannelInfoCache();
+    cache[handle.toLowerCase()] = { ...info, ts: Date.now() };
+    this._channelInfoCache = cache;
+    try { localStorage.setItem('ytapi_channel_info', JSON.stringify(cache)); } catch {}
+  },
   async getChannelInfo(handle) {
+    // Check local cache first (24h TTL)
+    const cache = this._loadChannelInfoCache();
+    const cached = cache[handle.toLowerCase()];
+    if (cached && (Date.now() - cached.ts < this._CACHE_TTL)) {
+      return { id: cached.id, name: cached.name, avatar: cached.avatar };
+    }
     // Try by handle first (@username)
     let data = await this._fetch('channels', { part: 'snippet', forHandle: handle });
     if (!data?.items?.length) {
@@ -241,13 +293,17 @@ const YTApi = {
         const chData = await this._fetch('channels', { part: 'snippet', id: chId });
         if (chData?.items?.length) {
           const s = chData.items[0].snippet;
-          return { id: chId, name: s.title, avatar: s.thumbnails?.default?.url || '' };
+          const result = { id: chId, name: s.title, avatar: s.thumbnails?.default?.url || '' };
+          this._saveChannelInfo(handle, result);
+          return result;
         }
       }
       return null;
     }
     const item = data.items[0];
-    return { id: item.id, name: item.snippet.title, avatar: item.snippet.thumbnails?.default?.url || '' };
+    const result = { id: item.id, name: item.snippet.title, avatar: item.snippet.thumbnails?.default?.url || '' };
+    this._saveChannelInfo(handle, result);
+    return result;
   },
 
   // Get video details (title, duration)
@@ -532,24 +588,65 @@ const App = {
     CheckinModule.init();
     this.updateTabTitle();
     
-    // Async: sync from cloud (use cloud data if local is empty or cloud is richer)
+    // Async: sync from cloud (merge cloud data with local to prevent data loss)
     Store.loadFromCloud().then(cloudData => {
       if (!cloudData) return;
-      const localWords = (this.data.words || []).length;
-      const cloudWords = (cloudData.words || []).length;
-      const localXP = this.data.xp || 0;
-      const cloudXP = cloudData.xp || 0;
-      // Use cloud if it has more data
-      if (cloudWords > localWords || cloudXP > localXP) {
-        this.data = { ...Store._defaults, ...cloudData };
+      
+      // Read CURRENT local data (not the snapshot from init start) to avoid race condition
+      const freshLocal = Store.load();
+      const localWords = freshLocal.words || [];
+      const cloudWords = cloudData.words || [];
+      
+      // Merge words by id: keep all unique words from both local and cloud
+      const wordMap = new Map();
+      // Cloud words first (base)
+      for (const w of cloudWords) wordMap.set(w.id, w);
+      // Local words override cloud (local is more recent for same id)
+      for (const w of localWords) wordMap.set(w.id, w);
+      const mergedWords = [...wordMap.values()];
+      
+      // Merge mastered lists
+      const localMastered = new Set(freshLocal.mastered || []);
+      const cloudMastered = cloudData.mastered || [];
+      for (const m of cloudMastered) localMastered.add(m);
+      
+      // Merge checkins (keep both)
+      const mergedCheckins = { ...(cloudData.checkins || {}), ...(freshLocal.checkins || {}) };
+      
+      // Merge shadowDone
+      const mergedShadowDone = [...new Set([...(cloudData.shadowDone || []), ...(freshLocal.shadowDone || [])])];
+      
+      // Use higher XP
+      const mergedXP = Math.max(freshLocal.xp || 0, cloudData.xp || 0);
+      
+      // Check if anything actually changed
+      const hadChanges = mergedWords.length > localWords.length || 
+                         mergedWords.length > cloudWords.length ||
+                         mergedXP > (freshLocal.xp || 0);
+      
+      if (hadChanges || cloudWords.length > 0) {
+        this.data = { 
+          ...Store._defaults, 
+          ...freshLocal,        // start with current local
+          ...cloudData,         // overlay cloud fields
+          words: mergedWords,   // but use merged words
+          mastered: [...localMastered],
+          checkins: mergedCheckins,
+          shadowDone: mergedShadowDone,
+          xp: mergedXP,
+          youtubers: (freshLocal.youtubers?.length >= (cloudData.youtubers?.length || 0)) 
+            ? freshLocal.youtubers : cloudData.youtubers,
+        };
         Store.save(this.data);
         this.refreshDashboard();
         VocabModule.render();
         ShadowModule.render();
         CheckinModule.render();
-        toast('Data synced from cloud!');
-      } else if (localWords > 0) {
-        // Push local data to cloud if cloud is empty/stale
+        if (mergedWords.length > localWords.length) {
+          toast('Data synced from cloud!');
+        }
+      } else if (localWords.length > 0 && cloudWords.length === 0) {
+        // Push local data to cloud if cloud is empty
         Store._syncToCloud(this.data);
       }
     });
@@ -582,6 +679,61 @@ const App = {
     if (h < 12) greeting = 'Good morning!';
     else if (h < 18) greeting = 'Good afternoon!';
     document.getElementById('greeting').textContent = greeting;
+    // Load avatar
+    this._loadAvatar();
+  },
+
+  _loadAvatar() {
+    const logoIcon = document.getElementById('logoIcon');
+    if (!logoIcon) return;
+    const saved = localStorage.getItem('pebble_avatar');
+    if (saved) {
+      logoIcon.style.background = 'transparent';
+      logoIcon.innerHTML = `<img src="${saved}" alt="avatar">`;
+    } else {
+      // Default: yin-yang SVG icon
+      logoIcon.style.background = 'transparent';
+      logoIcon.innerHTML = `<svg viewBox="0 0 100 100" width="28" height="28">
+        <circle cx="50" cy="50" r="48" fill="#2d2d2d"/>
+        <path d="M50 2 A48 48 0 0 1 50 98 A24 24 0 0 0 50 50 A24 24 0 0 1 50 2 Z" fill="#fff"/>
+        <circle cx="50" cy="26" r="7" fill="#2d2d2d"/>
+        <circle cx="50" cy="74" r="7" fill="#fff"/>
+      </svg>`;
+    }
+  },
+
+  changeAvatar() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        // Resize to save space
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const size = 200;
+          canvas.width = size;
+          canvas.height = size;
+          const ctx = canvas.getContext('2d');
+          // Crop to square center
+          const min = Math.min(img.width, img.height);
+          const sx = (img.width - min) / 2;
+          const sy = (img.height - min) / 2;
+          ctx.drawImage(img, sx, sy, min, min, 0, 0, size, size);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          localStorage.setItem('pebble_avatar', dataUrl);
+          this._loadAvatar();
+          toast('Avatar updated!');
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
   },
 
   refreshDashboard() {
@@ -939,9 +1091,9 @@ const App = {
   updateTabTitle() {
     const due = this.data.words.filter(w => !w.nextReview || w.nextReview <= todayStr()).length;
     if (due > 0 && !this.data.checkins[todayStr()]) {
-      document.title = `(${due}) EnglishDaily — Time to learn!`;
+      document.title = `(${due}) pebble-k — Time to learn!`;
     } else {
-      document.title = 'EnglishDaily - 每日英语学习';
+      document.title = 'pebble-k - 每日英语学习';
     }
   },
 
@@ -1511,29 +1663,41 @@ const ShadowModule = {
     
     // Render with placeholder avatars first, then fetch real ones
     const colors = ['#6366f1','#8b5cf6','#ec4899','#f59e0b','#10b981','#3b82f6','#ef4444','#14b8a6'];
+    const channelCache = YTApi._loadChannelInfoCache();
+    
     container.innerHTML = list.map((yt, i) => {
       const isB = yt.startsWith('http') && yt.includes('bilibili');
       const url = isB ? yt : `https://www.youtube.com/@${yt.replace(/^@/, '')}`;
       const initials = yt.replace(/^@/, '').slice(0, 2).toUpperCase();
       const color = colors[i % colors.length];
+      // Use cached avatar if available
+      const cached = channelCache[yt.replace(/^@/, '').toLowerCase()];
+      const avatarHtml = (cached && cached.avatar)
+        ? `<img src="${cached.avatar}" alt="${yt}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.style.background='${color}';this.parentElement.textContent='${initials}';this.remove();">`
+        : initials;
+      const avatarBg = (cached && cached.avatar) ? 'transparent' : color;
       return `<a href="${url}" target="_blank" class="sc-channel" id="sc_${i}" oncontextmenu="event.preventDefault();ShadowModule.showChannelMenu(event,${i})">
-        <div class="sc-avatar" style="background:${color}" id="sca_${i}">${initials}</div>
+        <div class="sc-avatar" style="background:${avatarBg}" id="sca_${i}">${avatarHtml}</div>
         <span class="sc-name">${yt}</span>
       </a>`;
     }).join('');
     
-    // Fetch real YouTube avatars
+    // Fetch real YouTube avatars for those not yet cached
     list.forEach((yt, i) => {
       if (yt.startsWith('http')) return; // skip bilibili
+      const cached = channelCache[yt.replace(/^@/, '').toLowerCase()];
+      if (cached && cached.avatar && (Date.now() - cached.ts < YTApi._CACHE_TTL)) return; // already shown from cache
+      const color = colors[i % colors.length];
+      const initials = yt.replace(/^@/, '').slice(0, 2).toUpperCase();
       YTApi.getChannelInfo(yt.replace(/^@/, '')).then(info => {
         if (info && info.avatar) {
           const el = document.getElementById('sca_' + i);
           if (el) {
-            el.style.background = 'none';
-            el.innerHTML = `<img src="${info.avatar}" alt="${yt}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+            el.style.background = 'transparent';
+            el.innerHTML = `<img src="${info.avatar}" alt="${yt}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.style.background='${color}';this.parentElement.textContent='${initials}';this.remove();">`;
           }
         }
-      });
+      }).catch(() => {});
     });
   },
 

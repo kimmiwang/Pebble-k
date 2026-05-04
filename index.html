@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EnglishDaily - 每日英语学习</title>
+  <title>pebble-k - 每日英语学习</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 </head>
@@ -11,8 +11,15 @@
   <!-- 侧边导航 -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <span class="logo-icon">E</span>
-      <span class="logo-text">EnglishDaily</span>
+      <span class="logo-icon" id="logoIcon" onclick="App.changeAvatar()" title="Click to change avatar">
+        <svg viewBox="0 0 100 100" width="28" height="28">
+          <circle cx="50" cy="50" r="48" fill="#2d2d2d"/>
+          <path d="M50 2 A48 48 0 0 1 50 98 A24 24 0 0 0 50 50 A24 24 0 0 1 50 2 Z" fill="#fff"/>
+          <circle cx="50" cy="26" r="7" fill="#2d2d2d"/>
+          <circle cx="50" cy="74" r="7" fill="#fff"/>
+        </svg>
+      </span>
+      <span class="logo-text">pebble-k</span>
     </div>
     <ul class="nav-list">
       <li class="nav-item active" data-page="dashboard">
