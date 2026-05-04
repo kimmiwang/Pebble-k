@@ -31,6 +31,7 @@
       <li class="nav-item" data-page="vocabulary">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
         <span>Vocabulary</span>
+        <span class="nav-badge" id="navVocabBadge"></span>
       </li>
       <li class="nav-item" data-page="shadow">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -88,52 +89,6 @@
     <section class="page active" id="page-dashboard">
       <div class="page-header">
         <h1 class="greeting" id="greeting">Good morning!</h1>
-      </div>
-
-      <div class="dashboard-grid">
-        <div class="dash-card card-review" onclick="App.navigate('vocabulary')">
-          <div class="dash-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          </div>
-          <div class="dash-card-info">
-            <span class="dash-card-num" id="dashReviewCount">0</span>
-            <span class="dash-card-label">Words to review</span>
-          </div>
-          <div class="dash-card-action">Start Review →</div>
-        </div>
-
-        <div class="dash-card card-shadow" onclick="App.navigate('shadow')">
-          <div class="dash-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
-          <div class="dash-card-info">
-            <span class="dash-card-num" id="dashShadowStatus">Ready</span>
-            <span class="dash-card-label">Videos watched</span>
-          </div>
-          <div class="dash-card-action">Go Practice →</div>
-        </div>
-
-        <div class="dash-card card-daily" onclick="App.navigate('daily')">
-          <div class="dash-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div class="dash-card-info">
-            <span class="dash-card-num" id="dashDailyCount">0</span>
-            <span class="dash-card-label">Daily sentences read</span>
-          </div>
-          <div class="dash-card-action">Check It Out →</div>
-        </div>
-
-        <div class="dash-card card-checkin" onclick="App.navigate('checkin')">
-          <div class="dash-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
-          <div class="dash-card-info">
-            <span class="dash-card-num" id="dashLevel">Lv.1</span>
-            <span class="dash-card-label">Your level</span>
-          </div>
-          <div class="dash-card-action">View Progress →</div>
-        </div>
       </div>
 
       <!-- 今日推荐新词 -->

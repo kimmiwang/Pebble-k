@@ -758,22 +758,37 @@ const App = {
     const d = this.data;
     // Review count
     const dueWords = d.words.filter(w => !w.nextReview || w.nextReview <= todayStr());
-    document.getElementById('dashReviewCount').textContent = dueWords.length;
+    const el = document.getElementById('dashReviewCount');
+    if (el) el.textContent = dueWords.length;
 
     // Shadow status
     const todayDone = d.checkins[todayStr()]?.tasks?.includes('shadow');
-    document.getElementById('dashShadowStatus').textContent = todayDone ? 'Done' : 'Ready';
+    const shadowEl = document.getElementById('dashShadowStatus');
+    if (shadowEl) shadowEl.textContent = todayDone ? 'Done' : 'Ready';
 
     // Level
     const lvl = this.getLevel();
-    document.getElementById('dashLevel').textContent = `Lv.${lvl.level}`;
+    const lvlEl = document.getElementById('dashLevel');
+    if (lvlEl) lvlEl.textContent = `Lv.${lvl.level}`;
 
     // Streak
     const streak = this.getStreak();
     document.getElementById('streakNum').textContent = streak;
 
     // Daily sentences seen count
-    document.getElementById('dashDailyCount').textContent = (d.dailySeen || []).length;
+    const dailyEl = document.getElementById('dashDailyCount');
+    if (dailyEl) dailyEl.textContent = (d.dailySeen || []).length;
+
+    // Nav badge: show review count on Vocabulary
+    const badge = document.getElementById('navVocabBadge');
+    if (badge) {
+      if (dueWords.length > 0) {
+        badge.textContent = dueWords.length;
+        badge.className = 'nav-badge show';
+      } else {
+        badge.className = 'nav-badge';
+      }
+    }
 
     // Recommended words
     this._recommendFilter = 'all';

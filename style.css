@@ -119,6 +119,29 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; stroke-width: 1.5; }
 .nav-item:hover { color: var(--text); background: rgba(0,0,0,0.03); }
 .nav-item.active { color: var(--text); font-weight: 700; background: rgba(0,0,0,0.04); }
+.nav-badge {
+  margin-left: auto;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.nav-badge.show { display: flex; }
+.nav-badge.dot {
+  min-width: 8px;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+}
 
 .sidebar-footer {
   display: flex;
