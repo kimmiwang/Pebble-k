@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EnglishDaily - 每日英语学习</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- 侧边导航 -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">E</span>
+      <span class="logo-text">EnglishDaily</span>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-item active" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Dashboard</span>
+      </li>
+      <li class="nav-item" data-page="vocabulary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>生词本</span>
+      </li>
+      <li class="nav-item" data-page="shadow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span>Video &amp; Podcast</span>
+      </li>
+      <li class="nav-item" data-page="daily">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>每日一句</span>
+      </li>
+      <li class="nav-item" data-page="checkin">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span>打卡中心</span>
+      </li>
+    </ul>
+    <div class="sidebar-channels" id="sidebarChannels">
+      <div class="sidebar-channels-header">
+        <span>MY CHANNELS</span>
+        <button class="sc-add-btn" onclick="ShadowModule.showYoutuberModal()">+</button>
+      </div>
+      <div class="sidebar-channels-list" id="sidebarChannelsList"></div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="btn-export" onclick="App.toggleSettings()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
+    </div>
+  </nav>
+
+  <!-- 主内容区 -->
+  <main class="main-content" id="mainContent">
+
+    <!-- ========== Dashboard ========== -->
+    <section class="page active" id="page-dashboard">
+      <div class="page-header">
+        <div>
+          <h1 class="greeting" id="greeting">Good morning!</h1>
+          <p class="sub-greeting">Ready to learn something new today?</p>
+        </div>
+        <div class="streak-badge" id="streakBadge">
+          <span class="streak-fire">&#x1F525;</span>
+          <span class="streak-num" id="streakNum">0</span>
+          <span class="streak-label">day streak</span>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dash-card card-review" onclick="App.navigate('vocabulary')">
+          <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="dash-card-info">
+            <span class="dash-card-num" id="dashReviewCount">0</span>
+            <span class="dash-card-label">Words to review</span>
+          </div>
+          <div class="dash-card-action">Start Review →</div>
+        </div>
+
+        <div class="dash-card card-shadow" onclick="App.navigate('shadow')">
+          <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="dash-card-info">
+            <span class="dash-card-num" id="dashShadowStatus">Ready</span>
+            <span class="dash-card-label">Videos watched</span>
+          </div>
+          <div class="dash-card-action">Go Practice →</div>
+        </div>
+
+        <div class="dash-card card-daily" onclick="App.navigate('daily')">
+          <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="dash-card-info">
+            <span class="dash-card-num" id="dashDailyCount">0</span>
+            <span class="dash-card-label">Daily sentences read</span>
+          </div>
+          <div class="dash-card-action">Check It Out →</div>
+        </div>
+
+        <div class="dash-card card-checkin" onclick="App.navigate('checkin')">
+          <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="dash-card-info">
+            <span class="dash-card-num" id="dashLevel">Lv.1</span>
+            <span class="dash-card-label">Your level</span>
+          </div>
+          <div class="dash-card-action">View Progress →</div>
+        </div>
+      </div>
+
+      <!-- 今日推荐新词 -->
+      <div class="recommend-section">
+        <div class="recommend-header">
+          <div>
+            <h3>Today's New Words <span class="recommend-count" id="recommendCount">30</span></h3>
+            <div class="learn-progress-row" id="learnProgressRow">
+              <div class="learn-progress-bar"><div class="learn-progress-fill" id="learnProgressFill" style="width:0%"></div></div>
+              <span class="learn-progress-text" id="learnProgressText">0 / 30 learned</span>
+            </div>
+          </div>
+          <div class="recommend-header-right">
+            <button class="btn-primary" onclick="App.startDailyLearn()" id="btnStartLearn">Start Learning</button>
+            <div class="recommend-tags">
+              <button class="rtag-btn active" data-tag="all" onclick="App.filterRecommend('all')">All</button>
+              <button class="rtag-btn" data-tag="daily" onclick="App.filterRecommend('daily')">Daily Life</button>
+              <button class="rtag-btn" data-tag="tech" onclick="App.filterRecommend('tech')">Tech & Internet</button>
+              <button class="rtag-btn" data-tag="design" onclick="App.filterRecommend('design')">Designer</button>
+            </div>
+          </div>
+        </div>
+        <div class="recommend-grid" id="recommendGrid"></div>
+      </div>
+
+      <!-- 每日学习模式弹窗 -->
+      <div class="modal-overlay" id="dailyLearnModal">
+        <div class="daily-learn-container">
+          <div class="dl-header">
+            <span class="dl-progress" id="dlProgress">1 / 30</span>
+            <button class="modal-close" onclick="App.closeDailyLearn()">&times;</button>
+          </div>
+          <div class="dl-card" id="dlCard" onclick="App.flipDailyCard()">
+            <div class="dl-card-inner" id="dlCardInner">
+              <div class="dl-front">
+                <span class="dl-word" id="dlWord"></span>
+                <span class="dl-phonetic-row" id="dlPhoneticRow"></span>
+                <span class="dl-hint">Think about the meaning, then tap to reveal</span>
+              </div>
+              <div class="dl-back">
+                <div class="dl-back-word-row" id="dlBackWord"></div>
+                <div class="dl-meaning" id="dlMeaning"></div>
+                <div class="dl-example" id="dlExample"></div>
+                <div class="dl-synonyms" id="dlSynonyms"></div>
+                <div class="dl-image" id="dlImage"></div>
+              </div>
+            </div>
+          </div>
+          <div class="dl-buttons" id="dlButtons">
+            <button class="dl-btn dl-btn-know" onclick="App.dailyLearnAnswer('know')">I know this</button>
+            <button class="dl-btn dl-btn-learn" onclick="App.dailyLearnAnswer('learn')">Need to learn</button>
+          </div>
+          <!-- 学习完成页 -->
+          <div class="dl-complete" id="dlComplete" style="display:none;">
+            <div class="dl-complete-icon">&#127881;</div>
+            <h2>Session Complete!</h2>
+            <div class="dl-stats-grid">
+              <div class="dl-stat">
+                <span class="dl-stat-num" id="dlStatKnow">0</span>
+                <span class="dl-stat-label">Already knew</span>
+              </div>
+              <div class="dl-stat">
+                <span class="dl-stat-num" id="dlStatLearn">0</span>
+                <span class="dl-stat-label">Added to review</span>
+              </div>
+            </div>
+            <button class="btn-primary" onclick="App.closeDailyLearn()" style="margin-top:20px;">Done</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 最近添加的词 -->
+      <div class="recent-words-section">
+        <h3>Recently Added Words</h3>
+        <div class="recommend-grid" id="recentWordsList">
+          <p class="empty-hint">No words yet. Start adding from the vocabulary section!</p>
+        </div>
+      </div>
+
+      <!-- 单词详情弹窗 -->
+      <div class="modal-overlay" id="wordDetailModal">
+        <div class="modal wd-modal">
+          <div class="modal-header">
+            <h2 id="wdWord"></h2>
+            <button class="modal-close" onclick="App.closeWordDetail()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="wd-phonetic" id="wdPhonetic"></div>
+            <div class="wd-meaning" id="wdMeaning"></div>
+            <div class="wd-image" id="wdImage"></div>
+            <div class="wd-examples" id="wdExamples"></div>
+            <div class="wd-synonyms" id="wdSynonyms"></div>
+            <div style="margin-top:16px;">
+              <button class="btn-primary btn-full" id="wdAddBtn">+ Add to Vocabulary</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 生词本 ========== -->
+    <section class="page" id="page-vocabulary">
+      <div class="page-header">
+        <h1>Vocabulary Book</h1>
+        <div class="vocab-actions">
+          <button class="btn-primary" onclick="VocabModule.showAddModal()">+ Add Word</button>
+          <button class="btn-secondary" onclick="VocabModule.showTextModal()">Highlight & Add</button>
+          <button class="btn-secondary" onclick="VocabModule.startReview()" id="btnStartReview">Review Cards</button>
+        </div>
+      </div>
+
+      <!-- 词汇列表 -->
+      <div class="vocab-list-container">
+        <div class="vocab-search">
+          <input type="text" placeholder="Search your words..." id="vocabSearchInput" oninput="VocabModule.filterWords()">
+        </div>
+        <div class="vocab-list" id="vocabList">
+          <p class="empty-hint">Your vocabulary book is empty. Add your first word!</p>
+        </div>
+      </div>
+
+      <!-- 添加单词弹窗 -->
+      <div class="modal-overlay" id="addWordModal">
+        <div class="modal">
+          <div class="modal-header">
+            <h2>Add New Word</h2>
+            <button class="modal-close" onclick="VocabModule.closeAddModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Word or Phrase</label>
+              <input type="text" id="inputWord" placeholder="e.g. serendipity" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label>Your Note (optional)</label>
+              <textarea id="inputNote" placeholder="Where did you see it? Any personal note..."></textarea>
+            </div>
+            <button class="btn-primary btn-full" onclick="VocabModule.addWord()">Add to Vocabulary</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 划词录入弹窗 -->
+      <div class="modal-overlay" id="textModal">
+        <div class="modal modal-wide">
+          <div class="modal-header">
+            <h2>Highlight & Add</h2>
+            <button class="modal-close" onclick="VocabModule.closeTextModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p class="modal-hint">Paste your English text below, then select any word or sentence to add it. Or just type a word and click the button.</p>
+            <div class="text-area-highlight" id="textHighlightArea" contenteditable="true" spellcheck="false">Paste your English text here...</div>
+            <div class="highlight-actions" id="highlightActions" style="display:none;">
+              <span id="highlightSelected"></span>
+              <button class="btn-small" onclick="VocabModule.addHighlighted()">+ Add This</button>
+            </div>
+            <button class="btn-primary btn-full" style="margin-top:16px;" onclick="VocabModule.addAllText()">Add to Vocabulary</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 复习卡片区域 -->
+      <div class="modal-overlay" id="reviewModal">
+        <div class="review-container">
+          <div class="review-progress">
+            <span id="reviewProgress">0 / 0</span>
+            <button class="modal-close" onclick="VocabModule.closeReview()">&times;</button>
+          </div>
+          <div class="flashcard" id="flashcard" onclick="VocabModule.flipCard()">
+            <div class="flashcard-inner" id="flashcardInner">
+              <div class="flashcard-front">
+                <span class="flashcard-word" id="fcWord"></span>
+                <span class="fc-front-phonetic" id="fcFrontPhonetic"></span>
+                <span class="flashcard-hint">Think about the meaning, then tap to reveal</span>
+              </div>
+              <div class="flashcard-back">
+                <div class="dl-back-word-row" id="fcBackWord"></div>
+                <div class="fc-meaning" id="fcMeaning"></div>
+                <div class="fc-example" id="fcExample"></div>
+                <div class="fc-synonyms" id="fcSynonyms"></div>
+                <div class="fc-image" id="fcImage"></div>
+                <div class="fc-note" id="fcNote"></div>
+              </div>
+            </div>
+          </div>
+          <div class="review-buttons">
+            <button class="rbtn rbtn-forgot" onclick="VocabModule.reviewAnswer(0)">Forgot</button>
+            <button class="rbtn rbtn-fuzzy" onclick="VocabModule.reviewAnswer(1)">Fuzzy</button>
+            <button class="rbtn rbtn-got" onclick="VocabModule.reviewAnswer(2)">Got it!</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Video &amp; Podcast ========== -->
+    <section class="page" id="page-shadow">
+      <div class="page-header">
+        <div>
+          <h1>Video &amp; Podcast</h1>
+          <p class="page-desc">Watch videos from your favorite creators to immerse in English.</p>
+        </div>
+        <div class="vocab-actions">
+          <button class="btn-primary" onclick="ShadowModule.showAddVideoModal()">+ Add Video</button>
+          <button class="btn-secondary" onclick="ShadowModule.showYoutuberModal()">My YouTubers</button>
+        </div>
+      </div>
+
+      <div class="shadow-categories">
+        <button class="cat-btn active" data-cat="all" onclick="ShadowModule.filterCategory('all')">All</button>
+        <button class="cat-btn" data-cat="daily" onclick="ShadowModule.filterCategory('daily')">Daily Life</button>
+        <button class="cat-btn" data-cat="work" onclick="ShadowModule.filterCategory('work')">Workplace</button>
+        <button class="cat-btn" data-cat="tech" onclick="ShadowModule.filterCategory('tech')">Tech & Internet</button>
+        <button class="cat-btn" data-cat="ted" onclick="ShadowModule.filterCategory('ted')">TED Talks</button>
+        <button class="cat-btn" data-cat="news" onclick="ShadowModule.filterCategory('news')">News & Culture</button>
+      </div>
+
+      <div class="shadow-layout">
+        <div class="shadow-video-grid" id="shadowVideoGrid"></div>
+      </div>
+
+      <!-- 跟读练习弹窗 -->
+      <div class="modal-overlay" id="shadowPracticeModal">
+        <div class="shadow-practice">
+          <div class="sp-header">
+            <h2 id="spTitle"></h2>
+            <button class="modal-close" onclick="ShadowModule.closePractice()">&times;</button>
+          </div>
+          <div class="sp-video">
+            <iframe id="spVideo" width="100%" height="360" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+          </div>
+          <div class="sp-steps">
+            <div class="sp-step active" data-step="1"><span class="sp-step-num">1</span> Watch</div>
+            <div class="sp-step" data-step="2"><span class="sp-step-num">2</span> Read Along</div>
+            <div class="sp-step" data-step="3"><span class="sp-step-num">3</span> Shadow</div>
+          </div>
+          <div class="sp-subtitle-area">
+            <p class="sp-hint">Select text + <kbd>Option+Q</kbd> to add to vocab · <kbd>Option+W</kbd> screenshot OCR</p>
+            <div class="sp-subtitles" id="spSubtitles"></div>
+            <div class="sp-controls">
+              <button class="btn-secondary" onclick="ShadowModule.toggleSubtitle()" id="btnToggleSub">Hide Subtitles</button>
+              <button class="btn-primary" onclick="ShadowModule.markComplete()">Mark as Complete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 添加视频弹窗 -->
+      <div class="modal-overlay" id="addVideoModal">
+        <div class="modal">
+          <div class="modal-header">
+            <h2>Add YouTube Video</h2>
+            <button class="modal-close" onclick="ShadowModule.closeAddVideoModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Video URL (YouTube or Bilibili)</label>
+              <input type="text" id="inputVideoUrl" placeholder="https://youtube.com/watch?v=... or https://bilibili.com/video/...">
+            </div>
+            <div class="form-group">
+              <label>Title <span class="form-hint">(auto-filled from URL)</span></label>
+              <input type="text" id="inputVideoTitle" placeholder="Loading from URL...">
+            </div>
+            <div class="form-group">
+              <label>Subtitles (optional, one line per sentence)</label>
+              <textarea id="inputVideoSubs" placeholder="Line 1&#10;Line 2&#10;..."></textarea>
+            </div>
+            <button class="btn-primary btn-full" onclick="ShadowModule.addCustomVideo()">Add Video</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- YouTuber 管理弹窗 -->
+      <div class="modal-overlay" id="youtuberModal">
+        <div class="modal">
+          <div class="modal-header">
+            <h2>My YouTubers</h2>
+            <button class="modal-close" onclick="ShadowModule.closeYoutuberModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p class="modal-hint">Add your favorite English-speaking YouTubers for shadow practice inspiration.</p>
+            <div class="youtuber-add-row">
+              <input type="text" id="inputYoutuber" placeholder="e.g. @RachelsEnglish">
+              <button class="btn-primary" onclick="ShadowModule.addYoutuber()">Add</button>
+            </div>
+            <div id="youtuberList" style="margin-top:16px;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 每日一句 ========== -->
+    <section class="page" id="page-daily">
+      <div class="page-header">
+        <div>
+          <h1>Daily Sentence</h1>
+          <p class="page-desc">One useful expression every day. British English pronunciation.</p>
+        </div>
+        <div class="daily-shortcut-hint">
+          <kbd>Option+Q</kbd> add selected text · <kbd>Option+W</kbd> screenshot OCR
+        </div>
+      </div>
+      <div class="daily-card" id="dailyCard">
+        <div class="daily-scene" id="dailyScene"></div>
+        <div class="daily-english" id="dailyEnglish"></div>
+        <div class="daily-chinese" id="dailyChinese"></div>
+        <div class="daily-context" id="dailyContext"></div>
+        <div class="daily-actions">
+          <button class="btn-secondary" onclick="DailyModule.speak()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            Listen (British)
+          </button>
+          <button class="btn-secondary" onclick="DailyModule.addToVocab()">+ Add to Vocab</button>
+          <button class="btn-primary" onclick="DailyModule.next()">Next Sentence →</button>
+        </div>
+      </div>
+      <div class="daily-history">
+        <h3>Previous Sentences</h3>
+        <div id="dailyHistory"></div>
+      </div>
+    </section>
+
+    <!-- ========== 打卡中心 ========== -->
+    <section class="page" id="page-checkin">
+      <div class="page-header">
+        <h1>Check-in Center</h1>
+      </div>
+
+      <div class="checkin-top">
+        <div class="checkin-level-card">
+          <div class="level-circle" id="levelCircle">
+            <span class="level-num" id="levelNum">1</span>
+          </div>
+          <div class="level-info">
+            <span class="level-title" id="levelTitle">Beginner Explorer</span>
+            <div class="xp-bar">
+              <div class="xp-fill" id="xpFill" style="width:0%"></div>
+            </div>
+            <span class="xp-text" id="xpText">0 / 100 XP</span>
+          </div>
+        </div>
+        <div class="checkin-stats">
+          <div class="stat-item">
+            <span class="stat-num" id="statTotalWords">0</span>
+            <span class="stat-label">Total Words</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num" id="statReviewed">0</span>
+            <span class="stat-label">Reviews Done</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num" id="statShadow">0</span>
+            <span class="stat-label">Videos Watched</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num" id="statStreak">0</span>
+            <span class="stat-label">Best Streak</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 热力图日历 -->
+      <div class="heatmap-section">
+        <h3>Activity Heatmap</h3>
+        <div class="heatmap-months" id="heatmapMonths"></div>
+        <div class="heatmap" id="heatmap"></div>
+        <div class="heatmap-legend">
+          <span>Less</span>
+          <span class="hl hl-0"></span>
+          <span class="hl hl-1"></span>
+          <span class="hl hl-2"></span>
+          <span class="hl hl-3"></span>
+          <span class="hl hl-4"></span>
+          <span>More</span>
+        </div>
+      </div>
+
+      <!-- 补打卡 -->
+      <div class="makeup-section">
+        <h3>Make-up Check-in</h3>
+        <p class="makeup-hint">Missed a day? You can make up <strong id="makeupRemain">3</strong> days this month.</p>
+        <input type="date" id="makeupDate" max="">
+        <button class="btn-secondary" onclick="CheckinModule.makeupCheckin()">Make Up</button>
+      </div>
+
+      <!-- 成就徽章 -->
+      <div class="badges-section">
+        <h3>Achievements</h3>
+        <div class="badges-grid" id="badgesGrid"></div>
+      </div>
+
+      <!-- 今日打卡按钮 -->
+      <div class="checkin-action">
+        <button class="btn-checkin" id="btnCheckin" onclick="CheckinModule.checkinToday()">
+          Check In Today
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== 截图OCR弹窗（全局） ========== -->
+  <div class="modal-overlay" id="ocrModal">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h2>Screenshot OCR</h2>
+        <button class="modal-close" onclick="DailyModule._closeOCRModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-hint">Press <kbd>Cmd+V</kbd> to paste a screenshot, drag & drop an image, or choose a file.</p>
+        <div class="ocr-drop-zone" id="ocrPreview"
+             onpaste="DailyModule._handleOCRPaste(event)"
+             ondrop="DailyModule._handleOCRDrop(event)"
+             ondragover="event.preventDefault()"
+             tabindex="0">
+          <p class="empty-hint">Paste a screenshot (Ctrl+V) or drop an image here.</p>
+        </div>
+        <label class="btn-secondary" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer;">
+          Choose Image
+          <input type="file" accept="image/*" onchange="DailyModule._handleOCRFile(event)" hidden>
+        </label>
+        <div class="ocr-status" id="ocrStatus"></div>
+        <div class="form-group" style="margin-top:12px;">
+          <label>Recognized Text (editable)</label>
+          <textarea id="ocrResult" rows="3" placeholder="OCR result will appear here..."></textarea>
+        </div>
+        <button class="btn-primary btn-full" onclick="DailyModule._addOCRResult()">Add to Vocabulary</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== Settings 弹窗 ========== -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button class="modal-close" onclick="App.toggleSettings()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-section">
+          <h3>Data Backup</h3>
+          <p class="modal-hint">Your data is auto-saved in the browser. Use these to backup or transfer to another device.</p>
+          <div class="settings-btns">
+            <button class="btn-secondary" onclick="App.exportData()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export Data
+            </button>
+            <label class="btn-secondary" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Import Data
+              <input type="file" accept=".json" onchange="App.importData(event)" hidden>
+            </label>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3>Shortcuts</h3>
+          <div class="settings-shortcuts">
+            <div class="shortcut-row"><kbd>Option+Q</kbd><span>Add selected text to vocabulary</span></div>
+            <div class="shortcut-row"><kbd>Option+W</kbd><span>Screenshot OCR to vocabulary</span></div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3>Danger Zone</h3>
+          <button class="btn-danger" onclick="if(confirm('Clear ALL data? This cannot be undone.')){localStorage.clear();location.reload();}">Reset All Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
