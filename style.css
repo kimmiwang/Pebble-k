@@ -470,6 +470,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .vocab-tag-tech { background: var(--blue-light); color: var(--blue); }
 .vocab-tag-design { background: var(--purple-light); color: var(--purple); }
 .vocab-tag-slang { background: var(--orange-light); color: var(--accent); }
+.vocab-tag-mine { background: #f5f5f4; color: #1a1a1a; border: 1px solid var(--border); }
 
 /* ══════ Recent Words ══════ */
 .recent-words-section h3 {
