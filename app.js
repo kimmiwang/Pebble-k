@@ -1706,12 +1706,12 @@ const VocabModule = {
   },
   flipCard() {
     const inner = document.getElementById('flashcardInner');
-    inner.classList.toggle('flipped');
+    // Only allow flip from front to back, not back to front
+    if (inner.classList.contains('flipped')) return;
+    inner.classList.add('flipped');
     // Auto-read example sentence when flipped to back
-    if (inner.classList.contains('flipped')) {
-      const example = document.getElementById('fcExample').textContent;
-      if (example) setTimeout(() => speakWord(example), 300);
-    }
+    const example = document.getElementById('fcExample').textContent;
+    if (example) setTimeout(() => speakWord(example), 300);
   },
   saveReviewNote() {
     const w = this.reviewQueue[this.reviewIndex];
