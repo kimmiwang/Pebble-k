@@ -2693,6 +2693,8 @@ const FocusTimer = {
       this._save();
       if (this._running) { this._pause(); }
       this._render();
+      // Also refresh dashboard to reset "All Done Today" and progress
+      try { App.refreshDashboard(); } catch {}
     }
   },
 
