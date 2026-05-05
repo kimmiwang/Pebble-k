@@ -35,7 +35,7 @@
       </li>
       <li class="nav-item" data-page="shadow">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        <span>Video &amp; Podcast</span>
+        <span>Daily Brief</span>
       </li>
       <li class="nav-item" data-page="daily">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -87,11 +87,12 @@
         <h1 class="greeting" id="greeting">Good morning!</h1>
       </div>
 
-      <!-- 今日推荐新词 -->
+      <!-- 今日场景 -->
       <div class="recommend-section">
         <div class="recommend-header">
           <div>
-            <h3>Today's New Words</h3>
+            <h3>Today's Scenes</h3>
+            <p class="page-desc" style="margin-top:4px;">Learn words in real-life contexts. Each scene has 3-5 related words.</p>
           </div>
           <button class="btn-primary" onclick="App.startDailyLearn()" id="btnStartLearn">Start Learning</button>
         </div>
@@ -100,15 +101,8 @@
             <div class="learn-progress-bar"><div class="learn-progress-fill" id="learnProgressFill" style="width:0%"></div></div>
             <span class="learn-progress-text" id="learnProgressText">0 / 30 learned</span>
           </div>
-          <div class="recommend-tags">
-            <button class="rtag-btn active" data-tag="all" onclick="App.filterRecommend('all')">All</button>
-            <button class="rtag-btn" data-tag="daily" onclick="App.filterRecommend('daily')">Daily Life</button>
-            <button class="rtag-btn" data-tag="tech" onclick="App.filterRecommend('tech')">Tech & Internet</button>
-            <button class="rtag-btn" data-tag="design" onclick="App.filterRecommend('design')">Designer</button>
-            <button class="rtag-btn" data-tag="slang" onclick="App.filterRecommend('slang')">Slang & Phrases</button>
-          </div>
         </div>
-        <div class="recommend-grid" id="recommendGrid"></div>
+        <div class="scene-grid" id="recommendGrid"></div>
       </div>
 
       <!-- 每日学习模式弹窗 -->
@@ -215,15 +209,35 @@
             <button class="modal-close" onclick="VocabModule.closeAddModal()">&times;</button>
           </div>
           <div class="modal-body">
-            <div class="form-group">
-              <label>Word or Phrase</label>
-              <input type="text" id="inputWord" placeholder="e.g. serendipity" autocomplete="off">
+            <!-- Step 1: input -->
+            <div id="addWordStep1">
+              <div class="form-group">
+                <label>Word or Phrase</label>
+                <input type="text" id="inputWord" placeholder="e.g. serendipity" autocomplete="off" onkeydown="if(event.key==='Enter')VocabModule.lookupWord()">
+              </div>
+              <button class="btn-primary btn-full" onclick="VocabModule.lookupWord()">Look Up</button>
             </div>
-            <div class="form-group">
-              <label>Your Note (optional)</label>
-              <textarea id="inputNote" placeholder="Where did you see it? Any personal note..."></textarea>
+            <!-- Step 2: preview & confirm -->
+            <div id="addWordStep2" style="display:none;">
+              <div class="aw-preview">
+                <div class="aw-word-row">
+                  <span class="aw-word" id="awWord"></span>
+                  <button class="speak-btn" id="awSpeak" onclick="speakWord(document.getElementById('awWord').textContent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+                </div>
+                <div class="aw-meaning" id="awMeaning"></div>
+              </div>
+              <div class="form-group" style="margin-top:16px;">
+                <textarea id="inputNote" placeholder="Add a note (optional)..." rows="2"></textarea>
+              </div>
+              <div class="aw-buttons">
+                <button class="btn-secondary" onclick="VocabModule.backToStep1()">Cancel</button>
+                <button class="btn-primary" onclick="VocabModule.addWord()">Confirm</button>
+              </div>
             </div>
-            <button class="btn-primary btn-full" onclick="VocabModule.addWord()">Add to Vocabulary</button>
+            <!-- Loading -->
+            <div id="addWordLoading" style="display:none;text-align:center;padding:20px;">
+              <span style="color:var(--text-muted);font-size:14px;">Looking up...</span>
+            </div>
           </div>
         </div>
       </div>
@@ -257,9 +271,8 @@
           <div class="flashcard" id="flashcard" onclick="VocabModule.flipCard()">
             <div class="flashcard-inner" id="flashcardInner">
               <div class="flashcard-front">
-                <span class="flashcard-word" id="fcWord"></span>
-                <span class="fc-front-phonetic" id="fcFrontPhonetic"></span>
-                <span class="flashcard-hint">Think about the meaning, then tap to reveal</span>
+                <div class="fc-cloze-sentence" id="fcClozeSentence"></div>
+                <span class="flashcard-hint">Read the sentence. What word fills the blank? Tap to reveal</span>
               </div>
               <div class="flashcard-back">
                 <div class="dl-back-word-row" id="fcBackWord"></div>
@@ -275,7 +288,15 @@
               </div>
             </div>
           </div>
-          <div class="review-buttons">
+          <!-- 造句练习提示 -->
+          <div class="fc-compose-prompt" id="fcComposePrompt" style="display:none;">
+            <div class="fc-compose-inner">
+              <span class="fc-compose-icon">💭</span>
+              <p class="fc-compose-text" id="fcComposeText"></p>
+              <button class="btn-primary fc-compose-next" onclick="VocabModule.composeNext()">Done — Next Card →</button>
+            </div>
+          </div>
+          <div class="review-buttons" id="reviewButtons">
             <button class="rbtn rbtn-forgot" onclick="VocabModule.reviewAnswer(0)">Forgot</button>
             <button class="rbtn rbtn-fuzzy" onclick="VocabModule.reviewAnswer(1)">Fuzzy</button>
             <button class="rbtn rbtn-got" onclick="VocabModule.reviewAnswer(2)">Got it!</button>
@@ -284,97 +305,34 @@
       </div>
     </section>
 
-    <!-- ========== Video &amp; Podcast ========== -->
+    <!-- ========== Daily Brief (原 Video & Podcast) ========== -->
     <section class="page" id="page-shadow">
       <div class="page-header">
         <div>
-          <h1>Video &amp; Podcast</h1>
-          <p class="page-desc">Watch videos from your favorite creators to immerse in English.</p>
-        </div>
-        <div class="vocab-actions">
-          <button class="btn-primary" onclick="ShadowModule.showAddVideoModal()">+ Add Video</button>
-          <button class="btn-secondary" onclick="ShadowModule.showYoutuberModal()">My YouTubers</button>
+          <h1>Daily Brief</h1>
+          <p class="page-desc">Your personalized English learning digest. Updated daily.</p>
         </div>
       </div>
 
-      <div class="shadow-categories">
-        <button class="cat-btn active" data-cat="all" onclick="ShadowModule.filterCategory('all')">All</button>
-        <button class="cat-btn" data-cat="daily" onclick="ShadowModule.filterCategory('daily')">Daily Life</button>
-        <button class="cat-btn" data-cat="work" onclick="ShadowModule.filterCategory('work')">Workplace</button>
-        <button class="cat-btn" data-cat="tech" onclick="ShadowModule.filterCategory('tech')">Tech & Internet</button>
-        <button class="cat-btn" data-cat="ted" onclick="ShadowModule.filterCategory('ted')">TED Talks</button>
-        <button class="cat-btn" data-cat="news" onclick="ShadowModule.filterCategory('news')">News & Culture</button>
-      </div>
-
-      <div class="shadow-layout">
-        <div class="shadow-video-grid" id="shadowVideoGrid"></div>
-      </div>
+      <div class="brief-content" id="briefContent"></div>
 
       <!-- 跟读练习弹窗 -->
       <div class="modal-overlay" id="shadowPracticeModal">
         <div class="shadow-practice">
           <div class="sp-header">
-            <h2 id="spTitle"></h2>
-            <button class="modal-close" onclick="ShadowModule.closePractice()">&times;</button>
-          </div>
-          <div class="sp-video">
-            <iframe id="spVideo" width="100%" height="360" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-          </div>
-          <div class="sp-steps">
-            <div class="sp-step active" data-step="1"><span class="sp-step-num">1</span> Watch</div>
-            <div class="sp-step" data-step="2"><span class="sp-step-num">2</span> Read Along</div>
-            <div class="sp-step" data-step="3"><span class="sp-step-num">3</span> Shadow</div>
+            <h2 id="spTitle">Shadow Practice</h2>
+            <button class="modal-close" onclick="BriefModule.closePractice()">&times;</button>
           </div>
           <div class="sp-subtitle-area">
-            <p class="sp-hint">Select text + <kbd>Option+Q</kbd> to add to vocab · <kbd>Option+W</kbd> screenshot OCR</p>
             <div class="sp-subtitles" id="spSubtitles"></div>
+            <div class="sp-shadow-tips" id="spShadowTips"></div>
             <div class="sp-controls">
-              <button class="btn-secondary" onclick="ShadowModule.toggleSubtitle()" id="btnToggleSub">Hide Subtitles</button>
-              <button class="btn-primary" onclick="ShadowModule.markComplete()">Mark as Complete</button>
+              <button class="btn-secondary" onclick="BriefModule.speakPractice()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                Listen
+              </button>
+              <button class="btn-primary" onclick="BriefModule.closePractice()">Done</button>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 添加视频弹窗 -->
-      <div class="modal-overlay" id="addVideoModal">
-        <div class="modal">
-          <div class="modal-header">
-            <h2>Add YouTube Video</h2>
-            <button class="modal-close" onclick="ShadowModule.closeAddVideoModal()">&times;</button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>Video URL (YouTube or Bilibili)</label>
-              <input type="text" id="inputVideoUrl" placeholder="https://youtube.com/watch?v=... or https://bilibili.com/video/...">
-            </div>
-            <div class="form-group">
-              <label>Title <span class="form-hint">(auto-filled from URL)</span></label>
-              <input type="text" id="inputVideoTitle" placeholder="Loading from URL...">
-            </div>
-            <div class="form-group">
-              <label>Subtitles (optional, one line per sentence)</label>
-              <textarea id="inputVideoSubs" placeholder="Line 1&#10;Line 2&#10;..."></textarea>
-            </div>
-            <button class="btn-primary btn-full" onclick="ShadowModule.addCustomVideo()">Add Video</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- YouTuber 管理弹窗 -->
-      <div class="modal-overlay" id="youtuberModal">
-        <div class="modal">
-          <div class="modal-header">
-            <h2>My YouTubers</h2>
-            <button class="modal-close" onclick="ShadowModule.closeYoutuberModal()">&times;</button>
-          </div>
-          <div class="modal-body">
-            <p class="modal-hint">Add your favorite English-speaking YouTubers for shadow practice inspiration.</p>
-            <div class="youtuber-add-row">
-              <input type="text" id="inputYoutuber" placeholder="e.g. @RachelsEnglish">
-              <button class="btn-primary" onclick="ShadowModule.addYoutuber()">Add</button>
-            </div>
-            <div id="youtuberList" style="margin-top:16px;"></div>
           </div>
         </div>
       </div>
@@ -396,6 +354,7 @@
         <div class="daily-english" id="dailyEnglish"></div>
         <div class="daily-chinese" id="dailyChinese"></div>
         <div class="daily-context" id="dailyContext"></div>
+        <div class="daily-keywords" id="dailyKeywords"></div>
         <div class="daily-actions">
           <button class="btn-secondary" onclick="DailyModule.speak()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>

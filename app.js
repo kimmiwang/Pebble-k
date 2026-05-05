@@ -394,6 +394,48 @@ async function autoLookup(word) {
 // Pre-built list of words for daily auto-push (system picks 30/day based on date)
 const DAILY_WORD_POOL = Object.keys(WORD_DB);
 
+// ───────── Daily Scene Definitions (5-6 scenes per day, 3-5 words each) ─────────
+const DAILY_SCENES = [
+  { title: "Coffee Shop", emoji: "☕", desc: "Ordering your morning fix", words: ["commute", "mundane", "spontaneous", "vibe", "banter"], sentence: "I grab my usual <strong>commute</strong> coffee — the <strong>mundane</strong> ritual that somehow makes my day feel less <strong>mundane</strong>." },
+  { title: "Standup Meeting", emoji: "🧑‍💻", desc: "Daily sync with your team", words: ["blocker", "bandwidth", "standup", "sync", "heads-up"], sentence: "At the <strong>standup</strong>, I gave a <strong>heads-up</strong> that I'm <strong>blocked</strong> on the API — I need more <strong>bandwidth</strong> from backend." },
+  { title: "Design Review", emoji: "🎨", desc: "Critiquing a new mockup", words: ["hierarchy", "whitespace", "contrast", "alignment", "CTA"], sentence: "The visual <strong>hierarchy</strong> is off — add more <strong>whitespace</strong> and increase <strong>contrast</strong> on the <strong>CTA</strong>." },
+  { title: "Lunch Break", emoji: "🍜", desc: "Chatting over food", words: ["foodie", "mouthwatering", "bland", "guilty pleasure", "binge"], sentence: "She's a total <strong>foodie</strong> — her Instagram is full of <strong>mouthwatering</strong> photos, and her <strong>guilty pleasure</strong> is late-night ramen." },
+  { title: "Networking Event", emoji: "🤝", desc: "Making new connections", words: ["break the ice", "compelling", "stakeholder", "leverage", "synergy"], sentence: "I used a joke to <strong>break the ice</strong>, then made a <strong>compelling</strong> case for how we can create <strong>synergy</strong>." },
+  { title: "Bug Hunt", emoji: "🐛", desc: "Debugging a production issue", words: ["bottleneck", "edge case", "rollback", "verbose", "workaround"], sentence: "The <strong>edge case</strong> caused a <strong>bottleneck</strong> — we used a <strong>workaround</strong> first, then <strong>rolled back</strong> the deploy." },
+  { title: "Weekend Plans", emoji: "🌤️", desc: "Making plans with friends", words: ["hang out", "spontaneous", "FOMO", "bucket list", "wanderlust"], sentence: "Let's be <strong>spontaneous</strong> and just <strong>hang out</strong> at the beach — I've had serious <strong>wanderlust</strong> and <strong>FOMO</strong> lately." },
+  { title: "Movie Night", emoji: "🎬", desc: "Discussing what to watch", words: ["cliffhanger", "plot twist", "binge-watch", "spoiler", "iconic"], sentence: "No <strong>spoilers</strong>! But I heard the ending has an <strong>iconic</strong> <strong>plot twist</strong> — it's so <strong>binge</strong>-worthy." },
+  { title: "Performance Review", emoji: "📊", desc: "Getting feedback at work", words: ["actionable", "KPI", "deliverable", "iterate", "trade-off"], sentence: "The feedback was <strong>actionable</strong>: hit our <strong>KPIs</strong>, <strong>iterate</strong> faster, and accept the <strong>trade-offs</strong> in quality vs. speed." },
+  { title: "Apartment Hunting", emoji: "🏠", desc: "Looking for a new place", words: ["dealbreaker", "incentive", "commute", "cozy", "sustainable"], sentence: "A long <strong>commute</strong> is a <strong>dealbreaker</strong> for me — I need somewhere <strong>cozy</strong> and <strong>sustainable</strong>." },
+  { title: "Startup Pitch", emoji: "🚀", desc: "Presenting your idea", words: ["MVP", "pivot", "pain point", "scalable", "disrupt"], sentence: "Our <strong>MVP</strong> solves a key <strong>pain point</strong> — if we need to <strong>pivot</strong>, the architecture is <strong>scalable</strong>." },
+  { title: "Creative Process", emoji: "✨", desc: "Brainstorming new ideas", words: ["moodboard", "iteration", "cohesive", "aesthetic", "intuitive"], sentence: "I started with a <strong>moodboard</strong> and after three <strong>iterations</strong>, the design feels <strong>cohesive</strong> and <strong>intuitive</strong>." },
+  { title: "Gym & Fitness", emoji: "💪", desc: "Talking about workouts", words: ["motivated", "overwhelmed", "cope", "resilient", "burnt out"], sentence: "I felt <strong>overwhelmed</strong> and <strong>burnt out</strong>, but working out helps me <strong>cope</strong> — it makes me more <strong>resilient</strong>." },
+  { title: "Social Media", emoji: "📱", desc: "Internet culture talk", words: ["viral", "algorithm", "influencer", "clickbait", "scroll"], sentence: "That post went <strong>viral</strong> thanks to the <strong>algorithm</strong> — but half the comments are just <strong>influencers</strong> leaving <strong>clickbait</strong>." },
+  { title: "Travel Day", emoji: "✈️", desc: "At the airport", words: ["jet lag", "itinerary", "souvenir", "bucket list", "wanderlust"], sentence: "Despite the <strong>jet lag</strong>, I stuck to my <strong>itinerary</strong> and crossed three things off my <strong>bucket list</strong>." },
+  { title: "Code Review", emoji: "👁️", desc: "Reviewing a teammate's PR", words: ["refactor", "tech debt", "boilerplate", "legacy", "deprecate"], sentence: "This <strong>legacy</strong> module has too much <strong>tech debt</strong> — let's <strong>refactor</strong> it and <strong>deprecate</strong> the old API." },
+  { title: "First Date", emoji: "❤️", desc: "Getting to know someone", words: ["genuine", "hilarious", "awkward", "catch up", "vibe"], sentence: "The <strong>vibe</strong> was great — she's <strong>genuine</strong> and <strong>hilarious</strong>, and it wasn't <strong>awkward</strong> at all." },
+  { title: "Product Launch", emoji: "🎯", desc: "Shipping a new feature", words: ["ship", "deploy", "sprint", "scope creep", "pipeline"], sentence: "We <strong>shipped</strong> it after a two-week <strong>sprint</strong> — avoided <strong>scope creep</strong> and our CI/CD <strong>pipeline</strong> handled the <strong>deploy</strong>." },
+  { title: "Freelance Life", emoji: "💻", desc: "Working independently", words: ["side hustle", "deadline", "bandwidth", "streamline", "follow up"], sentence: "My <strong>side hustle</strong> has tight <strong>deadlines</strong>, so I <strong>streamlined</strong> my workflow and always <strong>follow up</strong> quickly." },
+  { title: "Book Club", emoji: "📚", desc: "Discussing what you're reading", words: ["compelling", "nuance", "eloquent", "gist", "understatement"], sentence: "The author's <strong>eloquent</strong> prose captures every <strong>nuance</strong> — saying it's good is an <strong>understatement</strong>." },
+  { title: "Slang Vibes", emoji: "🔥", desc: "Casual chat with friends", words: ["slay", "lit", "cap", "rent-free", "sus"], sentence: "That outfit? <strong>Slay</strong>. The party was <strong>lit</strong>. No <strong>cap</strong>, that song lives in my head <strong>rent-free</strong>." },
+  { title: "Remote Work", emoji: "🏡", desc: "WFH challenges", words: ["onboarding", "downtime", "agile", "deep dive", "hands-on"], sentence: "The <strong>onboarding</strong> was smooth — our <strong>agile</strong> team does <strong>hands-on</strong> pairing and weekly <strong>deep dives</strong>." },
+  { title: "Client Meeting", emoji: "💼", desc: "Discussing with stakeholders", words: ["ROI", "scope", "deliverable", "touch base", "takeaway"], sentence: "The key <strong>takeaway</strong>: define <strong>scope</strong> first, show <strong>ROI</strong>, and <strong>touch base</strong> weekly with updates." },
+  { title: "Street Food Tour", emoji: "🌮", desc: "Exploring local eats", words: ["authentic", "mouthwatering", "versatile", "iconic", "subtle"], sentence: "The <strong>authentic</strong> street tacos were <strong>mouthwatering</strong> — <strong>subtle</strong> spice, <strong>iconic</strong> flavors." },
+];
+
+function getDailyScenes(existingWords) {
+  const today = todayStr();
+  const seed = today.split('-').join('');
+  const seedNum = parseInt(seed, 10);
+  
+  // Shuffle scenes based on date seed and pick 5-6
+  const pool = [...DAILY_SCENES];
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = (seedNum * (i + 1) + 7919) % (i + 1);
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, 6);
+}
+
 function getDailyRecommendedWords(existingWords, masteredWords) {
   const today = todayStr();
   const seed = today.split('-').join('');
@@ -686,6 +728,33 @@ const DAILY_SENTENCES = [
   { scene: "Phone - Voicemail", en: "Hey, it's me. Give me a call back when you get a chance. Nothing urgent.", zh: "嘿是我。有空回我个电话。不着急。", context: "'Nothing urgent' prevents the other person from worrying." },
   { scene: "Phone - Texting", en: "Sorry, just saw this! My phone was on silent. What's up?", zh: "不好意思刚看到！手机静音了。怎么了？", context: "Common excuse for late text reply. 'What's up' asks what they needed." },
   { scene: "Messaging - Group chat", en: "Can someone fill me in? I missed the last 50 messages.", zh: "谁能帮我说一下？我错过了最后50条消息。", context: "'Fill me in' means summarize what I missed. Common in active group chats." },
+  // ═══ BATCH 17: Workplace — Remote & Async ═══
+  { scene: "Remote - Async", en: "I'll leave a Loom video so you can watch it at your own pace.", zh: "我录一个 Loom 视频，你可以按自己的节奏看。", context: "'At your own pace' means whenever it's convenient. Key async communication skill." },
+  { scene: "Remote - Focus", en: "I'm going to go heads-down for a couple hours. Ping me if it's urgent.", zh: "我接下来两小时要专注工作。紧急的事再 ping 我。", context: "'Heads-down' means deep focus work. 'Ping me' is casual for 'message me'." },
+  { scene: "Remote - Timezone", en: "Let's find a time that works across time zones. Maybe 10 AM UTC?", zh: "找个跨时区都方便的时间吧。UTC 上午10点怎么样？", context: "Essential for distributed teams. Always suggest a specific time in a neutral zone." },
+  { scene: "Remote - Check-in", en: "Just wanted to check in — how's everything going on your end?", zh: "就想问一下——你那边一切还好吗？", context: "'On your end' means in your area of responsibility. Casual check-in." },
+  // ═══ BATCH 18: Self-improvement & Learning ═══
+  { scene: "Learning - Progress", en: "I'm not where I want to be yet, but I'm making progress every day.", zh: "我还没达到目标，但每天都在进步。", context: "Great mindset sentence. 'Making progress' acknowledges effort over perfection." },
+  { scene: "Learning - Habits", en: "It takes about 21 days to build a habit, but consistency is what really matters.", zh: "养成习惯大约需要21天，但真正重要的是坚持。", context: "Classic self-improvement wisdom. 'Consistency' is the key word." },
+  { scene: "Learning - Mistakes", en: "I'd rather make mistakes and learn than play it safe and stay stuck.", zh: "我宁愿犯错学习，也不愿安于现状不进步。", context: "'Play it safe' means avoid risks. 'Stay stuck' means no progress." },
+  { scene: "Learning - Comfort zone", en: "Growth happens outside your comfort zone. It's supposed to feel uncomfortable.", zh: "成长发生在舒适区之外。本来就应该觉得不舒服。", context: "Motivational. 'It's supposed to' normalizes the discomfort of learning." },
+  { scene: "Learning - Feedback", en: "I'm open to constructive criticism. It's the fastest way to improve.", zh: "我乐于接受建设性批评。那是最快的进步方式。", context: "'Constructive criticism' vs just 'criticism' — the adjective matters." },
+  // ═══ BATCH 19: Health & Wellness ═══
+  { scene: "Health - Sleep", en: "I've been prioritizing sleep lately and it's made a huge difference.", zh: "我最近很注重睡眠，效果特别明显。", context: "'Prioritizing' and 'made a huge difference' are very common collocations." },
+  { scene: "Health - Mental", en: "It's okay to not be okay. Taking a mental health day isn't weakness.", zh: "不好也没关系。请心理健康假不是软弱。", context: "'Mental health day' is increasingly common in workplaces. Normalizing self-care." },
+  { scene: "Health - Exercise", en: "Even a 20-minute walk can completely shift your mood.", zh: "哪怕走20分钟路，心情都会完全不一样。", context: "'Shift your mood' means change how you feel. Simple but powerful advice." },
+  { scene: "Health - Burnout", en: "I realized I was heading toward burnout and decided to set better boundaries.", zh: "我意识到自己快要 burnout 了，决定设立更好的界限。", context: "'Heading toward' implies you caught it before it got worse. 'Set boundaries' is key." },
+  // ═══ BATCH 20: Culture & Society ═══
+  { scene: "Culture - Diversity", en: "I love how diverse this city is. You can find food from every continent.", zh: "我喜欢这个城市的多元化。各大洲的美食都能找到。", context: "'Diverse' and 'every continent' paint a vivid picture of multiculturalism." },
+  { scene: "Culture - Generational", en: "Every generation thinks the next one has it easy. It's been like that forever.", zh: "每一代人都觉得下一代过得轻松。一直都是这样。", context: "Observation about generational dynamics. 'Has it easy' means life is easier for them." },
+  { scene: "Culture - Trends", en: "I try not to follow every trend. I'd rather develop my own style.", zh: "我尽量不追每个潮流。我更想发展自己的风格。", context: "'Follow every trend' vs 'develop my own style' shows independence." },
+  { scene: "Culture - Language", en: "Learning a new language opens up a completely different way of thinking.", zh: "学一门新语言会打开一种完全不同的思维方式。", context: "'Opens up' is a beautiful metaphor for what language learning does to your mind." },
+  // ═══ BATCH 21: Professional Growth ═══
+  { scene: "Career - Interview", en: "Tell me about a time when you had to deal with a difficult situation.", zh: "跟我说说你处理过的一个困难情况。", context: "Classic behavioral interview question. Practice the STAR method to answer." },
+  { scene: "Career - Negotiation", en: "Based on my experience and market research, I believe a salary of X is fair.", zh: "根据我的经验和市场调研，我认为X的薪资是合理的。", context: "'Based on' and 'market research' show you've done your homework." },
+  { scene: "Career - Networking", en: "I'd love to pick your brain about your experience in this field.", zh: "很想请教一下你在这个领域的经验。", context: "'Pick your brain' is informal for 'get your insights/advice'. Flattering but casual." },
+  { scene: "Career - Transition", en: "I'm looking to make a career change. Any advice for someone starting over?", zh: "我在考虑转行。对从头开始的人有什么建议吗？", context: "'Make a career change' and 'starting over' are vulnerable but brave things to say." },
+  { scene: "Career - Mentorship", en: "Having a mentor completely changed my trajectory. I can't recommend it enough.", zh: "有个导师完全改变了我的轨迹。怎么推荐都不为过。", context: "'Changed my trajectory' and 'can't recommend it enough' are powerful endorsements." },
 ];
 
 
@@ -1160,50 +1229,36 @@ const App = {
   },
 
   renderRecommend(filter) {
-    if (filter) this._recommendFilter = filter;
-    const tag = this._recommendFilter || 'all';
-    const recommended = getDailyRecommendedWords(this.data.words, this.data.mastered);
-    let words = recommended.map(w => ({ key: w, ...WORD_DB[w] }));
-    if (tag !== 'all') words = words.filter(w => w.tag === tag);
-    
-    const rcEl = document.getElementById('recommendCount');
-    if (rcEl) rcEl.textContent = words.length;
+    const scenes = getDailyScenes(this.data.words);
     const grid = document.getElementById('recommendGrid');
     const existingSet = new Set(this.data.words.map(w => w.word.toLowerCase()));
     const todayLearned = new Set(((this.data.dailyLearned || {})[todayStr()] || []).map(w => w.toLowerCase()));
 
-    grid.innerHTML = words.map(w => {
-      const isAdded = existingSet.has(w.key.toLowerCase());
-      const isLearned = todayLearned.has(w.key.toLowerCase());
-      const tagClass = w.tag === 'tech' ? 'rc-tag-tech' : w.tag === 'design' ? 'rc-tag-design' : w.tag === 'slang' ? 'rc-tag-slang' : 'rc-tag-daily';
-      const tagLabel = w.tag === 'tech' ? 'Tech' : w.tag === 'design' ? 'Design' : w.tag === 'slang' ? 'Slang' : 'Daily';
-      return `<div class="recommend-card ${isLearned ? 'rc-learned' : ''}" onclick="App.showWordDetail('${w.key.replace(/'/g, "\\'")}')">
-        <button class="rc-dismiss" onclick="event.stopPropagation();App.masterWord('${w.key.replace(/'/g, "\\'")}')" title="I know this word — dismiss">×</button>
-        ${isLearned ? '<span class="rc-learned-badge">Learned</span>' : ''}
-        <div class="rc-left">
-          <div class="rc-word-row">
-            <span class="rc-word">${w.key}</span>
-            <button class="speak-btn" onclick="event.stopPropagation();speakWord('${w.key.replace(/'/g, "\\'")}')" title="Listen">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-            </button>
-          </div>
-          <span class="rc-phonetic">${w.phonetic || ''}</span>
-          <span class="rc-meaning">${w.meaning}</span>
-          <div class="rc-meta">
-            <span class="rc-tag ${tagClass}">${tagLabel}</span>
-          </div>
+    grid.innerHTML = scenes.map(scene => {
+      const wordsHtml = scene.words.map(w => {
+        const isLearned = todayLearned.has(w.toLowerCase());
+        const isAdded = existingSet.has(w.toLowerCase());
+        return `<div class="scene-word-chip ${isLearned ? 'learned' : ''}" onclick="App.showWordDetail('${w.replace(/'/g, "\\'")}')">
+          <span>${w}</span>
+          ${isAdded || isLearned 
+            ? '<button class="chip-add" disabled>✓</button>'
+            : `<button class="chip-add" onclick="event.stopPropagation();App.addRecommendWord('${w.replace(/'/g, "\\'")}')" title="Add to vocab">+</button>`}
+        </div>`;
+      }).join('');
+      return `<div class="scene-card">
+        <div class="scene-card-header">
+          <span class="scene-card-title"><span class="scene-emoji">${scene.emoji}</span> ${scene.title}</span>
         </div>
-        ${isAdded 
-          ? '<button class="rc-add added" onclick="event.stopPropagation()" disabled>✓</button>' 
-          : `<button class="rc-add" onclick="event.stopPropagation();App.addRecommendWord('${w.key.replace(/'/g, "\\'")}')">+</button>`
-        }
+        <div class="scene-card-desc">${scene.desc}</div>
+        <div class="scene-words">${wordsHtml}</div>
+        <div class="scene-sentence">${scene.sentence}</div>
       </div>`;
     }).join('');
   },
 
   filterRecommend(tag) {
-    document.querySelectorAll('.rtag-btn').forEach(b => b.classList.toggle('active', b.dataset.tag === tag));
-    this.renderRecommend(tag);
+    // Deprecated — scenes mode no longer uses tag filtering
+    this.renderRecommend();
   },
 
   masterWord(word) {
@@ -1252,6 +1307,8 @@ const App = {
       };
     }
     modal.classList.add('show');
+    // Auto-speak the word
+    setTimeout(() => speakWord(word), 200);
   },
 
   closeWordDetail() {
@@ -1607,8 +1664,52 @@ const VocabModule = {
     btn.textContent = due.length > 0 ? `Review Cards (${due.length})` : 'Review Cards';
   },
 
-  showAddModal() { document.getElementById('addWordModal').classList.add('show'); document.getElementById('inputWord').focus(); },
-  closeAddModal() { document.getElementById('addWordModal').classList.remove('show'); document.getElementById('inputWord').value = ''; document.getElementById('inputNote').value = ''; },
+  showAddModal() {
+    document.getElementById('addWordModal').classList.add('show');
+    document.getElementById('addWordStep1').style.display = 'block';
+    document.getElementById('addWordStep2').style.display = 'none';
+    document.getElementById('addWordLoading').style.display = 'none';
+    document.getElementById('inputWord').value = '';
+    document.getElementById('inputWord').focus();
+  },
+  closeAddModal() {
+    document.getElementById('addWordModal').classList.remove('show');
+    document.getElementById('inputWord').value = '';
+    document.getElementById('inputNote').value = '';
+    this._lookupResult = null;
+  },
+  backToStep1() {
+    document.getElementById('addWordStep1').style.display = 'block';
+    document.getElementById('addWordStep2').style.display = 'none';
+    document.getElementById('inputWord').focus();
+  },
+  _lookupResult: null,
+  async lookupWord() {
+    const word = document.getElementById('inputWord').value.trim();
+    if (!word) { toast('Please enter a word.'); return; }
+    const wordLower = word.toLowerCase();
+    if (App.data.words.find(w => w.word.toLowerCase() === wordLower)) {
+      toast('This word already exists in your vocabulary!');
+      return;
+    }
+    // Show loading
+    document.getElementById('addWordStep1').style.display = 'none';
+    document.getElementById('addWordLoading').style.display = 'block';
+    // Lookup
+    let entry = WORD_DB[wordLower];
+    if (!entry) {
+      entry = await autoLookup(word);
+    }
+    document.getElementById('addWordLoading').style.display = 'none';
+    // Show preview
+    document.getElementById('awWord').textContent = word;
+    document.getElementById('awMeaning').textContent = entry?.meaning || '(No definition found)';
+    document.getElementById('inputNote').value = '';
+    document.getElementById('addWordStep2').style.display = 'block';
+    this._lookupResult = entry;
+    // Auto speak
+    speakWord(word);
+  },
 
   addWord() {
     const wordInput = document.getElementById('inputWord').value.trim();
@@ -1621,7 +1722,7 @@ const VocabModule = {
       return;
     }
 
-    const dbEntry = WORD_DB[wordLower] || {};
+    const dbEntry = this._lookupResult || WORD_DB[wordLower] || {};
     const newWord = {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
       word: wordInput,
@@ -1644,24 +1745,6 @@ const VocabModule = {
     this.render();
     App.refreshDashboard();
     toast(`"${wordInput}" added! +5 XP`);
-
-    // Auto-lookup if no meaning
-    if (!newWord.meaning) {
-      autoLookup(wordInput).then(result => {
-        if (result && result.meaning) {
-          const w = App.data.words.find(x => x.id === newWord.id);
-          if (w) {
-            w.meaning = result.meaning;
-            if (result.phonetic) w.phonetic = result.phonetic;
-            if (result.examples?.length) w.examples = result.examples;
-            if (result.synonyms?.length) w.synonyms = result.synonyms;
-            Store.save(App.data);
-            VocabModule.render();
-            App.refreshDashboard();
-          }
-        }
-      });
-    }
   },
 
   addWordDirect(word, note = '') {
@@ -1793,23 +1876,29 @@ const VocabModule = {
     const image = w.image || dbEntry.image || '';
     
     document.getElementById('reviewProgress').textContent = `${this.reviewIndex + 1} / ${this.reviewQueue.length}`;
-    document.getElementById('fcWord').textContent = w.word;
     
-    // Front: phonetic + speak
-    document.getElementById('fcFrontPhonetic').innerHTML = `${phonetic} <button class="speak-btn" onclick="event.stopPropagation();speakWord('${w.word.replace(/'/g, "\\'")}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>`;
+    // Front: cloze sentence (fill-in-blank)
+    const clozeEl = document.getElementById('fcClozeSentence');
+    const exampleSentence = examples[0] || `Use the word "${w.word}" in context.`;
+    // Replace the word with blank, case-insensitive
+    const wordRegex = new RegExp(`\\b${w.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
+    const clozeSentence = exampleSentence.replace(wordRegex, '<span class="cloze-blank">___</span>');
+    clozeEl.innerHTML = clozeSentence !== exampleSentence ? clozeSentence : `"${exampleSentence.replace(wordRegex, '<span class="cloze-blank">___</span>')}"`;
+    // If the word wasn't found in the example (phrase with space, etc), use a generic cloze
+    if (clozeSentence === exampleSentence) {
+      clozeEl.innerHTML = `<span style="font-size:16px;color:var(--text-secondary);display:block;margin-bottom:12px;">"${exampleSentence}"</span><span class="cloze-blank" style="min-width:120px;">___</span><span style="display:block;margin-top:8px;font-size:13px;color:var(--text-muted);">What word fits this context?</span>`;
+    }
     
     // Back: word + phonetic + speak row at top
     document.getElementById('fcBackWord').innerHTML = `${w.word} <span class="dl-back-phonetic">${phonetic}</span> <button class="speak-btn speak-btn-card" onclick="event.stopPropagation();speakWord('${w.word.replace(/'/g, "\\'")}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>`;
     document.getElementById('fcMeaning').textContent = meaning;
-    // Chinese meaning: show DB meaning if current meaning is English-only
+    // Chinese meaning
     const cnEl = document.getElementById('fcMeaningCn');
     if (cnEl) {
       const dbMeaning = dbEntry.meaning || '';
       const hasChinese = /[\u4e00-\u9fff]/.test(meaning);
       if (!hasChinese && dbMeaning && /[\u4e00-\u9fff]/.test(dbMeaning)) {
         cnEl.textContent = dbMeaning;
-      } else if (!hasChinese) {
-        cnEl.textContent = '';
       } else {
         cnEl.textContent = '';
       }
@@ -1820,23 +1909,28 @@ const VocabModule = {
     imgEl.innerHTML = image ? `<img src="${image}" alt="${w.word}" onerror="this.style.display='none'">` : '';
     document.getElementById('fcNoteInput').value = w.note || '';
     
-    // Instant flip back without animation
+    // Reset card state
     const inner = document.getElementById('flashcardInner');
     inner.style.transition = 'none';
     inner.classList.remove('flipped');
     inner.offsetHeight;
     inner.style.transition = '';
-    // Auto-speak the word
-    setTimeout(() => speakWord(w.word), 300);
+    
+    // Hide compose prompt, show review buttons
+    document.getElementById('fcComposePrompt').style.display = 'none';
+    document.getElementById('reviewButtons').style.display = 'flex';
+    
+    // Auto-speak the example sentence (so user hears context)
+    if (examples[0]) setTimeout(() => speakWord(examples[0]), 300);
   },
   flipCard() {
     const inner = document.getElementById('flashcardInner');
     // Only allow flip from front to back, not back to front
     if (inner.classList.contains('flipped')) return;
     inner.classList.add('flipped');
-    // Auto-read example sentence when flipped to back
-    const example = document.getElementById('fcExample').textContent;
-    if (example) setTimeout(() => speakWord(example), 300);
+    // Auto-speak the word when revealing
+    const w = this.reviewQueue[this.reviewIndex];
+    if (w) setTimeout(() => speakWord(w.word), 300);
   },
   saveReviewNote() {
     const w = this.reviewQueue[this.reviewIndex];
@@ -1861,434 +1955,245 @@ const VocabModule = {
       App.addXP(quality === 2 ? 10 : quality === 1 ? 5 : 2);
       Store.save(App.data);
     }
+    // Show compose prompt
+    const prompts = [
+      `Try making a sentence with <strong>${w.word}</strong> in your head. Think about how you'd use it in conversation.`,
+      `Imagine a scenario where you'd say <strong>${w.word}</strong>. Picture yourself using it naturally.`,
+      `Can you think of a situation from today where <strong>${w.word}</strong> would fit? Take a moment.`,
+      `Close your eyes and compose a sentence with <strong>${w.word}</strong>. No pressure — just think it.`,
+    ];
+    const prompt = prompts[this.reviewIndex % prompts.length];
+    document.getElementById('fcComposeText').innerHTML = prompt;
+    document.getElementById('fcComposePrompt').style.display = 'block';
+    document.getElementById('reviewButtons').style.display = 'none';
+  },
+  composeNext() {
     this.reviewIndex++;
     this.showCard();
   },
 };
 
 // ═════════════════════════════════════════
-//  SHADOW LEARN MODULE
+//  DAILY BRIEF MODULE (replaces Shadow/Video)
 // ═════════════════════════════════════════
-const ShadowModule = {
-  currentFilter: 'all',
-  _feedVideos: [], // videos fetched from YouTubers
+const BRIEF_DATABASE = [
+  {
+    category: "Lifestyle & Input",
+    items: [
+      { title: "Emma Chamberlain (Anything Goes)", meta: "Podcast · ~20 min", desc: "Emma 聊到了那种「苦乐参半」的情绪——也就是你现在面对假期结束的心情。她探讨了如何接受不完美，并从这种细微的情感中汲取成长的力量。", keywords: ["bittersweet", "resilient", "vulnerable"] },
+      { title: "The Hot Pursuit Podcast", meta: "Podcast · ~45 min", desc: "三位主持人非常坦诚地聊到了关于身体焦虑和自我接纳。这类关于「自我认同」的对话包含了大量高频的<strong>情绪描述词汇</strong>。", keywords: ["boundaries", "authentic", "mindful"] },
+      { title: "Volka English", meta: "YouTube Vlog · ~30 min", desc: "春日户外的慢节奏 Vlog，适合做家务或通勤时开启。练习捕捉关于自然、天气和即时感受的简单地道短语。", keywords: ["spontaneous", "cozy", "subtle"] },
+    ]
+  },
+  {
+    category: "Professional UX & Tech",
+    items: [
+      { title: "UI/UX Design Trends 2026", meta: "YouTube · 15 min", desc: "视频提到了系统开始能够「感知用户的犹豫」（detect hesitation）并即时简化界面。掌握这些表达让你的设计汇报显得逻辑严密。", keywords: ["intuitive", "friction", "iterate"] },
+      { title: "State Machines & Agentic UI", meta: "Conference Talk · 25 min", desc: "主讲人解释了为什么<strong>状态机</strong>比简单的 if/else 更适合处理 Generative UI。核心概念：Orchestration (编排), Event-driven (事件驱动)。", keywords: ["robust", "scalable", "pipeline"] },
+      { title: "Product-Led Growth Strategies", meta: "Podcast · 35 min", desc: "如何用数据驱动产品增长——讨论了<strong>留存率</strong>、<strong>转化漏斗</strong>和用户行为分析的实战方法。", keywords: ["retention", "funnel", "churn"] },
+    ]
+  },
+  {
+    category: "Culture & Communication",
+    items: [
+      { title: "Cross-cultural Communication", meta: "TED Talk · 18 min", desc: "讲者分享了在不同文化背景下工作的技巧——如何识别<strong>高语境</strong>和<strong>低语境</strong>沟通的区别。", keywords: ["nuance", "empathy", "pragmatic"] },
+      { title: "Remote Team Dynamics", meta: "Podcast · 30 min", desc: "远程团队如何建立信任和保持高效协作。讨论了异步沟通的艺术和时区管理策略。", keywords: ["sync", "bandwidth", "streamline"] },
+      { title: "The Art of Small Talk", meta: "YouTube · 12 min", desc: "如何在社交场合自然地开启对话，避免尴尬沉默。提供了实用的<strong>破冰</strong>句型和话题转换技巧。", keywords: ["break the ice", "catch up", "vibe"] },
+    ]
+  },
+];
 
-  init() { this.render(); this.fetchFeeds(); },
+const SHADOW_TEXTS = [
+  {
+    title: "On Growth & Change",
+    source: "Emma Chamberlain",
+    text: "I'm finding that the <strong>bittersweet</strong> moments—the ones where you're a little sad to leave but so excited to go—are actually the ones that <strong>resonate</strong> the most with me. There's this massive <strong>misconception</strong> that leaving something comfortable is a loss, but sometimes, it's actually the most <strong>strategic</strong> thing you can do for your growth.",
+    tips: [
+      { label: "词块 (Chunks)", detail: "将 \"the ones where you're a little sad to leave\" 读顺，模仿那种略带随意的口语感。" },
+      { label: "关键词重音", detail: "强调 bittersweet (苦乐参半), resonate (产生共鸣), misconception (误解)。" },
+      { label: "弱读", detail: "\"to be\" 和 \"but it's\" 读得轻且快。" },
+    ],
+    keywords: ["bittersweet", "resilient", "pragmatic"]
+  },
+  {
+    title: "On Building Products",
+    source: "Design Engineering Talk",
+    text: "The key insight is that you don't need to <strong>iterate</strong> on everything simultaneously. Focus on the <strong>bottleneck</strong>—the one thing that's blocking user value—and fix that first. Everything else is <strong>scope creep</strong> in disguise. Ship the <strong>MVP</strong>, measure the impact, then decide what's next.",
+    tips: [
+      { label: "节奏", detail: "在 'fix that first' 后停顿一拍，制造重点感。" },
+      { label: "关键词重音", detail: "强调 iterate, bottleneck, scope creep, MVP。" },
+      { label: "连读", detail: "\"everything else is\" 连在一起读，不要断。" },
+    ],
+    keywords: ["iterate", "bottleneck", "scope creep", "MVP"]
+  },
+  {
+    title: "On Remote Work",
+    source: "Distributed Teams Podcast",
+    text: "Working remotely isn't just about <strong>flexibility</strong>—it's about intentional communication. When you can't tap someone on the shoulder, every message needs to be <strong>actionable</strong> and self-contained. The best remote teams don't just <strong>sync</strong> less; they sync <strong>better</strong>.",
+    tips: [
+      { label: "语调", detail: "\"isn't just about\" 用略升语调暗示后面有转折。" },
+      { label: "关键词重音", detail: "强调 flexibility, actionable, sync, better。" },
+      { label: "对比重音", detail: "最后一句 'less' 和 'better' 形成对比，'better' 要读重。" },
+    ],
+    keywords: ["actionable", "streamline", "sync"]
+  },
+  {
+    title: "On Finding Your Path",
+    source: "Career Growth Interview",
+    text: "It's about recognizing that you've <strong>outgrown</strong> the container you were in. Moving to a new place or a new career isn't just a physical shift; it's a mental <strong>reframing</strong>. You have to be okay with being the 'new person' again, even if it feels incredibly <strong>daunting</strong> at first.",
+    tips: [
+      { label: "词块 (Chunks)", detail: "\"You have to be okay with\" 当成一个整体读，中间不换气。" },
+      { label: "关键词重音", detail: "强调 outgrown, reframing, daunting。" },
+      { label: "弱读", detail: "\"even if it feels\" 中的 'it' 要读得极短。" },
+    ],
+    keywords: ["compelling", "resilient", "pragmatic"]
+  },
+  {
+    title: "On Design Thinking",
+    source: "UX Conference Keynote",
+    text: "Great design isn't about making things look pretty—it's about reducing <strong>cognitive load</strong>. Every element on the screen should either guide the user forward or get out of the way. The best <strong>interfaces</strong> are the ones people never notice, because they just <strong>work</strong>.",
+    tips: [
+      { label: "强调", detail: "\"guide the user forward OR get out of the way\" 中 'or' 前要稍停。" },
+      { label: "关键词重音", detail: "强调 cognitive load, interfaces, work (最后一个词加重)。" },
+      { label: "节奏", detail: "最后 'because they just work' 要慢下来，制造结尾力度。" },
+    ],
+    keywords: ["intuitive", "hierarchy", "friction"]
+  },
+];
 
-  render() { this.renderGrid(); this.renderSidebar(); },
+const MORNING_PLANS = [
+  [
+    { time: "00-10 min", task: "播放 Volka English 的 Vlog。在心里尝试用英文复述：\"Today is a beautiful day, and I'm going to make the most of it.\"" },
+    { time: "10-25 min", task: "专注死磕今天的影子跟读文本。不仅要读对发音，更要模仿那种略带随意的自信语调。" },
+    { time: "25-30 min", task: "打开 pebble-k 的 Daily Sentence，把重点词加入生词本。试着用这些词造一个跟你今天计划有关的句子。" },
+  ],
+  [
+    { time: "00-10 min", task: "听 The Hot Pursuit 最新一期的前 10 分钟。注意情绪类词汇的用法。" },
+    { time: "10-20 min", task: "做 pebble-k 的复习卡片（例句填空模式）。通过语境回忆单词。" },
+    { time: "20-30 min", task: "朗读今天的影子跟读文本三遍。第一遍看文本，第二遍遮住部分单词，第三遍尝试脱稿。" },
+  ],
+  [
+    { time: "00-5 min", task: "快速浏览今天的 Daily Brief，标记你最想深入学习的内容。" },
+    { time: "5-20 min", task: "完成影子跟读练习。录音自己读一遍，对比原音，找出发音差异。" },
+    { time: "20-30 min", task: "学习今天「每日场景」里的新词。每个词用英文造一个和你生活相关的句子。" },
+  ],
+];
 
-  getAllVideos() {
-    const custom = (App.data.customVideos || []).map(v => ({ ...v, isCustom: true }));
-    const dismissed = new Set(App.data.dismissedVideos || []);
-    return [...this._feedVideos, ...custom].filter(v => !dismissed.has(v.id));
+// Keep ShadowModule as alias for backward compatibility
+const ShadowModule = { init() { BriefModule.init(); }, render() { BriefModule.render(); } };
+
+const BriefModule = {
+  init() { this.render(); },
+
+  _getDayIndex() {
+    const start = new Date('2025-01-01');
+    const now = new Date();
+    return Math.floor((now - start) / (1000 * 60 * 60 * 24));
   },
 
-  // Fetch latest videos from all YouTubers via API
-  async fetchFeeds() {
-    const youtubers = App.data.youtubers || [];
-    if (youtubers.length === 0) return;
-    
-    const allFeed = [];
-    for (const yt of youtubers) {
-      if (yt.startsWith('http')) continue; // skip bilibili for now
-      try {
-        const info = await YTApi.getChannelInfo(yt.replace(/^@/, ''));
-        if (!info) continue;
-        // Search latest videos from this channel
-        const data = await YTApi._fetch('search', {
-          part: 'snippet',
-          channelId: info.id,
-          order: 'date',
-          type: 'video',
-          maxResults: '3'
-        });
-        if (!data?.items) continue;
-        for (const item of data.items) {
-          const videoId = item.id.videoId;
-          if (!videoId) continue;
-          // Get duration
-          const details = await YTApi.getVideoDetails(videoId);
-          allFeed.push({
-            id: 'feed_' + videoId,
-            title: item.snippet.title,
-            youtubeId: videoId,
-            platform: 'youtube',
-            category: ShadowModule._autoCategory(item.snippet.title),
-            source: info.name,
-            sourceAvatar: info.avatar,
-            duration: details?.duration || '',
-            subtitles: '',
-            publishedAt: item.snippet.publishedAt,
-          });
-        }
-      } catch { /* skip */ }
+  render() {
+    const dayIdx = this._getDayIndex();
+    const container = document.getElementById('briefContent');
+    if (!container) return;
+
+    // Pick content for today
+    const catIdx = dayIdx % BRIEF_DATABASE.length;
+    const categories = [];
+    for (let i = 0; i < Math.min(2, BRIEF_DATABASE.length); i++) {
+      categories.push(BRIEF_DATABASE[(catIdx + i) % BRIEF_DATABASE.length]);
     }
-    // Shuffle
-    for (let i = allFeed.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [allFeed[i], allFeed[j]] = [allFeed[j], allFeed[i]];
-    }
-    this._feedVideos = allFeed;
-    this.renderGrid();
-  },
+    const shadowText = SHADOW_TEXTS[dayIdx % SHADOW_TEXTS.length];
+    const plan = MORNING_PLANS[dayIdx % MORNING_PLANS.length];
+    const today = new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
 
-  filterCategory(cat) {
-    this.currentFilter = cat;
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
-    this.renderGrid();
-  },
+    let html = '';
 
-  renderGrid() {
-    const allVideos = this.getAllVideos();
-    const videos = this.currentFilter === 'all'
-      ? allVideos
-      : allVideos.filter(v => v.category === this.currentFilter);
-
-    const container = document.getElementById('shadowVideoGrid');
-    
-    if (videos.length === 0 && this._feedVideos.length === 0 && !(App.data.customVideos || []).length) {
-      container.innerHTML = `<div class="shadow-empty">
-        <p>No videos yet</p>
-        <p>Add YouTubers in the sidebar, and their latest videos will appear here automatically.</p>
+    // Content sections
+    categories.forEach(cat => {
+      html += `<div class="brief-section">
+        <div class="brief-section-header">
+          <span class="brief-section-icon">📺</span>
+          <span class="brief-section-title">${cat.category}</span>
+        </div>
+        ${cat.items.map(item => `<div class="brief-item">
+          <div class="brief-item-title">${item.title}</div>
+          <div class="brief-item-meta">${item.meta}</div>
+          <div class="brief-item-desc">${item.desc}</div>
+          <div class="brief-keywords">${item.keywords.map(kw => 
+            `<span class="brief-kw" onclick="BriefModule.addKeyword('${kw.replace(/'/g, "\\'")}')">${kw}</span>`
+          ).join('')}</div>
+        </div>`).join('')}
       </div>`;
-      return;
-    }
-    if (videos.length === 0) {
-      container.innerHTML = `<div class="shadow-empty"><p>No videos in this category.</p></div>`;
-      return;
-    }
-    
-    container.innerHTML = videos.map(v => {
-      const done = App.data.shadowDone.includes(v.id);
-      const isYT = v.platform !== 'bilibili';
-      const thumb = isYT ? `https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg` : '';
-      const thumbHtml = isYT 
-        ? `<img src="${thumb}" alt="${v.title}" onerror="this.parentElement.style.background='var(--accent-light)'">`
-        : `<div class="bilibili-thumb">B</div>`;
-      return `<div class="shadow-video-card">
-        <button class="sv-dismiss" onclick="event.stopPropagation();ShadowModule.dismissVideo('${v.id}')" title="Remove">×</button>
-        <a href="${v.platform === 'bilibili' ? 'https://www.bilibili.com/video/' + v.youtubeId : 'https://www.youtube.com/watch?v=' + v.youtubeId}" target="_blank" class="sv-link" onclick="ShadowModule.markWatched('${v.id}')">
-          <div class="shadow-thumb">
-            ${thumbHtml}
-            <div class="play-overlay">
-              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </div>
-            ${v.duration ? `<span class="sv-duration">${v.duration}</span>` : ''}
-          </div>
-          <div class="shadow-card-body">
-            <div class="shadow-card-title">${v.title}</div>
-            <div class="shadow-card-meta">
-              ${v.sourceAvatar ? `<img class="sv-source-avatar" src="${v.sourceAvatar}" alt="">` : ''}
-              ${v.source ? `<span class="shadow-source">${v.source}</span>` : ''}
-              <span class="shadow-card-tag">${v.category}</span>
-              ${done ? '<span class="shadow-done-badge">Done</span>' : ''}
-            </div>
-          </div>
-        </a>
-      </div>`;
-    }).join('');
+    });
+
+    // Shadow practice
+    html += `<div class="brief-section">
+      <div class="brief-section-header">
+        <span class="brief-section-icon">🎙️</span>
+        <span class="brief-section-title">Shadow Practice</span>
+      </div>
+      <div class="brief-item-title">${shadowText.title}</div>
+      <div class="brief-item-meta">Source: ${shadowText.source}</div>
+      <div class="brief-shadow-text">${shadowText.text}</div>
+      <div class="brief-tips">
+        ${shadowText.tips.map(t => `<div class="brief-tip"><strong>${t.label}:</strong> ${t.detail}</div>`).join('')}
+      </div>
+      <div class="brief-keywords">${shadowText.keywords.map(kw => 
+        `<span class="brief-kw" onclick="BriefModule.addKeyword('${kw.replace(/'/g, "\\'")}')">${kw}</span>`
+      ).join('')}</div>
+      <div class="brief-actions">
+        <button class="btn-secondary" onclick="BriefModule.openPractice()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Start Shadowing
+        </button>
+      </div>
+    </div>`;
+
+    // Morning plan
+    html += `<div class="brief-section">
+      <div class="brief-section-header">
+        <span class="brief-section-icon">💡</span>
+        <span class="brief-section-title">Morning Plan (${today})</span>
+      </div>
+      <div class="brief-plan">
+        ${plan.map(p => `<div class="brief-plan-item"><strong>${p.time}:</strong> ${p.task}</div>`).join('')}
+      </div>
+    </div>`;
+
+    container.innerHTML = html;
   },
 
-  dismissVideo(videoId) {
-    if (!App.data.dismissedVideos) App.data.dismissedVideos = [];
-    if (!App.data.dismissedVideos.includes(videoId)) {
-      App.data.dismissedVideos.push(videoId);
-      Store.save(App.data);
-    }
-    this.renderGrid();
-    toast('Video removed from feed.');
+  addKeyword(word) {
+    VocabModule.addWordDirect(word, 'From Daily Brief');
+    VocabModule.render();
+    App.refreshDashboard();
+    toast(`"${word}" added to vocabulary!`);
   },
 
-  markWatched(videoId) {
-    if (!App.data.shadowDone.includes(videoId)) {
-      App.data.shadowDone.push(videoId);
-      App.addXP(20);
-      Store.save(App.data);
-    }
-  },
-
-  openPractice(videoId) {
-    const allVideos = this.getAllVideos();
-    const v = allVideos.find(x => x.id === videoId);
-    if (!v) return;
-    this._currentVideo = v;
-    document.getElementById('spTitle').textContent = v.title;
-    // Handle different platforms
-    if (v.platform === 'bilibili' && v.embedUrl) {
-      document.getElementById('spVideo').src = v.embedUrl;
-    } else {
-      document.getElementById('spVideo').src = `https://www.youtube.com/embed/${v.youtubeId}?rel=0&modestbranding=1`;
-    }
-    document.getElementById('spSubtitles').textContent = v.subtitles || '(No subtitles provided for this video)';
-    document.getElementById('spSubtitles').classList.remove('hidden-sub');
-    document.getElementById('btnToggleSub').textContent = 'Hide Subtitles';
+  openPractice() {
+    const dayIdx = this._getDayIndex();
+    const shadowText = SHADOW_TEXTS[dayIdx % SHADOW_TEXTS.length];
+    document.getElementById('spTitle').textContent = 'Shadow: ' + shadowText.title;
+    document.getElementById('spSubtitles').innerHTML = shadowText.text;
+    document.getElementById('spShadowTips').innerHTML = shadowText.tips.map(t => 
+      `<p><strong>${t.label}:</strong> ${t.detail}</p>`
+    ).join('');
     document.getElementById('shadowPracticeModal').classList.add('show');
-    this.setStep(1);
+    // Auto-speak
+    const plainText = shadowText.text.replace(/<[^>]+>/g, '');
+    setTimeout(() => speakWord(plainText), 500);
   },
 
   closePractice() {
     document.getElementById('shadowPracticeModal').classList.remove('show');
-    document.getElementById('spVideo').src = '';
-  },
-
-  setStep(n) {
-    document.querySelectorAll('.sp-step').forEach(s => s.classList.toggle('active', parseInt(s.dataset.step) <= n));
-  },
-
-  toggleSubtitle() {
-    const el = document.getElementById('spSubtitles');
-    const btn = document.getElementById('btnToggleSub');
-    el.classList.toggle('hidden-sub');
-    btn.textContent = el.classList.contains('hidden-sub') ? 'Show Subtitles' : 'Hide Subtitles';
-    if (el.classList.contains('hidden-sub')) this.setStep(3);
-    else this.setStep(2);
-  },
-
-  markComplete() {
-    const v = this._currentVideo;
-    if (!v) return;
-    if (!App.data.shadowDone.includes(v.id)) {
-      App.data.shadowDone.push(v.id);
-      App.addXP(20);
-      Store.save(App.data);
-      toast(`Shadow practice complete! +20 XP`);
-    } else {
-      toast('Already completed this one!');
-    }
-    this.closePractice();
-    this.render();
-    App.refreshDashboard();
-  },
-
-  // ── Add custom video ──
-  showAddVideoModal() {
-    document.getElementById('addVideoModal').classList.add('show');
-    const urlInput = document.getElementById('inputVideoUrl');
-    // Listen for paste / input to auto-fetch title
-    urlInput.oninput = () => {
-      const val = urlInput.value.trim();
-      if (val.startsWith('http')) {
-        ShadowModule._fetchVideoTitle(val);
-      }
-    };
-  },
-  renderSidebar() {
-    const list = App.data.youtubers || [];
-    const container = document.getElementById('sidebarChannelsList');
-    if (!container) return;
-    if (list.length === 0) { container.innerHTML = ''; return; }
-    
-    // Render with placeholder avatars first, then fetch real ones
-    const colors = ['#1a1a1a','#3a3a3a','#555555','#2d2d2d','#444444','#1a1a1a','#333333','#4a4a4a'];
-    const channelCache = YTApi._loadChannelInfoCache();
-    
-    container.innerHTML = list.map((yt, i) => {
-      const isB = yt.startsWith('http') && yt.includes('bilibili');
-      const url = isB ? yt : `https://www.youtube.com/@${yt.replace(/^@/, '')}`;
-      const initials = yt.replace(/^@/, '').slice(0, 2).toUpperCase();
-      const color = colors[i % colors.length];
-      // Use cached avatar if available
-      const cached = channelCache[yt.replace(/^@/, '').toLowerCase()];
-      const avatarHtml = (cached && cached.avatar)
-        ? `<img src="${cached.avatar}" alt="${yt}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.style.background='${color}';this.parentElement.textContent='${initials}';this.remove();">`
-        : initials;
-      const avatarBg = (cached && cached.avatar) ? 'transparent' : color;
-      return `<a href="${url}" target="_blank" class="sc-channel" id="sc_${i}" oncontextmenu="event.preventDefault();ShadowModule.showChannelMenu(event,${i})">
-        <div class="sc-avatar" style="background:${avatarBg}" id="sca_${i}">${avatarHtml}</div>
-        <span class="sc-name">${yt}</span>
-      </a>`;
-    }).join('');
-    
-    // Fetch real YouTube avatars for those not yet cached
-    list.forEach((yt, i) => {
-      if (yt.startsWith('http')) return; // skip bilibili
-      const cached = channelCache[yt.replace(/^@/, '').toLowerCase()];
-      if (cached && cached.avatar && (Date.now() - cached.ts < YTApi._CACHE_TTL)) return; // already shown from cache
-      const color = colors[i % colors.length];
-      const initials = yt.replace(/^@/, '').slice(0, 2).toUpperCase();
-      YTApi.getChannelInfo(yt.replace(/^@/, '')).then(info => {
-        if (info && info.avatar) {
-          const el = document.getElementById('sca_' + i);
-          if (el) {
-            el.style.background = 'transparent';
-            el.innerHTML = `<img src="${info.avatar}" alt="${yt}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.style.background='${color}';this.parentElement.textContent='${initials}';this.remove();">`;
-          }
-        }
-      }).catch(() => {});
-    });
-  },
-
-  showChannelMenu(e, index) {
-    document.querySelectorAll('.custom-ctx-menu').forEach(m => m.remove());
-    const name = App.data.youtubers[index];
-    const menu = document.createElement('div');
-    menu.className = 'custom-ctx-menu';
-    menu.innerHTML = `<div class="ctx-item ctx-item-danger" onclick="ShadowModule.removeChannelFromMenu(${index})">Remove "${name}"</div>`;
-    menu.style.left = e.clientX + 'px';
-    menu.style.top = e.clientY + 'px';
-    document.body.appendChild(menu);
-    setTimeout(() => {
-      document.addEventListener('click', () => menu.remove(), { once: true });
-    }, 10);
-  },
-
-  removeChannelFromMenu(index) {
-    const name = App.data.youtubers[index];
-    App.data.youtubers.splice(index, 1);
+    App.addXP(15);
     Store.save(App.data);
-    this.renderSidebar();
-    this.fetchFeeds();
-    document.querySelectorAll('.custom-ctx-menu').forEach(m => m.remove());
-    toast(`"${name}" removed.`);
+    toast('Shadow practice done! +15 XP');
   },
 
-  closeAddVideoModal() {
-    document.getElementById('addVideoModal').classList.remove('show');
-    document.getElementById('inputVideoUrl').value = '';
-    document.getElementById('inputVideoTitle').value = '';
-    document.getElementById('inputVideoSubs').value = '';
-  },
-
-  addCustomVideo() {
-    const url = document.getElementById('inputVideoUrl').value.trim();
-    let title = document.getElementById('inputVideoTitle').value.trim();
-    const subs = document.getElementById('inputVideoSubs').value.trim();
-    
-    if (!url) { toast('Please enter a video URL.'); return; }
-    
-    let ytId = '';
-    let platform = 'youtube';
-    let embedUrl = '';
-    
-    // YouTube
-    try {
-      const urlObj = new URL(url);
-      if (urlObj.hostname.includes('youtube.com')) {
-        ytId = urlObj.searchParams.get('v') || '';
-      } else if (urlObj.hostname === 'youtu.be') {
-        ytId = urlObj.pathname.slice(1);
-      } else if (urlObj.hostname.includes('bilibili.com')) {
-        platform = 'bilibili';
-        const match = urlObj.pathname.match(/\/video\/(BV[a-zA-Z0-9]+)/);
-        if (match) {
-          ytId = match[1];
-          embedUrl = `https://player.bilibili.com/player.html?bvid=${ytId}&high_quality=1`;
-        }
-      }
-    } catch {
-      if (/^[a-zA-Z0-9_-]{11}$/.test(url)) ytId = url;
-    }
-    
-    if (!ytId) { toast('Invalid URL. Supports YouTube and Bilibili.'); return; }
-    if (!title) title = 'Video ' + ytId;
-    
-    // Auto-categorize based on title keywords
-    const cat = this._autoCategory(title);
-    
-    if (!App.data.customVideos) App.data.customVideos = [];
-    App.data.customVideos.push({
-      id: 'custom_' + Date.now().toString(36),
-      title,
-      youtubeId: ytId,
-      platform,
-      embedUrl: embedUrl || '',
-      category: cat,
-      subtitles: subs,
-      duration: this._pendingDuration || '',
-      addedAt: new Date().toISOString(),
-    });
-    Store.save(App.data);
-    this.closeAddVideoModal();
-    this.render();
-    toast(`Video "${title}" added!`);
-  },
-
-  _autoCategory(title) {
-    const t = title.toLowerCase();
-    if (/\bted\b|tedx|ted talk/i.test(t)) return 'ted';
-    if (/\bnews\b|bbc|cnn|report|journalist|media|culture/i.test(t)) return 'news';
-    if (/\bwork\b|meeting|office|job|career|interview|salary|boss|colleague|email|presentation|negotiate|professional/i.test(t)) return 'work';
-    if (/\btech\b|code|program|api|software|developer|engineer|computer|algorithm|data|ai\b|startup|product/i.test(t)) return 'tech';
-    return 'daily';
-  },
-
-  // Auto-fetch title + duration when URL is pasted
-  _fetchVideoTitle(url) {
-    const titleInput = document.getElementById('inputVideoTitle');
-    
-    let ytId = '';
-    try {
-      const urlObj = new URL(url);
-      if (urlObj.hostname.includes('youtube.com')) ytId = urlObj.searchParams.get('v') || '';
-      else if (urlObj.hostname === 'youtu.be') ytId = urlObj.pathname.slice(1);
-      else if (urlObj.hostname.includes('bilibili.com')) {
-        // Bilibili doesn't support cross-origin title fetch
-        titleInput.value = '';
-        titleInput.placeholder = 'Enter title manually for Bilibili videos';
-        titleInput.focus();
-        return;
-      }
-    } catch { return; }
-    if (!ytId) return;
-    
-    titleInput.value = 'Loading...';
-    this._pendingDuration = '';
-    
-    // Use YouTube Data API for title + duration
-    YTApi.getVideoDetails(ytId).then(details => {
-      if (details) {
-        titleInput.value = details.title || '';
-        this._pendingDuration = details.duration || '';
-      } else {
-        // Fallback to noembed
-        fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${ytId}`)
-          .then(r => r.json())
-          .then(data => { titleInput.value = data.title || ''; })
-          .catch(() => { titleInput.value = ''; });
-      }
-    });
-  },
-
-  // ── Manage YouTubers ──
-  showYoutuberModal() {
-    document.getElementById('youtuberModal').classList.add('show');
-    this.renderYoutubers();
-  },
-  closeYoutuberModal() {
-    document.getElementById('youtuberModal').classList.remove('show');
-  },
-  renderYoutubers() {
-    const list = App.data.youtubers || [];
-    const container = document.getElementById('youtuberList');
-    if (list.length === 0) {
-      container.innerHTML = '<p class="empty-hint">No YouTubers added yet.</p>';
-      return;
-    }
-    container.innerHTML = list.map((yt, i) => {
-      const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(yt)}`;
-      return `<div class="youtuber-item">
-        <a href="${searchUrl}" target="_blank" class="youtuber-link" onclick="event.stopPropagation()">${yt} <span class="youtuber-go">→ Open on YouTube</span></a>
-        <button class="vocab-delete" onclick="ShadowModule.removeYoutuber(${i})">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>`;
-    }).join('');
-  },
-  addYoutuber() {
-    const input = document.getElementById('inputYoutuber').value.trim();
-    if (!input) return;
-    if (!App.data.youtubers) App.data.youtubers = [];
-    if (App.data.youtubers.includes(input)) { toast('Already added!'); return; }
-    App.data.youtubers.push(input);
-    Store.save(App.data);
-    document.getElementById('inputYoutuber').value = '';
-    this.renderYoutubers();
-    toast(`YouTuber "${input}" added!`);
-  },
-  removeYoutuber(index) {
-    App.data.youtubers.splice(index, 1);
-    Store.save(App.data);
-    this.renderYoutubers();
+  speakPractice() {
+    const text = document.getElementById('spSubtitles').textContent;
+    speakWord(text);
   },
 };
 
@@ -2521,6 +2426,20 @@ const DailyModule = {
         }).catch(() => {});
     }
 
+    // Show keywords for this sentence
+    const keywords = this._extractKeywords(s.en);
+    const kwContainer = document.getElementById('dailyKeywords');
+    if (keywords.length > 0) {
+      kwContainer.innerHTML = `<span class="daily-keywords-label">Key words in this sentence</span>` +
+        keywords.map(kw => 
+          `<span class="daily-keyword-chip" onclick="DailyModule.addKeyword('${kw.replace(/'/g, "\\'")}')" title="Click to add to vocab">
+            ${kw} <span class="kw-plus">+</span>
+          </span>`
+        ).join('');
+    } else {
+      kwContainer.innerHTML = '';
+    }
+
     if (!App.data.dailySeen.includes(idx)) {
       App.data.dailySeen.push(idx);
       Store.save(App.data);
@@ -2528,6 +2447,32 @@ const DailyModule = {
     this.renderHistory();
     // Auto-speak the sentence
     setTimeout(() => speakWord(s.en), 300);
+  },
+
+  _extractKeywords(sentence) {
+    // Find words from WORD_DB that appear in this sentence
+    const lower = sentence.toLowerCase();
+    const found = [];
+    for (const word of Object.keys(WORD_DB)) {
+      if (word.length < 3) continue; // skip very short
+      const wLower = word.toLowerCase();
+      // Check if the word appears in the sentence (word boundary aware for single words)
+      if (wLower.includes(' ')) {
+        if (lower.includes(wLower)) found.push(word);
+      } else {
+        const regex = new RegExp(`\\b${wLower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        if (regex.test(sentence)) found.push(word);
+      }
+    }
+    // Return up to 3 keywords, prioritize longer/more complex words
+    return found.sort((a, b) => b.length - a.length).slice(0, 3);
+  },
+
+  addKeyword(word) {
+    VocabModule.addWordDirect(word, 'From Daily Sentence keyword');
+    VocabModule.render();
+    App.refreshDashboard();
+    toast(`"${word}" added to your vocabulary!`);
   },
 
   renderHistory() {
@@ -2541,7 +2486,7 @@ const DailyModule = {
       const s = DAILY_SENTENCES[idx % DAILY_SENTENCES.length];
       return `<div class="daily-history-item">
         <div>${s.en}</div>
-        <div class="dh-chinese">${s.cn}</div>
+        <div class="dh-chinese">${s.zh}</div>
       </div>`;
     }).join('');
   },

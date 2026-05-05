@@ -443,6 +443,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .rc-tag-daily { background: var(--green-light); color: var(--green); }
 .rc-tag-tech { background: var(--blue-light); color: var(--blue); }
 .rc-tag-design { background: var(--purple-light); color: var(--purple); }
+.rc-tag-slang { background: var(--orange-light); color: var(--accent); }
 .rc-add {
   background: transparent;
   color: var(--text);
@@ -1398,3 +1399,324 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 @media (max-width: 480px) {
   .dashboard-grid { grid-template-columns: 1fr; }
 }
+
+/* ══════ Cloze / Fill-in-blank Review Card ══════ */
+.fc-cloze-sentence {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  padding: 0 20px;
+}
+.fc-cloze-sentence .cloze-blank {
+  display: inline-block;
+  min-width: 80px;
+  border-bottom: 3px solid var(--accent);
+  margin: 0 4px;
+  color: transparent;
+  position: relative;
+}
+.fc-cloze-sentence .cloze-blank::after {
+  content: '___';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ══════ Compose Prompt (造句练习) ══════ */
+.fc-compose-prompt {
+  margin-top: 16px;
+  animation: fadeIn 0.35s ease;
+}
+.fc-compose-inner {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.fc-compose-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 10px;
+}
+.fc-compose-text {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.fc-compose-text strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+.fc-compose-next {
+  min-width: 200px;
+}
+
+/* ══════ Scene-based Daily Recommendations ══════ */
+.scene-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.scene-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  transition: var(--transition);
+}
+.scene-card:hover {
+  border-color: var(--text);
+}
+.scene-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.scene-card-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scene-card-title .scene-emoji {
+  font-size: 22px;
+}
+.scene-card-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+.scene-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.scene-word-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.scene-word-chip:hover {
+  border-color: var(--text);
+  background: var(--bg-warm);
+}
+.scene-word-chip.learned {
+  background: var(--green-light);
+  border-color: var(--green);
+  color: var(--green);
+}
+.scene-word-chip .chip-add {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 0;
+  line-height: 1;
+}
+.scene-word-chip:hover .chip-add {
+  border-color: var(--text);
+  color: var(--text);
+}
+.scene-word-chip.learned .chip-add {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+.scene-sentence {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--accent);
+}
+.scene-sentence strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ══════ Daily Sentence Keywords ══════ */
+.daily-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.daily-keywords-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  width: 100%;
+  margin-bottom: 4px;
+}
+.daily-keyword-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+.daily-keyword-chip:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.daily-keyword-chip .kw-plus {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+/* ══════ Add Word Preview ══════ */
+.aw-preview { padding: 4px 0; }
+.aw-word-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.aw-word {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.aw-meaning {
+  font-size: 17px;
+  color: var(--accent);
+  font-weight: 600;
+  line-height: 1.5;
+}
+.aw-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+.aw-buttons .btn-primary { min-width: 120px; }
+.aw-buttons .btn-secondary { min-width: 100px; }
+
+/* ══════ Daily Brief ══════ */
+.brief-content { display: flex; flex-direction: column; gap: 28px; }
+.brief-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+}
+.brief-section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.brief-section-icon { font-size: 20px; }
+.brief-section-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.brief-item { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.brief-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.brief-item-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+.brief-item-meta { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+.brief-item-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.brief-item-desc strong { color: var(--accent); }
+.brief-keywords {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+}
+.brief-kw {
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+  background: var(--accent-light); color: var(--accent);
+  cursor: pointer; transition: var(--transition);
+}
+.brief-kw:hover { background: var(--accent); color: #fff; }
+
+/* Brief Shadow Section */
+.brief-shadow-text {
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 20px 24px;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--text);
+  border-left: 3px solid var(--accent);
+  margin: 12px 0;
+  font-family: var(--font-serif);
+  letter-spacing: -0.2px;
+}
+.brief-shadow-text strong { color: var(--accent); font-weight: 700; }
+.brief-tips { margin-top: 12px; }
+.brief-tip {
+  font-size: 13px; color: var(--text-secondary); line-height: 1.7;
+  padding: 4px 0;
+}
+.brief-tip strong { color: var(--text); }
+.brief-plan {
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-top: 12px;
+}
+.brief-plan-item {
+  font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+  padding: 2px 0;
+}
+.brief-plan-item strong { color: var(--text); font-weight: 600; }
+.brief-actions { display: flex; gap: 10px; margin-top: 16px; }
+
+/* Shadow practice tips */
+.sp-shadow-tips {
+  margin-top: 16px;
+  padding: 16px 20px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+}
+.sp-shadow-tips p {
+  font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 6px;
+}
+.sp-shadow-tips p:last-child { margin-bottom: 0; }
+.sp-shadow-tips strong { color: var(--text); }
