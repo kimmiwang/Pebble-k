@@ -2676,11 +2676,29 @@ const FocusTimer = {
   _KEY: 'pebble_focus',
 
   init() {
+    this._lastDate = todayStr();
     this._checkAndReset();
     this._running = false;
     this._render();
-    // Check every 60s if day changed (for users who keep the page open overnight)
-    this._dayCheckInterval = setInterval(() => this._checkAndReset(), 60000);
+    // Check every 30s if day changed (for users who keep the page open overnight)
+    setInterval(() => this._checkDayChange(), 30000);
+  },
+
+  _checkDayChange() {
+    const now = todayStr();
+    if (now !== this._lastDate) {
+      this._lastDate = now;
+      this._elapsed = 0;
+      this._save();
+      if (this._running) { this._pause(); }
+      this._render();
+      // Refresh the entire dashboard — resets progress bar, button, scenes
+      try {
+        App.refreshDashboard();
+        App._updateLearnProgress();
+        App.renderRecommend();
+      } catch {}
+    }
   },
 
   _checkAndReset() {
@@ -2691,10 +2709,6 @@ const FocusTimer = {
     } else {
       this._elapsed = 0;
       this._save();
-      if (this._running) { this._pause(); }
-      this._render();
-      // Also refresh dashboard to reset "All Done Today" and progress
-      try { App.refreshDashboard(); } catch {}
     }
   },
 
