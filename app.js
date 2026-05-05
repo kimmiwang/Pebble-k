@@ -1705,7 +1705,13 @@ const VocabModule = {
     setTimeout(() => speakWord(w.word), 300);
   },
   flipCard() {
-    document.getElementById('flashcardInner').classList.toggle('flipped');
+    const inner = document.getElementById('flashcardInner');
+    inner.classList.toggle('flipped');
+    // Auto-read example sentence when flipped to back
+    if (inner.classList.contains('flipped')) {
+      const example = document.getElementById('fcExample').textContent;
+      if (example) setTimeout(() => speakWord(example), 300);
+    }
   },
   saveReviewNote() {
     const w = this.reviewQueue[this.reviewIndex];
