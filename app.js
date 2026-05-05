@@ -2676,15 +2676,24 @@ const FocusTimer = {
   _KEY: 'pebble_focus',
 
   init() {
+    this._checkAndReset();
+    this._running = false;
+    this._render();
+    // Check every 60s if day changed (for users who keep the page open overnight)
+    this._dayCheckInterval = setInterval(() => this._checkAndReset(), 60000);
+  },
+
+  _checkAndReset() {
     const saved = this._load();
     const today = todayStr();
     if (saved.date === today) {
       this._elapsed = saved.elapsed || 0;
     } else {
       this._elapsed = 0;
+      this._save();
+      if (this._running) { this._pause(); }
+      this._render();
     }
-    this._running = false;
-    this._render();
   },
 
   _load() {
