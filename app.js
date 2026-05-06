@@ -1957,19 +1957,6 @@ const VocabModule = {
       App.addXP(quality === 2 ? 10 : quality === 1 ? 5 : 2);
       Store.save(App.data);
     }
-    // Show compose prompt
-    const prompts = [
-      `Try making a sentence with <strong>${w.word}</strong> in your head. Think about how you'd use it in conversation.`,
-      `Imagine a scenario where you'd say <strong>${w.word}</strong>. Picture yourself using it naturally.`,
-      `Can you think of a situation from today where <strong>${w.word}</strong> would fit? Take a moment.`,
-      `Close your eyes and compose a sentence with <strong>${w.word}</strong>. No pressure — just think it.`,
-    ];
-    const prompt = prompts[this.reviewIndex % prompts.length];
-    document.getElementById('fcComposeText').innerHTML = prompt;
-    document.getElementById('fcComposePrompt').style.display = 'block';
-    document.getElementById('reviewButtons').style.display = 'none';
-  },
-  composeNext() {
     this.reviewIndex++;
     this.showCard();
   },
