@@ -2747,6 +2747,8 @@ const FocusTimer = {
       toast('30 minutes done! Great focus today! 🎉');
       App.addXP(15);
       Store.save(App.data);
+    } else if (sessionSec % 5 === 0) {
+      this._save(); // auto-save every 5s to survive page refresh
     }
     this._render();
   },
@@ -2808,6 +2810,11 @@ const FocusTimer = {
 document.addEventListener('DOMContentLoaded', () => {
   App.init();
   FocusTimer.init();
+
+  // Save timer progress on page unload
+  window.addEventListener('beforeunload', () => {
+    if (FocusTimer._running) FocusTimer._save();
+  });
   
   // Click outside modal to close
   document.querySelectorAll('.modal-overlay').forEach(overlay => {
