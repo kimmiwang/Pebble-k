@@ -1211,7 +1211,7 @@ const App = {
         const tag = w.tag || (dbEntry && dbEntry.tag) || '';
         const tagClass = tag === 'tech' ? 'rc-tag-tech' : tag === 'design' ? 'rc-tag-design' : tag === 'slang' ? 'rc-tag-slang' : tag ? 'rc-tag-daily' : '';
         const tagLabel = tag === 'tech' ? 'Tech' : tag === 'design' ? 'Design' : tag === 'slang' ? 'Slang' : tag ? 'Daily' : '';
-        return `<div class="recommend-card" onclick="App.navigate('vocabulary')">
+        return `<div class="recommend-card" onclick="App.showWordDetail('${w.word.replace(/'/g, "\\'")}')">
           <div class="rc-left">
             <div class="rc-word-row">
               <span class="rc-word">${w.word}</span>
@@ -1274,7 +1274,9 @@ const App = {
   },
 
   showWordDetail(word) {
-    const entry = WORD_DB[word.toLowerCase()];
+    const dbEntry = WORD_DB[word.toLowerCase()];
+    const userWord = this.data.words.find(w => w.word.toLowerCase() === word.toLowerCase());
+    const entry = dbEntry || userWord;
     if (!entry) return;
     const modal = document.getElementById('wordDetailModal');
     document.getElementById('wdWord').textContent = word;
