@@ -1969,25 +1969,25 @@ const BRIEF_DATABASE = [
   {
     category: "Lifestyle & Input",
     items: [
-      { title: "Emma Chamberlain (Anything Goes)", meta: "Podcast · ~20 min", desc: "Emma 聊到了那种「苦乐参半」的情绪——也就是你现在面对假期结束的心情。她探讨了如何接受不完美，并从这种细微的情感中汲取成长的力量。", keywords: ["bittersweet", "resilient", "vulnerable"] },
-      { title: "The Hot Pursuit Podcast", meta: "Podcast · ~45 min", desc: "三位主持人非常坦诚地聊到了关于身体焦虑和自我接纳。这类关于「自我认同」的对话包含了大量高频的<strong>情绪描述词汇</strong>。", keywords: ["boundaries", "authentic", "mindful"] },
-      { title: "Volka English", meta: "YouTube Vlog · ~30 min", desc: "春日户外的慢节奏 Vlog，适合做家务或通勤时开启。练习捕捉关于自然、天气和即时感受的简单地道短语。", keywords: ["spontaneous", "cozy", "subtle"] },
+      { title: "Emma Chamberlain (Anything Goes)", url: "https://www.youtube.com/@emmachamberlain", meta: "Podcast · ~20 min", desc: "Emma 聊到了那种「苦乐参半」的情绪——也就是你现在面对假期结束的心情。她探讨了如何接受不完美，并从这种细微的情感中汲取成长的力量。", keywords: ["bittersweet", "resilient", "vulnerable"] },
+      { title: "The Hot Pursuit Podcast", url: "https://www.youtube.com/@TheHotPursuit", meta: "Podcast · ~45 min", desc: "三位主持人非常坦诚地聊到了关于身体焦虑和自我接纳。这类关于「自我认同」的对话包含了大量高频的<strong>情绪描述词汇</strong>。", keywords: ["boundaries", "authentic", "mindful"] },
+      { title: "Volka English", url: "https://www.youtube.com/@VolkaEnglish", meta: "YouTube Vlog · ~30 min", desc: "春日户外的慢节奏 Vlog，适合做家务或通勤时开启。练习捕捉关于自然、天气和即时感受的简单地道短语。", keywords: ["spontaneous", "cozy", "subtle"] },
     ]
   },
   {
     category: "Professional UX & Tech",
     items: [
-      { title: "UI/UX Design Trends 2026", meta: "YouTube · 15 min", desc: "视频提到了系统开始能够「感知用户的犹豫」（detect hesitation）并即时简化界面。掌握这些表达让你的设计汇报显得逻辑严密。", keywords: ["intuitive", "friction", "iterate"] },
-      { title: "State Machines & Agentic UI", meta: "Conference Talk · 25 min", desc: "主讲人解释了为什么<strong>状态机</strong>比简单的 if/else 更适合处理 Generative UI。核心概念：Orchestration (编排), Event-driven (事件驱动)。", keywords: ["robust", "scalable", "pipeline"] },
-      { title: "Product-Led Growth Strategies", meta: "Podcast · 35 min", desc: "如何用数据驱动产品增长——讨论了<strong>留存率</strong>、<strong>转化漏斗</strong>和用户行为分析的实战方法。", keywords: ["retention", "funnel", "churn"] },
+      { title: "UI/UX Design Trends 2026", url: "https://www.youtube.com/results?search_query=UI+UX+Design+Trends+2026", meta: "YouTube · 15 min", desc: "视频提到了系统开始能够「感知用户的犹豫」（detect hesitation）并即时简化界面。掌握这些表达让你的设计汇报显得逻辑严密。", keywords: ["intuitive", "friction", "iterate"] },
+      { title: "State Machines & Agentic UI", url: "https://www.youtube.com/results?search_query=XState+v5+state+machine+tutorial", meta: "Conference Talk · 25 min", desc: "主讲人解释了为什么<strong>状态机</strong>比简单的 if/else 更适合处理 Generative UI。核心概念：Orchestration (编排), Event-driven (事件驱动)。", keywords: ["robust", "scalable", "pipeline"] },
+      { title: "Product-Led Growth Strategies", url: "https://www.youtube.com/results?search_query=product+led+growth+strategy+2026", meta: "Podcast · 35 min", desc: "如何用数据驱动产品增长——讨论了<strong>留存率</strong>、<strong>转化漏斗</strong>和用户行为分析的实战方法。", keywords: ["retention", "funnel", "churn"] },
     ]
   },
   {
     category: "Culture & Communication",
     items: [
-      { title: "Cross-cultural Communication", meta: "TED Talk · 18 min", desc: "讲者分享了在不同文化背景下工作的技巧——如何识别<strong>高语境</strong>和<strong>低语境</strong>沟通的区别。", keywords: ["nuance", "empathy", "pragmatic"] },
-      { title: "Remote Team Dynamics", meta: "Podcast · 30 min", desc: "远程团队如何建立信任和保持高效协作。讨论了异步沟通的艺术和时区管理策略。", keywords: ["sync", "bandwidth", "streamline"] },
-      { title: "The Art of Small Talk", meta: "YouTube · 12 min", desc: "如何在社交场合自然地开启对话，避免尴尬沉默。提供了实用的<strong>破冰</strong>句型和话题转换技巧。", keywords: ["break the ice", "catch up", "vibe"] },
+      { title: "Cross-cultural Communication", url: "https://www.youtube.com/results?search_query=cross+cultural+communication+TED", meta: "TED Talk · 18 min", desc: "讲者分享了在不同文化背景下工作的技巧——如何识别<strong>高语境</strong>和<strong>低语境</strong>沟通的区别。", keywords: ["nuance", "empathy", "pragmatic"] },
+      { title: "Remote Team Dynamics", url: "https://www.youtube.com/results?search_query=remote+team+communication+tips", meta: "Podcast · 30 min", desc: "远程团队如何建立信任和保持高效协作。讨论了异步沟通的艺术和时区管理策略。", keywords: ["sync", "bandwidth", "streamline"] },
+      { title: "The Art of Small Talk", url: "https://www.youtube.com/results?search_query=art+of+small+talk+english", meta: "YouTube · 12 min", desc: "如何在社交场合自然地开启对话，避免尴尬沉默。提供了实用的<strong>破冰</strong>句型和话题转换技巧。", keywords: ["break the ice", "catch up", "vibe"] },
     ]
   },
 ];
@@ -2105,7 +2105,7 @@ const BriefModule = {
           <span class="brief-section-title">${cat.category}</span>
         </div>
         ${cat.items.map(item => `<div class="brief-item">
-          <div class="brief-item-title">${item.title}</div>
+          <a href="${item.url}" target="_blank" class="brief-item-title">${item.title} →</a>
           <div class="brief-item-meta">${item.meta}</div>
           <div class="brief-item-desc">${item.desc}</div>
           <div class="brief-keywords">${item.keywords.map(kw => 
